@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import AppGradientView from '../../libComponents/AppGradientView'
 
 const SplashScreen = () => {
   return (
-    <View>
-      <Text>SplashScreen</Text>
-    </View>
+    <AppGradientView>
+      
+    </AppGradientView>
   )
 }
 

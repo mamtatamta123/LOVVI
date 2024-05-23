@@ -6,6 +6,7 @@ import SignupScreen from '../screens/authScreens/SignupScreen';
 import ForgotPasswordScreen from '../screens/authScreens/ForgotPasswordScreen';
 import OtpVerificationScreen from '../screens/authScreens/OtpVerificationScreen';
 import SplashScreen from '../screens/authScreens/SplashScreen';
+import WelcomeScreen from '../screens/authScreens/WelcomeScreen';
 
 const AuthStack = () => {
     const Stack = createNativeStackNavigator();
@@ -18,7 +19,7 @@ const AuthStack = () => {
       <Stack.Screen name={Routes.Forgot_Password_Screen} component={ForgotPasswordScreen} />
       <Stack.Screen name={Routes.Otp_Verification_Screen} component={OtpVerificationScreen} />
 
-
+      <Stack.Screen name={Routes.Welcome_Screen} component={WelcomeScreen} />
     </Stack.Navigator>
   </NavigationContainer>
   )
