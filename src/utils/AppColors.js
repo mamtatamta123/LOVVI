@@ -1,9 +1,9 @@
 export default appColors={
-  PrimaryGradient: ['#7DD12E', '#FEB747'],
+  PrimaryGradient: ['#7DD12E', '#FECA06','#FECA06'],
   primaryColor:'#7DD12E',
   secondoryColor:'#FEB747',
   White_color:'#ffffff',
-
+Button_Color:'#FECA06',
   Black_color:'#222222',
   DARK_GRAY: '#707070',
   LIGHT_Gray: '#8E8D8F',
@@ -32,7 +32,7 @@ export default appColors={
   Noti_Text_color: ' #4B7DFD',
   Green_color: '#7ED957',
   brown_color: '#D8B06B',
-  
+  TextInput_BgColor:'#D9D9D9'
 
 }
 

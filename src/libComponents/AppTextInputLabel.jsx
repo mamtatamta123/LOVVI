@@ -29,7 +29,8 @@ const AppTextInputLabel = ({
   secureTextEntry,
   onPress,
   keyboardType,
-  borderRadius = 25,
+  
+  borderRadius = wp(3),
   editable = true,
 }) => {
   return (
@@ -82,11 +83,14 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     borderWidth: 1,
-    borderColor: '#D9D9D9',
+    borderColor: appColors.TextInput_BgColor,
     marginTop: wp(1),
-    width: '100%',
+    // width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor:appColors.TextInput_BgColor,
+    marginHorizontal:0
+  
   },
   icon: {
     marginRight: wp(2),
@@ -99,11 +103,10 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fp(1.8),
     alignSelf: 'center',
-    borderTopRightRadius: 25,
-    borderBottomRightRadius: 25,
+  
     color: appColors.BLACK,
   },
   eyeIconContainer: {
-    marginHorizontal: wp(3),
+    marginHorizontal: wp(2),
   },
 });

@@ -6,29 +6,27 @@ import {
     responsiveFontSize as fp,
   } from 'react-native-responsive-dimensions';
 
-const AppButton = ({marginTop=wp(8),title}) => {
+const AppButton = ({marginTop=wp(5),title,onPress}) => {
 
     const [isActive,setIsActive]=useState('false')
 
-    const handlePress = () => {
-        setIsActive(!isActive);
-
-    };
+   
   return (
     <TouchableOpacity
   
-  onPress={handlePress}
+  onPress={onPress}
     style={[
       {
       
-        backgroundColor: appColors.White_color,
+        backgroundColor: '#FECA06',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: marginTop,
           height:50,
       
-        borderRadius:9,
-     marginHorizontal:wp(3)
+        borderRadius:wp(3),
+     marginHorizontal:wp(4)
+
 
 
       

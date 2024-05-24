@@ -38,3 +38,4 @@ const WelcomeScreen = () => {
 export default WelcomeScreen
 
 const styles = StyleSheet.create({})
+
