@@ -12,8 +12,14 @@ import {
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
 import appColors from '../utils/appColors';
-import AppIcon from '../components/AppIcon';
+import AppIcon, {Icon} from './AppIcon';
 
+export const keyboardType = {
+  email_address: 'email-address',
+  number_pad: 'number-pad',
+  default: 'default',
+  url: 'url',
+};
 
 const AppTextInputLabel = ({
   value,
@@ -29,7 +35,6 @@ const AppTextInputLabel = ({
   secureTextEntry,
   onPress,
   keyboardType,
-  
   borderRadius = wp(3),
   editable = true,
 }) => {
@@ -44,7 +49,6 @@ const AppTextInputLabel = ({
           color={Iconcolor}
           style={styles.icon}
         />
-      
         <TextInput
           editable={editable}
           keyboardType={keyboardType}
@@ -59,7 +63,7 @@ const AppTextInputLabel = ({
           <TouchableOpacity onPress={onPress} style={styles.eyeIconContainer}>
             <AppIcon
               Type={Icon.Ionicons}
-              // name={!secureTextEntry ? 'eye-outline' : 'eye-off-outline'}
+              name={!secureTextEntry ? 'eye-outline' : 'eye-off-outline'}
               size={wp(5)}
               color={appColors.IconColor}
             />
@@ -73,13 +77,12 @@ const AppTextInputLabel = ({
 export default AppTextInputLabel;
 
 const styles = StyleSheet.create({
-  container: {
- 
-  },
+  container: {},
   labelText: {
-    fontSize: fp(2),
+    fontSize: fp(1.8),
     color: appColors.BLACK,
-    fontWeight: '500',
+    fontWeight: '600',
+    marginBottom: 3,
   },
   inputContainer: {
     borderWidth: 1,
@@ -88,9 +91,7 @@ const styles = StyleSheet.create({
     // width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor:appColors.TextInput_BgColor,
-    marginHorizontal:0
-  
+    backgroundColor: appColors.TextInput_BgColor,
   },
   icon: {
     marginRight: wp(2),
@@ -103,7 +104,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: fp(1.8),
     alignSelf: 'center',
-  
     color: appColors.BLACK,
   },
   eyeIconContainer: {
