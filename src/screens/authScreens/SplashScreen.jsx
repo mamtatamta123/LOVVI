@@ -4,6 +4,8 @@ import AppGradientView from '../../libComponents/AppGradientView';
 import AppStatusBar from '../../libComponents/AppStatusBar';
 import {red} from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
 import {routes} from '../../utils/routes';
+
+
 const SplashScreen = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {

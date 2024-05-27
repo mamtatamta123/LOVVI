@@ -10,6 +10,7 @@ import appColors from '../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
+  responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
 import AppTextInputLabel, {
   keyboardType,
@@ -22,15 +23,14 @@ import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
+import CheckBox from '@react-native-community/checkbox';
 
-const ForgotPasswordScreen = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+const HouseRules = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+  const [email, setEmail] = useState();
 
   return (
     <AppGradientView
@@ -42,49 +42,51 @@ const ForgotPasswordScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Forgot</Text>
-          <Text style={styles.titleText}>Password</Text>
+          <Text style={styles.titleText}>Welcome to</Text>
+          <Text style={styles.titleText}>Lovvi</Text>
+
           <Text style={styles.subtitleText}>
-            Enter the Phone Number associated with your account
+            Please follow these house rules
           </Text>
         </View>
 
         <AppView style={styles.formContainer}>
-          <AppTextInputLabel
-            keyboardType={keyboardType.number_pad}
-            labelText="Phone Number"
-            value={phoneNumber}
-            placeholder="Enter Your Phone Number"
-            onChangeText={text => setPhoneNumber(text)}
-            IconType={Icon.FontAwesome5}
-            Iconsize={20}
-            Iconname={'phone-alt'}
-            Iconcolor={appColors.IconColor}
-            style={styles.input}
-          />
-         
+          <AppText style={styles.labelText}>Be yourself</AppText>
+
+          <AppText style={styles.Sublabel}>
+            Make sure your photos, age and bio are true to who you are.
+          </AppText>
+          <AppText style={styles.labelText}>Stay safe.</AppText>
+
+<AppText style={styles.Sublabel}>
+Don't be too quick to give out personal information. Date Safely
+</AppText>
+ <AppText style={styles.labelText}>Play  it cool.</AppText>
+
+<AppText style={styles.Sublabel}>
+Respect others and treat them as you would like to be treated.
+</AppText>
+ <AppText style={styles.labelText}>Be proactive.</AppText>
+
+<AppText style={styles.Sublabel}>
+Always report bad behaviour
+</AppText>
+
+
+
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '15%'}}
-            title={'Send OTP'}
-            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
+            style={{marginTop: '50%'}}
+            title={'I agree'}
+            onPress={() => navigation.navigate(routes.Name_Screen)}
           />
-          <AppView style={{flexDirection:'row',justifyContent:'center'}}>
-          <AppText style={{   fontSize:15}}>
-          Back to 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Login_Screen)}>
-              <AppText style={{color:appColors.primaryColor,textDecorationLine:'underline'}}> Sign in</AppText>
-              </TouchableOpacity>
-              </AppView>
         </AppView>
       </ScrollView>
     </AppGradientView>
   );
 };
 
-export default ForgotPasswordScreen;
+export default HouseRules;
 
 const styles = StyleSheet.create({
   container: {
@@ -116,8 +118,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     opacity: 0.6,
-    marginTop: 7,
-    width:'75%'
   },
   formContainer: {
     backgroundColor: appColors.white,
@@ -131,5 +131,30 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 20,
     // marginHorizontal: 20,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: wp(5),
+    marginTop: hp(0.5),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxText: {
+    color: appColors.BLACK,
+    fontSize: fp(2),
+  },
+  labelText: {
+    fontSize: fp(2),
+    color: appColors.BLACK,
+    fontWeight: '600',
+    marginTop: 20,
+  },
+
+  Sublabel: {
+    color: appColors.Black_color,
+    fontSize: 12,
+    fontWeight: '500',
+    opacity: 0.6,
+    width: '100%',
   },
 });

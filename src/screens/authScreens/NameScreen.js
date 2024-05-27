@@ -10,6 +10,7 @@ import appColors from '../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
+  responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
 import AppTextInputLabel, {
   keyboardType,
@@ -22,15 +23,10 @@ import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
+import CheckBox from '@react-native-community/checkbox';
 
-const ForgotPasswordScreen = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const NameScreen = ({navigation}) => {
+  const [name, setName] = useState();
 
   return (
     <AppGradientView
@@ -42,49 +38,53 @@ const ForgotPasswordScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Forgot</Text>
-          <Text style={styles.titleText}>Password</Text>
-          <Text style={styles.subtitleText}>
-            Enter the Phone Number associated with your account
-          </Text>
+          <Text style={styles.titleText}> What’s your</Text>
+          <Text style={styles.titleText}>Full name?</Text>
         </View>
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-            keyboardType={keyboardType.number_pad}
-            labelText="Phone Number"
-            value={phoneNumber}
-            placeholder="Enter Your Phone Number"
-            onChangeText={text => setPhoneNumber(text)}
-            IconType={Icon.FontAwesome5}
-            Iconsize={20}
-            Iconname={'phone-alt'}
+            keyboardType={'email-address'}
+            labelText="Full Name"
+            value={name}
+            placeholder="Enter Your Full Name"
+            onChangeText={text => setName(text)}
+            // IconType={Icon.Feather}
+            // Iconsize={22}
+            // Iconname={'mail'}
             Iconcolor={appColors.IconColor}
             style={styles.input}
           />
-         
+
+          <AppText style={styles.subtitleText}>
+            This is how it’ll appear on your profile.
+          </AppText>
+
+          <AppText
+            style={{
+              color: appColors.BLACK,
+              fontSize: 14,
+              fontWeight: '500',
+
+              marginTop: 2,
+            }}>
+            Can’t change it later.
+          </AppText>
+          <AppText
+            style={{fontSize: 13, width: '100%', marginTop: 5}}></AppText>
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '15%'}}
-            title={'Send OTP'}
-            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
+            style={{marginBottom: '3%', marginTop: '20%'}}
+            title={'Next'}
+            onPress={() => navigation.navigate(routes.DatePickr_Screen)}
           />
-          <AppView style={{flexDirection:'row',justifyContent:'center'}}>
-          <AppText style={{   fontSize:15}}>
-          Back to 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Login_Screen)}>
-              <AppText style={{color:appColors.primaryColor,textDecorationLine:'underline'}}> Sign in</AppText>
-              </TouchableOpacity>
-              </AppView>
         </AppView>
       </ScrollView>
     </AppGradientView>
   );
 };
 
-export default ForgotPasswordScreen;
+export default NameScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -113,11 +113,10 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     color: appColors.Black_color,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '500',
-    opacity: 0.6,
+    opacity: 0.7,
     marginTop: 7,
-    width:'75%'
   },
   formContainer: {
     backgroundColor: appColors.white,
@@ -131,5 +130,16 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 20,
     // marginHorizontal: 20,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: wp(5),
+    marginTop: hp(0.5),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxText: {
+    color: appColors.BLACK,
+    fontSize: fp(2),
   },
 });

@@ -2,7 +2,7 @@ export default appColors = {
   PrimaryGradient: ['#7DD12E', '#FECA06', '#FECA06'],
   PrimaryGradient2: ['#7DD12E', '#FECA06', '#FECA06', '#FECA06'],
   primaryColor: '#7DD12E',
-  secondoryColor: '#FEB747',
+  secondoryColor: '#FECA06',
   TextInput_BgColor: '#D9D9D9',
   white: '#ffffff',
   Button_Color: '#FECA06',
