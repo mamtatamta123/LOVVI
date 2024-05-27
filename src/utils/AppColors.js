@@ -1,10 +1,12 @@
-export default appColors={
-  PrimaryGradient: ['#7DD12E', '#FECA06','#FECA06'],
-  primaryColor:'#7DD12E',
-  secondoryColor:'#FEB747',
-  White_color:'#ffffff',
-Button_Color:'#FECA06',
-  Black_color:'#222222',
+export default appColors = {
+  PrimaryGradient: ['#7DD12E', '#FECA06', '#FECA06'],
+  PrimaryGradient2: ['#7DD12E', '#FECA06', '#FECA06', '#FECA06'],
+  primaryColor: '#7DD12E',
+  secondoryColor: '#FEB747',
+  TextInput_BgColor: '#D9D9D9',
+  white: '#ffffff',
+  Button_Color: '#FECA06',
+  Black_color: '#222222',
   DARK_GRAY: '#707070',
   LIGHT_Gray: '#8E8D8F',
   grayShade: '#d1d1d1',
@@ -18,10 +20,7 @@ Button_Color:'#FECA06',
   DARK_BLUE: '#304759',
   red: '#fc0303',
   GRAY_BG: '#EDF3FB',
-  RED: '#FF1100',
-  BG: '#F4F7FA',
   Blue: '#3f75ff',
-  fontColor: '#4478FB',
   course: '#C5E3FF',
   BorderColor: '#D9D9D9',
   IconColor: '#8E8D8F',
@@ -32,11 +31,4 @@ Button_Color:'#FECA06',
   Noti_Text_color: ' #4B7DFD',
   Green_color: '#7ED957',
   brown_color: '#D8B06B',
-  TextInput_BgColor:'#D9D9D9'
-
-}
-
-
-
-
-
+};

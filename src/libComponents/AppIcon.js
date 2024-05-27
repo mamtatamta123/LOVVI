@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {View} from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -41,5 +41,4 @@ const AppIcon = ({Type, name, color, size = 24, style}) => {
     </View>
   );
 };
-
 export default AppIcon;
