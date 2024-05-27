@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import React from 'react'
+import OtpVerificationScreen from './OtpVerificationScreen'
 
 const SCREEN_HEIGHT = Dimensions.get('window').height
 const SCREEN_WIDTH = Dimensions.get('window').width
@@ -27,3 +28,14 @@ const ForgotPasswordScreen = () => {
 export default ForgotPasswordScreen
 
 const styles = StyleSheet.create({})
+
+
+
+
+
+
+
+// 1.create login screen according to figma
+// 2.create signup screen according to figma
+// 3.create forgot password screen according to figma
+// 4.create Otp Verificatio nScreen screen according to figma
