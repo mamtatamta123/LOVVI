@@ -1,16 +1,35 @@
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import AuthStack from './src/navigation/AuthStack'
+import React from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import AuthStack from './src/navigation/AuthStack';
+import {useSelector} from 'react-redux';
+import {DefaultTheme, DarkTheme, useTheme} from '@react-navigation/native';
+import {Text} from 'react-native';
+import MainStack from './src/navigation/MainStack';
+import {store} from './src/app/store';
 
 const App = () => {
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
+  const appTheme = isarkMode ? DarkTheme : DefaultTheme;
+  // use-------------------------
+  // import krna colors from useTheme  in any screeen where to use----
+  // const {colors} = useTheme(); like this-----
+  // <Text style={{color: colors.text}}></Text> ------it will give to you like colors.text
+  // colors.background
+  // use-------------------------
+
   return (
-    <NavigationContainer>
-      <AuthStack/>
+    <NavigationContainer theme={appTheme}>
+      {loggedIn ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
-  )
-}
-export default App;
+  );
+};
 
-
-
-
+const AppWapper = () => {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+};
+export default AppWapper;

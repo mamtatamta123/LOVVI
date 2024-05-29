@@ -22,7 +22,7 @@ import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
-
+ 
 const LoginScreen = ({navigation}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

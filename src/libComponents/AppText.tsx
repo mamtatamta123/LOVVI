@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TextProps, TextStyle} from 'react-native';
 import React from 'react';
 import appColors from '../utils/appColors';
+import {useTheme} from '@react-navigation/native';
 
 interface AppTextProp extends TextProps {
   style: TextStyle;
@@ -13,6 +14,7 @@ const AppText: React.FC<AppTextProp> = ({
   fontSize = 16,
   ...restProp
 }) => {
+  const {colors} = useTheme();
   return (
     <Text
       {...restProp}
@@ -20,6 +22,7 @@ const AppText: React.FC<AppTextProp> = ({
         {
           fontSize: fontSize,
           color: false ? appColors.white : appColors.Black_color,
+          // color: colors.text,
         },
         {...style},
       ]}>
