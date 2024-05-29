@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
@@ -23,8 +23,19 @@ import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
-// ======= new
+
+
+import AppButton from '../../../libComponents/AppButton';
+import {Icon} from '../../../libComponents/AppIcon';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
+import appColors from '../../../utils/appColors';
+import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
 
 const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
@@ -45,10 +56,9 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.titleText}>Sign In with Phone Number</Text>
           <Text style={styles.subtitleText}>Enter your details to sign in</Text>
         </View>
-
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-            keyboardType={keyboardType.number_pad}
+            // keyboardType={keyboardType.number_pad}
             labelText="Phone Number"
             value={phoneNumber}
             placeholder="Enter Your Phone Number"
@@ -111,23 +121,17 @@ const LoginScreen = ({navigation}) => {
               </AppText>
             </TouchableOpacity>
           </View>
+        
+
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
+            style={{marginBottom: '3%', marginTop: '10%'}}
             title={'Sign in'}
-            // onPress={}
+            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
           />
 
           <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
-            <AppText style={{fontSize: 15}}>Don’t have an account?</AppText>
-            <TouchableOpacity
-              onPress={() => navigation.navigate(routes.Signup_Screen)}>
-              <AppText style={{color: appColors.primaryColor}}>
-                {' '}
-                Sign up?
-              </AppText>
-            </TouchableOpacity>
-          </AppView>
+         
         </AppView>
       </ScrollView>
     </AppGradientView>

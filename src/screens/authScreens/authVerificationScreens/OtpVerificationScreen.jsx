@@ -6,22 +6,18 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../libComponents/AppTextInputLabel';
-import AppButton from '../../libComponents/AppButton';
-import {Icon} from '../../libComponents/AppIcon';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
-import AppHeader from '../../libComponents/AppHeader';
-import AppView from '../../libComponents/AppView';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
+
+
+
+
+
+
+
 import {
   CodeField,
   Cursor,
@@ -29,6 +25,14 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
+import AppButton from '../../../libComponents/AppButton';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import appColors from '../../../utils/appColors';
+import { routes } from '../../../utils/routes';
 
 const OtpVerificationScreen = ({navigation}) => {
   const [value, setValue] = useState('');
@@ -43,57 +47,66 @@ const OtpVerificationScreen = ({navigation}) => {
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
-      <AppStatusBar />
-      <AppHeader />
+     <AppStatusBar/>
+    <AppHeader/>
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>OTP
-</Text>
+          <Text style={styles.titleText}>OTP</Text>
           <Text style={styles.titleText}>Verification</Text>
           <Text style={styles.subtitleText}>
-          Enter the OTP code we just sent on 
-your  Phone Number.
+            Enter the OTP code we just sent on your Phone Number.
           </Text>
         </View>
 
-        <AppView style={styles.formContainer}>
-        <CodeField
-        ref={ref}
-        {...props}
-        // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
-        value={value}
-        onChangeText={setValue}
-        cellCount={CELL_COUNT}
-        rootStyle={styles.codeFieldRoot}
-        keyboardType="number-pad"
-        textContentType="oneTimeCode"
-        autoComplete={Platform.select({ android: 'sms-otp', default: 'one-time-code' })}
-        testID="my-code-input"
-        renderCell={({index, symbol, isFocused}) => (
-          <Text
-            key={index}
-            style={[styles.cell, isFocused && styles.focusCell]}
-            onLayout={getCellOnLayoutHandler(index)}>
-            {symbol || (isFocused ? <Cursor/> : null)}
-          </Text>
-        )}
-      />
-          <AppButton
-            style={{marginBottom: '10%', marginTop: '20%'}}
-            title={'Verify'}
-            onPress={() => navigation.navigate(routes.Password_Screen)}
+        <AppView   style={styles.formContainer}>
+          <CodeField
+            ref={ref}
+            {...props}
+            // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+            value={value}
+            onChangeText={setValue}
+            cellCount={CELL_COUNT}
+            rootStyle={styles.codeFieldRoot}
+            keyboardType="number-pad"
+            textContentType="oneTimeCode"
+            autoComplete={Platform.select({
+              android: 'sms-otp',
+              default: 'one-time-code',
+            })}
+            testID="my-code-input"
+            renderCell={({index, symbol, isFocused}) => (
+              <Text
+                key={index}
+                style={[styles.cell, isFocused && styles.focusCell]}
+                onLayout={getCellOnLayoutHandler(index)}>
+                {symbol || (isFocused ? <Cursor /> : null)}
+              </Text>
+            )}
           />
-    <AppView style={{flexDirection:'row',justifyContent:'center'}}>
-          <AppText style={{   fontSize:15}}>
-          Didn't received code? 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Login_Screen)}>
-              <AppText style={{color:appColors.primaryColor,textDecorationLine:'underline'}}> Resend</AppText>
-              </TouchableOpacity>
-              </AppView>
+          <AppButton
+            style={{marginBottom: '10%', marginTop: '10%'}}
+            title={'Verify'}
+            onPress={() => navigation.navigate(routes.Email_Verification)}
+          />
+          <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <AppText style={{fontSize: 15}}>Didn't received code?</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Email_Verification)}
+              
+              
+              >
+              <AppText
+                style={{
+                  color: appColors.primaryColor,
+                  textDecorationLine: 'underline',
+                }}>
+                {' '}
+                Resend
+              </AppText>
+            </TouchableOpacity>
+          </AppView>
         </AppView>
       </ScrollView>
     </AppGradientView>
@@ -133,7 +146,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     opacity: 0.6,
     marginTop: 7,
-    width:'75%'
+    width: '75%',
   },
   formContainer: {
     backgroundColor: appColors.white,
@@ -162,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: wp(4),
     color: appColors.BLACK,
-    backgroundColor:appColors.TextInput_BgColor
+    backgroundColor: appColors.TextInput_BgColor,
   },
   focusCell: {
     borderColor: '#000',
@@ -171,6 +184,5 @@ const styles = StyleSheet.create({
     color: appColors.TextInput_BgColor,
     fontSize: fp(2),
     marginRight: wp(2),
-  
   },
 });

@@ -15,6 +15,7 @@ import {
 interface AppButtonProp extends TouchableOpacityProps {
   title?: string;
   style?: ViewStyle;
+  height?:55
 }
 
 const AppButton: React.FC<AppButtonProp> = ({title, style, ...restProp}) => {
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 55,
+    height: 50,
     borderRadius: wp(2.5),
   },
 });

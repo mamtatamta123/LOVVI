@@ -6,27 +6,30 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../libComponents/AppTextInputLabel';
-import AppButton from '../../libComponents/AppButton';
-import {Icon} from '../../libComponents/AppIcon';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
-import AppHeader from '../../libComponents/AppHeader';
-import AppView from '../../libComponents/AppView';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
 
-const NameScreen = ({navigation}) => {
-  const [name, setName] = useState();
+import AppButton from '../../../libComponents/AppButton';
+import {Icon} from '../../../libComponents/AppIcon';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import {routes} from '../../../utils/routes';
+import CheckBox from '@react-native-community/checkbox';
+import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+
+const EmailVerification = ({navigation}) => {
+  const [password, setPassword] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+  const [email, setEmail] = useState();
 
   return (
     <AppGradientView
@@ -38,45 +41,32 @@ const NameScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}> What’s your</Text>
-          <Text style={styles.titleText}>Full name?</Text>
+          <Text style={styles.titleText}>Enter your </Text>
+          <Text style={styles.titleText}>Email</Text>
         </View>
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-            keyboardType={'email-address'}
-            labelText="Full Name"
-            value={name}
-            placeholder="Enter Your Full Name"
-            onChangeText={text => setName(text)}
-            // IconType={Icon.Feather}
-            // Iconsize={22}
-            // Iconname={'mail'}
+           
+            labelText="Email"
+            value={email}
+            placeholder="Enter Your Email"
+            onChangeText={text => setEmail(text)}
+            IconType={Icon.Feather}
+            Iconsize={22}
+            Iconname={'mail'}
             Iconcolor={appColors.IconColor}
             style={styles.input}
           />
 
-          <AppText style={styles.subtitleText}>
-            This is how it’ll appear on your profile.
+          <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
+            Don't lose access to your account, verify your email.
           </AppText>
-
-          <AppText
-            style={{
-              color: appColors.BLACK,
-              fontSize: 14,
-              fontWeight: '500',
-
-              marginTop: 2,
-            }}>
-            Can’t change it later.
-          </AppText>
-          <AppText
-            style={{fontSize: 13, width: '100%', marginTop: 5}}></AppText>
 
           <AppButton
             style={{marginBottom: '3%', marginTop: '20%'}}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.DatePickr_Screen)}
+            onPress={() => navigation.navigate(routes.House_Rules)}
           />
         </AppView>
       </ScrollView>
@@ -84,7 +74,7 @@ const NameScreen = ({navigation}) => {
   );
 };
 
-export default NameScreen;
+export default EmailVerification;
 
 const styles = StyleSheet.create({
   container: {
@@ -113,9 +103,9 @@ const styles = StyleSheet.create({
   },
   subtitleText: {
     color: appColors.Black_color,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: '500',
-    opacity: 0.7,
+    opacity: 0.6,
     marginTop: 7,
   },
   formContainer: {

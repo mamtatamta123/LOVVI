@@ -6,23 +6,21 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../libComponents/AppTextInputLabel';
-import AppButton from '../../libComponents/AppButton';
-import {Icon} from '../../libComponents/AppIcon';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
-import AppHeader from '../../libComponents/AppHeader';
-import AppView from '../../libComponents/AppView';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
+
+import AppButton from '../../../libComponents/AppButton';
+import {Icon} from '../../../libComponents/AppIcon';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 
 const HouseRules = ({navigation}) => {
