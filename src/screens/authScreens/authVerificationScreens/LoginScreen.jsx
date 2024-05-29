@@ -6,24 +6,24 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../libComponents/AppTextInputLabel';
-import AppButton from '../../libComponents/AppButton';
-import {Icon} from '../../libComponents/AppIcon';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
-import AppHeader from '../../libComponents/AppHeader';
-import AppView from '../../libComponents/AppView';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
+
+import AppButton from '../../../libComponents/AppButton';
+import {Icon} from '../../../libComponents/AppIcon';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
+import appColors from '../../../utils/appColors';
+import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
 
 const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
@@ -47,7 +47,7 @@ const LoginScreen = ({navigation}) => {
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-            keyboardType={keyboardType.number_pad}
+            // keyboardType={keyboardType.number_pad}
             labelText="Phone Number"
             value={phoneNumber}
             placeholder="Enter Your Phone Number"
@@ -58,70 +58,25 @@ const LoginScreen = ({navigation}) => {
             Iconcolor={appColors.IconColor}
             style={styles.input}
           />
-          <AppTextInputLabel
-            keyboardType={'email-address'}
-            labelText="Password"
-            value={password}
-            placeholder="Enter Your Password"
-            onChangeText={text => setPassword(text)}
-            IconType={Icon.Fontisto}
-            Iconsize={20}
-            Iconname={'locked'}
-            Iconcolor={appColors.IconColor}
-            style={styles.input}
-            secureEntry={true}
-                secureTextEntry={showPassword}
-                onPress={() => setShowPassword(!showPassword)}
-          />
+        
 
-        <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
-
-          <AppView style={{flexDirection: 'row', alignItems: 'center'}}>
-            <CheckBox
-              disabled={false}
-              value={toggleCheckBox}
-              onValueChange={newValue => setToggleCheckBox(newValue)}
-              tintColors={{true: appColors.primaryColor}}
-            />
-            <AppText
-              style={{
-                color: appColors.BLACK,
-                fontSize:15
-              }}>
-              Remember me
-            </AppText>
-          </AppView>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate(routes.Forgot_Password_Screen)}>
-            <AppText
-              style={{
-                color: appColors.primaryColor,
-                textDecorationLine: 'underline',
-                fontSize:15
-                
-              }}>
-              Forgot Password?
-            </AppText>
-          </TouchableOpacity>
-          </View> 
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
+            style={{marginBottom: '3%', marginTop: '10%'}}
             title={'Sign in'}
-            // onPress={}
+            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
           />
 
-<AppView style={{flexDirection:'row',justifyContent:'center'}}>
-          <AppText style={{   fontSize:15}}>
-          Don’t have an account? 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Signup_Screen)}>
-              <AppText style={{color:appColors.primaryColor}}> Sign up?</AppText>
-              </TouchableOpacity>
-              </AppView>
-
+          {/* <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <AppText style={{fontSize: 15}}>Don’t have an account?</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Signup_Screen)}>
+              <AppText style={{color: appColors.primaryColor}}>
+                {' '}
+                Sign up?
+              </AppText>
+            </TouchableOpacity>
+          </AppView> */}
         </AppView>
       </ScrollView>
     </AppGradientView>

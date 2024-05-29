@@ -1,7 +1,8 @@
-import BirthdayScreen from "../screens/authScreens/DatePickrScreen";
-import GenderScreen from "../screens/authScreens/GenderScreen";
-import HouseRules from "../screens/authScreens/HouseRules";
-import NameScreen from "../screens/authScreens/NameScreen";
+import { InteractionManager } from "react-native";
+import IdentityGender from "../screens/authScreens/authOtherScreens/IdentityGender";
+import InterestedGender from "../screens/authScreens/authOtherScreens/InterestedGender";
+import CardScreen from "../screens/authScreens/authOtherScreens/CardScreen";
+
 
 
 
@@ -19,7 +20,10 @@ Email_Verification:'EmailVerification',
 House_Rules:'HouseRules',
 Name_Screen:"NameScreen",
 DatePickr_Screen:'DatePickrScreen',
-Gender_Screen:'GenderScreen'
+Gender_Screen:'GenderScreen',
+Identity_Gender:'IdentityGender',
+Interested_Gender:'InterestedGender',
+Card_Screen:"CardScreen"
 
 
 };

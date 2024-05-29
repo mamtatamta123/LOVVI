@@ -1,9 +1,9 @@
 import {StyleSheet, Text, Image, View} from 'react-native';
 import React, {useEffect} from 'react';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
 import {red} from 'react-native-reanimated/lib/typescript/reanimated2/Colors';
-import {routes} from '../../utils/routes';
+import {routes} from '../../../utils/routes';
 
 
 const SplashScreen = ({navigation}) => {
@@ -17,7 +17,7 @@ const SplashScreen = ({navigation}) => {
     <AppGradientView style={styles.gradientStyle}>
       <AppStatusBar />
       <Image
-        source={require('../../assets/Images/mainHeading.png')}
+        source={require('../../../assets/Images/mainHeading.png')}
         style={styles.image}
       />
     </AppGradientView>

@@ -10,34 +10,38 @@ import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
-import appColors from '../../utils/appColors';
-import AppButton from '../../libComponents/AppButton';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
-import AppStatusBar from '../../libComponents/AppStatusBar';
+
+
+
+
+
+import AppButton from '../../../libComponents/AppButton';
+import AppText from '../../../libComponents/AppText';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import { routes } from '../../../utils/routes';
 
 const WelcomeScreen = ({navigation}) => {
   return (
     <ImageBackground
-      source={require('../../assets/Images/LovviBgImage.png')}
+      source={require('../../../assets/Images/LovviBgImage.png')}
       style={{flex: 1}}
       resizeMode="cover">
       <AppStatusBar />
       {/* <ScrollView contentContainerStyle={{flex: 1}}> */}
       <View style={{paddingHorizontal: 20}}>
         <Image
-          source={require('../../assets/Images/mainHeading.png')}
+          source={require('../../../assets/Images/mainHeading.png')}
           style={styles.image}
         />
         <View style={styles.textContainer}>
           <AppText style={styles.heading}>Welcome Back</AppText>
-          <AppText style={styles.text}>Start with Sign Up or Sign In</AppText>
+          <AppText style={styles.text}>Start with Sign In</AppText>
         </View>
-        <AppButton
+        {/* <AppButton
           onPress={() => navigation.navigate(routes.Signup_Screen)}
           style={{marginTop: '15%', backgroundColor: appColors.white}}
           title={'Sign Up'}
-        />
+        /> */}
         <AppButton
           onPress={() => navigation.navigate(routes.Login_Screen)}
           style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}

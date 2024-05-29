@@ -31,4 +31,5 @@ export default appColors = {
   Noti_Text_color: ' #4B7DFD',
   Green_color: '#7ED957',
   brown_color: '#D8B06B',
+  modalbg:'rgba(0,0,0,0.8)'
 };

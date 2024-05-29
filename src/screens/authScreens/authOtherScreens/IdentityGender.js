@@ -6,31 +6,38 @@ import {
     TouchableOpacity,
   } from 'react-native';
   import React, {useState} from 'react';
-  import appColors from '../../utils/appColors';
+  import appColors from '../../../utils/appColors';
   import {
     responsiveWidth as wp,
     responsiveFontSize as fp,
     responsiveHeight as hp,
   } from 'react-native-responsive-dimensions';
-  import AppTextInputLabel, {
-    keyboardType,
-  } from '../../libComponents/AppTextInputLabel';
-  import AppButton from '../../libComponents/AppButton';
-  import {Icon} from '../../libComponents/AppIcon';
-  import AppGradientView from '../../libComponents/AppGradientView';
-  import AppStatusBar from '../../libComponents/AppStatusBar';
-  import AppHeader from '../../libComponents/AppHeader';
-  import AppView from '../../libComponents/AppView';
-  import AppText from '../../libComponents/AppText';
-  import {routes} from '../../utils/routes';
-  import CheckBox from '@react-native-community/checkbox';
   
-  const EmailVerification = ({navigation}) => {
-    const [password, setPassword] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [toggleCheckBox, setToggleCheckBox] = useState(false);
-    const [showPassword, setShowPassword] = useState(true);
-    const [email, setEmail] = useState();
+  import AppButton from '../../../libComponents/AppButton';
+  import {Icon} from '../../../libComponents/AppIcon';
+  import AppGradientView from '../../../libComponents/AppGradientView';
+  import AppStatusBar from '../../../libComponents/AppStatusBar';
+  import AppHeader from '../../../libComponents/AppHeader';
+  import AppView from '../../../libComponents/AppView';
+  import AppText from '../../../libComponents/AppText';
+  import { routes } from '../../../utils/routes';
+  
+  
+  const IdentityGender = ({navigation}) => {
+    const genderArr = [
+      { name: 'Straight', value: 'straight' },
+      { name: 'Gay', value: 'gay' },
+      { name: 'Asexual', value: 'asexual' },
+      { name: 'Lesbian', value: 'lesbian' },
+      { name: 'Bisexual', value: 'bisexual' },
+      { name: 'Demisexual', value: 'demisexual' },
+      { name: 'Pansexual', value: 'pansexual' },
+      { name: 'Queer', value: 'queer' },
+      { name: 'Bicurious', value: 'bicurious' },
+      { name: 'Aromantic', value: 'aromantic' },
+  
+    ]; 
+    
   
     return (
       <AppGradientView
@@ -42,46 +49,34 @@ import {
           keyboardShouldPersistTaps={'handled'}
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.infoContainer}>
-            <Text style={styles.titleText}>Enter your </Text>
-            <Text style={styles.titleText}>
-Email</Text>
-
-
+            <Text style={styles.titleText}>Your Sexual
+</Text>
+            <Text style={styles.titleText}>Orientation?</Text>
+            <Text style={styles.subtitleText}>Select up to 3</Text>
+            
           </View>
-
-        
   
           <AppView style={styles.formContainer}>
-          <AppTextInputLabel
-                keyboardType={'email-address'}
-                labelText="Email"
-                value={email}
-                placeholder="Enter Your Email"
-                onChangeText={text => setEmail(text)}
-                IconType={Icon.Feather}
-                Iconsize={22}
-                Iconname={'mail'}
-                Iconcolor={appColors.IconColor}
-                style={styles.input}
-              />
-  
-  <AppText style={{fontSize:13,width:'100%',marginTop:5}}>Don't lose access to your account, verify your email.</AppText>
+          {genderArr.map((item,index)=>
+            <AppButton
+            key={index}
+              style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}
+              title={item.name}
+             
+            />)}
   
             <AppButton
               style={{marginBottom: '3%', marginTop: '20%'}}
               title={'Next'}
-              onPress={()=>navigation.navigate(routes.House_Rules)}
+              onPress={() => navigation.navigate(routes.Interested_Gender)}
             />
-  
-  
-  
           </AppView>
         </ScrollView>
       </AppGradientView>
     );
   };
   
-  export default EmailVerification;
+  export default IdentityGender;
   
   const styles = StyleSheet.create({
     container: {
@@ -138,6 +133,20 @@ Email</Text>
     checkboxText: {
       color: appColors.BLACK,
       fontSize: fp(2),
+    },
+    heading: {
+      fontSize: fp(4.7),
+      fontWeight: '900',
+    },
+    text: {
+      fontSize: fp(2),
+      fontWeight: '700',
+      opacity: 0.8,
+      marginTop: '3%',
+    },
+    textContainer: {
+      marginTop: '50%',
+      alignItems: 'center',
     },
   });
   

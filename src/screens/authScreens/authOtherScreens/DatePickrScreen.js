@@ -7,7 +7,7 @@ import {
   TextInput
 } from 'react-native';
 import React, {useState} from 'react';
-import appColors from '../../utils/appColors';
+import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
@@ -15,18 +15,18 @@ import {
 } from 'react-native-responsive-dimensions';
 import AppTextInputLabel, {
   keyboardType,
-} from '../../libComponents/AppTextInputLabel';
-import AppButton from '../../libComponents/AppButton';
-import AppIcon, {Icon} from '../../libComponents/AppIcon';
-import AppGradientView from '../../libComponents/AppGradientView';
-import AppStatusBar from '../../libComponents/AppStatusBar';
-import AppHeader from '../../libComponents/AppHeader';
-import AppView from '../../libComponents/AppView';
-import AppText from '../../libComponents/AppText';
-import {routes} from '../../utils/routes';
+} from '../../../libComponents/AppTextInputLabel';
+import AppButton from '../../../libComponents/AppButton';
+import AppIcon, {Icon} from '../../../libComponents/AppIcon';
+import AppGradientView from '../../../libComponents/AppGradientView';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AppHeader from '../../../libComponents/AppHeader';
+import AppView from '../../../libComponents/AppView';
+import AppText from '../../../libComponents/AppText';
+import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+import moments from 'moment';
 
 const DatePickrScreen = ({navigation}) => {
 
@@ -85,14 +85,16 @@ const DatePickrScreen = ({navigation}) => {
                   display="default"
                   onChange={handleDOBDateChange}
                   maximumDate={new Date()}
+                
                 //   onConfirm={text => console.log('item==', text)}
                   onCancel={() => setShowDatePicker(false)}
+               
                 />
           
             </TouchableOpacity> 
 
           <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
-            Don't lose access to your account, verify your email.
+          Your profile shows your age, not your date of birth.
           </AppText>
 
           <AppButton
