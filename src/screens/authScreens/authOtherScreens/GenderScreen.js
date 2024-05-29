@@ -54,8 +54,11 @@ const GenderScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
+
         {genderArr.map((item,index)=>
+
           <AppButton
+          key={index}
             style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}
             title={item.name}
            

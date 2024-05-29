@@ -20,18 +20,16 @@ import {
   import AppHeader from '../../../libComponents/AppHeader';
   import AppView from '../../../libComponents/AppView';
   import AppText from '../../../libComponents/AppText';
-  import { routes } from '../../../utils/routes';
+  import {routes} from '../../../utils/routes';
+  import CheckBox from '@react-native-community/checkbox';
+  import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
   
-  
-  const  InterestedGender = ({navigation}) => {
-    const genderArr = [
-      { name: 'Women', value: 'female' },
-      { name: 'Men', value: 'male' },
-      { name: 'Everyone', value: 'everyone' },
-     
-  
-    ]; 
-    
+  const SchoolScreen = ({navigation}) => {
+    const [password, setPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [toggleCheckBox, setToggleCheckBox] = useState(false);
+    const [showPassword, setShowPassword] = useState(true);
+    const [email, setEmail] = useState();
   
     return (
       <AppGradientView
@@ -43,24 +41,30 @@ import {
           keyboardShouldPersistTaps={'handled'}
           contentContainerStyle={{flexGrow: 1}}>
           <View style={styles.infoContainer}>
-            <Text style={styles.titleText}>Who are you 
-</Text>
-            <Text style={styles.titleText}>Interested in Seeing?</Text>
+            <Text style={styles.titleText}>If Studying is 
+ </Text>
+            <Text style={styles.titleText}>your thing...</Text>
           </View>
   
           <AppView style={styles.formContainer}>
-          {genderArr.map((item,index)=>
-            <AppButton
-            key={index}
-              style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}
-              title={item.name}
+            <AppTextInputLabel
              
-            />)}
+              labelText="Enter school name, past or current"
+              value={email}
+              placeholder=" Enter school name, past or current"
+              onChangeText={text => setEmail(text)}
+              style={{marginTop:20}}
+            
+            />
+  
+            <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
+            This is how it’ll appear on your profile.
+            </AppText>
   
             <AppButton
               style={{marginBottom: '3%', marginTop: '20%'}}
               title={'Next'}
-              onPress={() => navigation.navigate(routes.Card_Screen)}
+              onPress={() => navigation.navigate(routes.Select_Interest)}
             />
           </AppView>
         </ScrollView>
@@ -68,7 +72,7 @@ import {
     );
   };
   
-  export default InterestedGender;
+  export default SchoolScreen;
   
   const styles = StyleSheet.create({
     container: {
@@ -125,20 +129,6 @@ import {
     checkboxText: {
       color: appColors.BLACK,
       fontSize: fp(2),
-    },
-    heading: {
-      fontSize: fp(4.7),
-      fontWeight: '900',
-    },
-    text: {
-      fontSize: fp(2),
-      fontWeight: '700',
-      opacity: 0.8,
-      marginTop: '3%',
-    },
-    textContainer: {
-      marginTop: '50%',
-      alignItems: 'center',
     },
   });
   

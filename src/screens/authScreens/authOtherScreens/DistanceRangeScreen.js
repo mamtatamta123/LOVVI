@@ -4,8 +4,9 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -22,15 +23,13 @@ import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
-import {setLoggedIn} from '../../../redux/auth.reducer';
-import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import RangeSlider from 'rn-range-slider';
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+const DistanceRangeScreen = ({navigation}) => {
+ 
+    const [range, setRange] = useState([0, 100]);
+    const [prigeRange, setPriceRange] = useState([]);
 
-const LoginScreen = ({navigation}) => {
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
-  const [email, setEmail] = useState();
 
   return (
     <AppGradientView
@@ -42,30 +41,27 @@ const LoginScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Sign In with Phone</Text>
-          <Text style={styles.titleText}>Number</Text>
+          <Text style={styles.titleText}>Your Distance</Text>
+          <Text style={styles.titleText}>Preference?</Text>
 
-          <Text style={styles.subtitleText}>Enter your details to sign in</Text>
+          <Text style={styles.subtitleText}>
+            Use the slider to set the maximum distance you would like potential
+            matches to be located.
+          </Text>
         </View>
 
         <AppView style={styles.formContainer}>
-          <AppTextInputLabel
-            // keyboardType={keyboardType.number_pad}
-            labelText="Phone Number"
-            value={phoneNumber}
-            placeholder="Enter Your Phone Number"
-            onChangeText={text => setPhoneNumber(text)}
-            IconType={Icon.FontAwesome5}
-            Iconsize={20}
-            Iconname={'phone-alt'}
-            Iconcolor={appColors.IconColor}
-            style={styles.input}
-          />
+          <AppText style={styles.labelText}>Distance Preference?</AppText>
+         
+          <MultiSlider
+                      values={[0, 1000]}
+                      onValuesChangeFinish={val => setPriceRange(val)}
+                    />
 
           <AppButton
-            style={{marginTop: '20%'}}
-            title={'I agree'}
-            onPress={() => navigation.navigate(routes.Name_Screen)}
+            style={{marginTop: '50%'}}
+            title={'Next'}
+            onPress={() => navigation.navigate(routes.School_Screen)}
           />
         </AppView>
       </ScrollView>
@@ -73,7 +69,7 @@ const LoginScreen = ({navigation}) => {
   );
 };
 
-export default LoginScreen;
+export default DistanceRangeScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -143,5 +139,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     opacity: 0.6,
     width: '100%',
+    labelText: {
+      fontSize: fp(2),
+      color: appColors.BLACK,
+      fontWeight: '600',
+      marginTop: 20,
+    },
   },
 });
