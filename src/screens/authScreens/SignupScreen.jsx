@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useState} from 'react';
 import appColors from '../../utils/appColors';
 import {
@@ -16,16 +22,16 @@ import AppGradientView from '../../libComponents/AppGradientView';
 import AppStatusBar from '../../libComponents/AppStatusBar';
 import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
+import CheckBox from '@react-native-community/checkbox';
+import AppText from '../../libComponents/AppText';
 
 const SignupScreen = () => {
   const navigation = useNavigation();
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <AppGradientView
@@ -95,12 +101,64 @@ const SignupScreen = () => {
             // secureTextEntry={showConfirmPassword}
             // onPress={() => setShowConfirmPassword(!showConfirmPassword)}
           />
+
+          <AppView style={{flexDirection: 'row', alignItems: 'center'}}>
+            <AppView style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={newValue => setToggleCheckBox(newValue)}
+                tintColors={{true: appColors.primaryColor}}
+              />
+              <AppText
+                style={{
+                  color: appColors.BLACK,
+                  fontSize: 15,
+                }}>
+                Agree with
+              </AppText>
+            </AppView>
+
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(routes.Forgot_Password_Screen)
+              }>
+              <AppText
+                style={{
+                  color: appColors.primaryColor,
+                  textDecorationLine: 'underline',
+                  fontSize: 15,
+                }}>
+                Terms & Conditions
+              </AppText>
+            </TouchableOpacity>
+          </AppView>
+
           <AppButton
-            style={{marginBottom: '10%', marginTop: '20%'}}
+            style={{ marginTop: '10%'}}
             title={'Sign up'}
             // onPress={}
           />
+          <AppView style={{marginTop:10}}>
+          <AppView style={{flexDirection:'row',justifyContent:'center',marginBottom:'10%'}}>
+          <AppText style={{   fontSize:15}}>
+          Already have an account? 
+          </AppText>
+          <TouchableOpacity
+                onPress={() => navigation.navigate(routes.Login_Screen)}
+                
+                >
+              <AppText style={{color:appColors.primaryColor}}> Sign in</AppText>
+              </TouchableOpacity>
+              </AppView>
+
         </AppView>
+         
+
+
+          
+        </AppView>
+        
       </ScrollView>
     </AppGradientView>
   );

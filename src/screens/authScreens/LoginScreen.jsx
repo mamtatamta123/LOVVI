@@ -10,6 +10,7 @@ import appColors from '../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
+  responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
 import AppTextInputLabel, {
   keyboardType,
@@ -22,15 +23,14 @@ import AppHeader from '../../libComponents/AppHeader';
 import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
- 
+// ======= new
+import CheckBox from '@react-native-community/checkbox';
+
 const LoginScreen = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
   return (
     <AppGradientView
@@ -42,8 +42,8 @@ const LoginScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Sign In Using Phone Number</Text>
-          <Text style={styles.subtitleText}>Hi there, sign up to sign in</Text>
+          <Text style={styles.titleText}>Sign In with Phone Number</Text>
+          <Text style={styles.subtitleText}>Enter your details to sign in</Text>
         </View>
 
         <AppView style={styles.formContainer}>
@@ -70,23 +70,64 @@ const LoginScreen = ({navigation}) => {
             Iconname={'locked'}
             Iconcolor={appColors.IconColor}
             style={styles.input}
+            secureEntry={true}
+            secureTextEntry={showPassword}
+            onPress={() => setShowPassword(!showPassword)}
           />
-          <TouchableOpacity
-            onPress={() => navigation.navigate(routes.Forgot_Password_Screen)}>
-            <AppText
-              style={{
-                color: appColors.primaryColor,
-                textDecorationLine: 'underline',
-              }}>
-              Forgot Password
-            </AppText>
-          </TouchableOpacity>
+
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <AppView style={{flexDirection: 'row', alignItems: 'center'}}>
+              <CheckBox
+                disabled={false}
+                value={toggleCheckBox}
+                onValueChange={newValue => setToggleCheckBox(newValue)}
+                tintColors={{true: appColors.primaryColor}}
+              />
+              <AppText
+                style={{
+                  color: appColors.BLACK,
+                  fontSize: 15,
+                }}>
+                Remember me
+              </AppText>
+            </AppView>
+
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate(routes.Forgot_Password_Screen)
+              }>
+              <AppText
+                style={{
+                  color: appColors.primaryColor,
+                  textDecorationLine: 'underline',
+                  fontSize: 15,
+                }}>
+                Forgot Password?
+              </AppText>
+            </TouchableOpacity>
+          </View>
 
           <AppButton
-            style={{marginBottom: '10%', marginTop: '20%'}}
+            style={{marginBottom: '3%', marginTop: '20%'}}
             title={'Sign in'}
             // onPress={}
           />
+
+          <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
+            <AppText style={{fontSize: 15}}>Don’t have an account?</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Signup_Screen)}>
+              <AppText style={{color: appColors.primaryColor}}>
+                {' '}
+                Sign up?
+              </AppText>
+            </TouchableOpacity>
+          </AppView>
         </AppView>
       </ScrollView>
     </AppGradientView>
@@ -139,5 +180,16 @@ const styles = StyleSheet.create({
   input: {
     marginTop: 20,
     // marginHorizontal: 20,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: wp(5),
+    marginTop: hp(0.5),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  checkboxText: {
+    color: appColors.BLACK,
+    fontSize: fp(2),
   },
 });

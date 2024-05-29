@@ -23,14 +23,13 @@ import AppView from '../../libComponents/AppView';
 import AppText from '../../libComponents/AppText';
 import {routes} from '../../utils/routes';
 
-const ForgotPasswordScreen = ({navigation}) => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+const PasswordScreen = ({navigation}) => {
+
   const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+  const [toggleCheckBox, setToggleCheckBox] = useState(false);
+
 
   return (
     <AppGradientView
@@ -42,49 +41,62 @@ const ForgotPasswordScreen = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Forgot</Text>
-          <Text style={styles.titleText}>Password</Text>
-          <Text style={styles.subtitleText}>
-            Enter the Phone Number associated with your account
-          </Text>
+          <Text style={styles.titleText}>New
+</Text>
+<Text style={styles.titleText}>
+Password</Text>
+          <Text style={styles.subtitleText}>Your new password must be unique 
+from those
+previously used.
+</Text>
         </View>
 
         <AppView style={styles.formContainer}>
-          <AppTextInputLabel
-            keyboardType={keyboardType.number_pad}
-            labelText="Phone Number"
-            value={phoneNumber}
-            placeholder="Enter Your Phone Number"
-            onChangeText={text => setPhoneNumber(text)}
-            IconType={Icon.FontAwesome5}
+        <AppTextInputLabel
+            keyboardType={'email-address'}
+            labelText="Password"
+            value={password}
+            placeholder="Enter Your Password"
+            onChangeText={text => setPassword(text)}
+            IconType={Icon.Fontisto}
             Iconsize={20}
-            Iconname={'phone-alt'}
+            Iconname={'locked'}
             Iconcolor={appColors.IconColor}
             style={styles.input}
+            secureEntry={true}
+                secureTextEntry={showPassword}
+                onPress={() => setShowPassword(!showPassword)}
           />
-         
+          <AppTextInputLabel
+            keyboardType={'email-address'}
+            labelText="Confirm Password"
+            value={confirmPassword}
+            placeholder="Enter Your Password"
+            onChangeText={text => setConfirmPassword(text)}
+            IconType={Icon.Fontisto}
+            Iconsize={20}
+            Iconname={'locked'}
+            Iconcolor={appColors.IconColor}
+            style={styles.input}
+            secureEntry={true}
+                secureTextEntry={showPassword}
+                onPress={() => setShowPassword(!showPassword)}
+          />
+        
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '15%'}}
-            title={'Send OTP'}
-            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
+            style={{marginBottom: '10%', marginTop: '20%'}}
+            title={' Create New Password'}
+            onPress={()=>navigation.navigate(routes.GetNumber_Screen)}
           />
-          <AppView style={{flexDirection:'row',justifyContent:'center'}}>
-          <AppText style={{   fontSize:15}}>
-          Back to 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Login_Screen)}>
-              <AppText style={{color:appColors.primaryColor,textDecorationLine:'underline'}}> Sign in</AppText>
-              </TouchableOpacity>
-              </AppView>
+
         </AppView>
       </ScrollView>
     </AppGradientView>
   );
 };
 
-export default ForgotPasswordScreen;
+export default PasswordScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -117,7 +129,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     opacity: 0.6,
     marginTop: 7,
-    width:'75%'
+    width:'78%'
   },
   formContainer: {
     backgroundColor: appColors.white,
