@@ -23,7 +23,9 @@ import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import {setLoggedIn} from '../../../redux/auth.reducer';
-import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import AppTextInputLabel, {
+  keyboardType,
+} from '../../../libComponents/AppTextInputLabel';
 
 const LoginScreen = ({navigation}) => {
   const [password, setPassword] = useState('');
@@ -50,7 +52,7 @@ const LoginScreen = ({navigation}) => {
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-            // keyboardType={keyboardType.number_pad}
+            keyboardType={keyboardType.number_pad}
             labelText="Phone Number"
             value={phoneNumber}
             placeholder="Enter Your Phone Number"

@@ -15,6 +15,7 @@ import AppText from '../../../libComponents/AppText';
 import AppButton from '../../../libComponents/AppButton';
 import {NavigationContainer} from '@react-navigation/native';
 import {routes} from '../../../utils/routes';
+import AppStatusBar from '../../../libComponents/AppStatusBar';
 
 const SelectInterest = ({navigation}) => {
   const interestArr = [
@@ -131,7 +132,14 @@ const SelectInterest = ({navigation}) => {
   ];
 
   return (
-    <View style={{backgroundColor: 'white', flex: 1, marginHorizontal: 15}}>
+    <View
+      style={{
+        backgroundColor: appColors.white,
+        flex: 1,
+        paddingHorizontal: 15,
+      }}>
+      <AppStatusBar />
+      <AppHeader isBlack={true} />
       <AppText style={{fontWeight: 'bold', marginTop: 50}}>
         Select up to 10 interests
       </AppText>
@@ -150,31 +158,19 @@ const SelectInterest = ({navigation}) => {
         style={{
           flexDirection: 'row',
           flexWrap: 'wrap',
-          gap: 20,
+          gap: 15,
           paddingVertical: 15,
-          justifyContent: 'space-between',
+          // justifyContent: 'space-around',
           //   marginBottom: 5,
           //   marginTop: 5,
         }}>
         {interestArr.map((item, index) => (
-          <TouchableOpacity
-            style={{
-              height: 40,
-              //   width: '27%',
-              // padding:10,
-              paddingHorizontal: 10,
-              backgroundColor: appColors.TextInput_BgColor,
-              borderRadius: 15,
-              justifyContent: 'center',
-              alignItems: 'center',
-              elevation: 5,
-              flexDirection: 'row',
-            }}>
+          <TouchableOpacity style={styles.cardContainer}>
             <Text
               style={{
                 color: appColors.DARK_GRAY,
                 fontSize: 13,
-                marginRight: 5,
+                // marginRight: 5,
               }}>
               {item.title}
             </Text>
@@ -199,4 +195,16 @@ const SelectInterest = ({navigation}) => {
 
 export default SelectInterest;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  cardContainer: {
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    backgroundColor: appColors.TextInput_BgColor,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 5,
+    flexDirection: 'row',
+    gap: 5,
+  },
+});
