@@ -1,3 +1,6 @@
+
+
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +9,6 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -15,64 +17,57 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import AppButton from '../../../libComponents/AppButton';
-
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
-import {routes} from '../../../utils/routes';
-import {Screen} from 'react-native-screens';
+import { routes } from '../../../utils/routes';
+import { Screen } from 'react-native-screens';
 
-const CardScreen = ({navigation}) => {
-
-  const [selectcard,setselectcard]=useState('true')
-  const [borderselect,setborderselect]=useState('true')
+const CardScreen = ({ navigation }) => {
+  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
 
   const cardArr = [
     {
       image: require('../../../assets/Images/Heart.png'),
       title: 'Long-term Partner',
-      Screen: routes.Card_Screen,
     },
     {
       image: require('../../../assets/Images/Love.png'),
       title: 'Long-term, but short-term Ok',
-      Screen: routes.Card_Screen,
     },
     {
       image: require('../../../assets/Images/champagne.png'),
       title: 'Long-term, but short-term Ok',
-      Screen: routes.Card_Screen,
     },
-  
     {
       image: require('../../../assets/Images/confetti.png'),
       title: 'Short-term Partner',
-      Screen: routes.Card_Screen,
     },
     {
       image: require('../../../assets/Images/bye.png'),
       title: 'New friends',
-      Screen: routes.Card_Screen,
     },
     {
       image: require('../../../assets/Images/thinking.png'),
       title: 'Still figuring it out',
-      Screen: routes.Card_Screen,
     },
-
   ];
+
+  const handleCardPress = (index) => {
+    setSelectedCardIndex(index);
+  };
 
   return (
     <AppGradientView
-      style={{height: '100%'}}
+      style={{ height: '100%' }}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
       <AppHeader />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={{flexGrow: 1}}>
+        contentContainerStyle={{ flexGrow: 1 }}>
         <View style={styles.infoContainer}>
           <Text style={styles.titleText}>Who are you</Text>
           <Text style={styles.titleText}>looking for?</Text>
@@ -82,43 +77,34 @@ const CardScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
-
-         
-            <View
-              style={{
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: 6,
-                paddingVertical: 10,
-                justifyContent: 'space-between',
-                // marginBottom: 5,
-                // marginTop: ,
-                // marginHorizontal:10
-              }}>
-               {cardArr.map((item, index) => (
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              gap: 6,
+              paddingVertical: 10,
+              justifyContent: 'space-between',
+            }}>
+            {cardArr.map((item, index) => (
               <TouchableOpacity
-                style={{
-                  height: 132,
-                  width: '32%',
-                  backgroundColor: appColors.TextInput_BgColor,
-                  borderRadius: 15,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  elevation:5,
-               marginTop:10
-                
-                }}>
-
-                <Image source={item.image}  style={{height:40,width:40}}/>
-                
-                <AppText style={{fontSize: 12,}}>{item.title}</AppText>
+                key={index}
+                style={[
+                  styles.cardContainer,
+                  selectedCardIndex === index && styles.selectedCard,
+                ]}
+                onPress={() => handleCardPress(index)}>
+                <Image source={item.image} style={styles.cardImage} />
+                <AppText style={styles.cardTitle}>{item.title}</AppText>
               </TouchableOpacity>
             ))}
-            </View>
-       
+          </View>
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
+          //  disabled={ selectedCardIndex ? false : true}
+            style={[
+              styles.button,
+              selectedCardIndex !== null && styles.buttonSelected,
+            ]}
             title={'Next'}
             onPress={() => navigation.navigate(routes.Distance_Range_Screen)}
           />
@@ -131,21 +117,7 @@ const CardScreen = ({navigation}) => {
 export default CardScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  headerContainer: {
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerText: {
-    color: appColors.white,
-    fontSize: 40,
-    fontWeight: 'bold',
-  },
   infoContainer: {
-    // marginHorizontal: wp(5),
     paddingHorizontal: 15,
     paddingVertical: '8%',
   },
@@ -171,19 +143,38 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingTop: 10,
   },
-  input: {
-    marginTop: 20,
-    // marginHorizontal: 20,
-  },
-  checkboxContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: wp(5),
-    marginTop: hp(0.5),
+  cardContainer: {
+    height: 132,
+    width: '32%',
+    backgroundColor: appColors.TextInput_BgColor,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 5,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: appColors.TextInput_BgColor,
+  
   },
-  checkboxText: {
-    color: appColors.BLACK,
-    fontSize: fp(2),
+  selectedCard: {
+    borderColor: appColors.primaryColor,
+  },
+  cardImage: {
+    height: 40,
+    width: 40,
+  },
+  cardTitle: {
+    fontSize: 12,
+  },
+  button: {
+    backgroundColor: appColors.white,
+    marginBottom: '3%',
+    marginTop: '20%',
+    borderWidth: 1,
+    borderColor: appColors.BLACK, // Set the border color for the button
+    // borderWidth: selectedCardIndex === null ? 0.8 : 0,
+  },
+  buttonSelected: {
+    backgroundColor: appColors.secondoryColor,
   },
 });

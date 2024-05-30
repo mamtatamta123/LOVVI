@@ -2,13 +2,16 @@ import {StatusBar} from 'react-native';
 import appColors from '../utils/appColors';
 
 const AppStatusBar = ({
-  backgroundColor = appColors.primaryColor,
+  isbg=true,
+  backgroundColor =isbg? appColors.primaryColor:appColors.white,
   isDark = false,
+
 }) => {
   return (
     <StatusBar
       backgroundColor={backgroundColor}
       barStyle={isDark ? 'dark-content' : 'light-content'}
+      
     />
   );
 };

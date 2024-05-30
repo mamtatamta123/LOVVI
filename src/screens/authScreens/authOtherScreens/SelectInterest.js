@@ -40,7 +40,7 @@ const SelectInterest = ({navigation}) => {
     {
       IconType: Icon.MaterialCommunityIcons,
       IconName: 'google-translate',
-      title: 'hloo',
+      title: 'language',
     },
     {
       IconType: Icon.AntDesign,
@@ -78,69 +78,61 @@ const SelectInterest = ({navigation}) => {
       IconName: 'business-time',
       title: 'Business',
     },
+   
     {
-      IconType: Icon.MaterialIcons,
-      IconName: 'payments',
-      title: 'hloo',
+      IconType: Icon.MaterialCommunityIcons,
+      IconName: 'google-translate',
+      title: 'language',
     },
     {
-      IconType: Icon.MaterialIcons,
-      IconName: 'flight',
-      title: 'hloo',
+      IconType: Icon.AntDesign,
+      IconName: 'camera',
+      title: 'Photography',
     },
     {
-      IconType: Icon.FontAwesome6,
-      IconName: 'car-rear',
-      title: 'hloo',
+      IconType: Icon.Ionicons,
+      IconName: 'shirt',
+      title: 'Fashion',
+    },
+    {
+      IconType: Icon.Entypo,
+      IconName: 'leaf',
+      title: 'Nature',
     },
 
     {
       IconType: Icon.FontAwesome5,
       IconName: 'dumbbell',
-      title: 'hloo',
+      title: 'Gym',
     },
     {
       IconType: Icon.MaterialIcons,
       IconName: 'pets',
-      title: 'hloo',
+      title: 'Animal',
     },
     {
       IconType: Icon.FontAwesome5,
       IconName: 'lightbulb',
-      title: 'hloo',
+      title: 'Technology',
     },
     {
       IconType: Icon.FontAwesome5,
       IconName: 'business-time',
-      title: 'hloo',
+      title: 'Business',
     },
-    {
-      IconType: Icon.MaterialIcons,
-      IconName: 'payments',
-      title: 'hloo',
-    },
-    {
-      IconType: Icon.MaterialIcons,
-      IconName: 'flight',
-      title: 'hloo',
-    },
-    {
-      IconType: Icon.FontAwesome6,
-      IconName: 'car-rear',
-      title: 'hloo',
-    },
+   
   ];
 
   return (
-    <View
+    <AppView
       style={{
         backgroundColor: appColors.white,
         flex: 1,
         paddingHorizontal: 15,
       }}>
-      <AppStatusBar />
-      <AppHeader isBlack={true} />
-      <AppText style={{fontWeight: 'bold', marginTop: 50}}>
+      <AppStatusBar isDark={false} isbg={false} />
+      <AppHeader isBlack={true}isColor={true}  />
+      <AppText style={{fontWeight: 'bold', marginTop: 30,fontSize:20}}>
         Select up to 10 interests
       </AppText>
       <AppText
@@ -149,7 +141,7 @@ const SelectInterest = ({navigation}) => {
           color: appColors.Black_color,
           fontSize: 15,
           fontWeight: '500',
-          opacity: 0.6,
+          opacity: 0.5,
         }}>
         Discover Meaningful Connections by Selecting Your Interests
       </AppText>
@@ -159,13 +151,11 @@ const SelectInterest = ({navigation}) => {
           flexDirection: 'row',
           flexWrap: 'wrap',
           gap: 15,
-          paddingVertical: 15,
-          // justifyContent: 'space-around',
-          //   marginBottom: 5,
-          //   marginTop: 5,
+          paddingVertical: 20,
+         
         }}>
         {interestArr.map((item, index) => (
-          <TouchableOpacity style={styles.cardContainer}>
+          <TouchableOpacity style={styles.cardContainer} key={index}>
             <Text
               style={{
                 color: appColors.DARK_GRAY,
@@ -189,7 +179,7 @@ const SelectInterest = ({navigation}) => {
         style={{marginTop: '20%'}}
         onPress={() => navigation.navigate(routes.Upload_Photos)}
       />
-    </View>
+    </AppView>
   );
 };
 
@@ -197,7 +187,7 @@ export default SelectInterest;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    paddingHorizontal: 18,
+    paddingHorizontal: 10,
     paddingVertical: 10,
     backgroundColor: appColors.TextInput_BgColor,
     borderRadius: 15,

@@ -4,7 +4,7 @@ import appColors from '../utils/appColors';
 import AppIcon, {Icon} from './AppIcon';
 import {useNavigation} from '@react-navigation/native';
 
-const AppHeader = ({isBlack = false}) => {
+const AppHeader = ({isBlack = false,isColor=false}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
@@ -14,14 +14,14 @@ const AppHeader = ({isBlack = false}) => {
         <AppIcon
           Type={Icon.Ionicons}
           name={'chevron-back-outline'}
-          color={appColors.white}
+          color={isColor ?appColors.BLACK: appColors.white } // Fixed color logic
           size={29}
         />
       </TouchableOpacity>
       <Image
         source={
           isBlack
-            ? require('../assets/Images/mainHeading.png')
+            ? require('../assets/Images/Lovvi2.png')
             : require('../assets/Images/mainHeading.png')
         }
         style={styles.image}
