@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -20,24 +20,31 @@ import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
-import { routes } from '../../../utils/routes';
-
+import {routes} from '../../../utils/routes';
 
 const GenderScreen = ({navigation}) => {
-  const genderArr = [
-    { name: 'Women', value: 'female' },
-    { name: 'Men', value: 'male' },
-    { name: 'Asexual', value: 'asexual' },
-    { name: 'Lesbian', value: 'lesbian' },
-    { name: 'Bisexual', value: 'bisexual' },
-    { name: 'Demisexual', value: 'demisexual' },
-    { name: 'Pansexual', value: 'pansexual' },
-    { name: 'Queer', value: 'queer' },
-    { name: 'Bicurious', value: 'bicurious' },
-    { name: 'Aromantic', value: 'aromantic' },
+  const [selectedGender, setSelectedGender] = useState('');
+  const ScrollRef = useRef();
 
-  ]; 
-  
+  const genderArr = [
+    {name: 'Women', value: 'female'},
+    {name: 'Men', value: 'male'},
+    {name: 'Asexual', value: 'asexual'},
+    {name: 'Lesbian', value: 'lesbian'},
+    {name: 'Bisexual', value: 'bisexual'},
+    {name: 'Demisexual', value: 'demisexual'},
+    {name: 'Pansexual', value: 'pansexual'},
+    {name: 'Queer', value: 'queer'},
+    {name: 'Bicurious', value: 'bicurious'},
+    {name: 'Aromantic', value: 'aromantic'},
+  ];
+
+  const scrollDown = () => {
+    setTimeout(() => {
+      console.log('hello');
+      ScrollRef.current.scrollToEnd();
+    }, 200);
+  };
 
   return (
     <AppGradientView
@@ -46,6 +53,7 @@ const GenderScreen = ({navigation}) => {
       <AppStatusBar />
       <AppHeader />
       <ScrollView
+        ref={ScrollRef}
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
@@ -54,18 +62,33 @@ const GenderScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
-
-        {genderArr.map((item,index)=>
+          {genderArr.map((item, index) => (
+            <AppButton
+              onPress={() => {
+                setSelectedGender(item.value), scrollDown();
+              }}
+              key={index}
+              style={{
+                marginTop: '8%',
+                borderWidth: item.value == selectedGender ? 0 : 0.8,
+                borderColor: appColors.DARK_GRAY,
+                backgroundColor:
+                  item.value == selectedGender ? appColors.primaryColor : null,
+              }}
+              title={item.name}
+            />
+          ))}
 
           <AppButton
-          key={index}
-            style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}
-            title={item.name}
-           
-          />)}
-
-          <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
+            disabled={selectedGender ? false : true}
+            style={{
+              marginBottom: '3%',
+              marginTop: '20%',
+              backgroundColor: selectedGender
+                ? appColors.secondoryColor
+                : appColors.white,
+              borderWidth: selectedGender ? 0 : 1,
+            }}
             title={'Next'}
             onPress={() => navigation.navigate(routes.Identity_Gender)}
           />
@@ -115,7 +138,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     elevation: 2,
     marginTop: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingTop: 10,
   },
   input: {

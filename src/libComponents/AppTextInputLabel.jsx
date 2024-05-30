@@ -52,6 +52,7 @@ const AppTextInputLabel = ({
         <TextInput
           editable={editable}
           keyboardType={keyboardType}
+          // keyboardType="number-pad"
           value={value}
           placeholder={placeholder}
           onChangeText={onChangeText}

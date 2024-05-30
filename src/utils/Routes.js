@@ -1,12 +1,3 @@
-import { InteractionManager } from "react-native";
-import IdentityGender from "../screens/authScreens/authOtherScreens/IdentityGender";
-import InterestedGender from "../screens/authScreens/authOtherScreens/InterestedGender";
-import CardScreen from "../screens/authScreens/authOtherScreens/CardScreen";
-import DistanceRangeScreen from "../screens/authScreens/authOtherScreens/DistanceRangeScreen";
-import SchoolScreen from "../screens/authScreens/authOtherScreens/SchoolScreen";
-import SelectInterest from "../screens/authScreens/authOtherScreens/SelectInterest";
-import UploadPhotos from "../screens/authScreens/PhotosScreens/UploadPhotos";
-
 
 
 
@@ -18,6 +9,7 @@ export const routes = {
   Forgot_Password_Screen: 'ForgotPasswordScreen',
   Otp_Verification_Screen: 'OtpVerificationScreen',
   Welcome_Screen: 'WelcomeScreen',
+
 Password_Screen:'PasswordScreen',
 GetNumber_Screen:'GetNumberScreen',
 Email_Verification:'EmailVerification',
@@ -32,8 +24,11 @@ Card_Screen:"CardScreen",
 Distance_Range_Screen:'DistanceRangeScreen',
 School_Screen:"SchoolScreen",
 Select_Interest:'SelectInterest',
-
-// Photos Screen==================================
-Upload_Photos:"UploadPhotos"
+Upload_Photos:'UploadPhotos',
+// GUIDELINES============================
+TermsAnd_Condition:'TermsAndCondition',
+Privacy_Policy:'PrivacyPolicy',
+Cookie_Policy:'CookiePolicy',
+Community_Guidelines:'CommunityGuidelines'
 
 };

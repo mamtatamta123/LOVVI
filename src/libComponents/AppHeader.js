@@ -4,7 +4,7 @@ import appColors from '../utils/appColors';
 import AppIcon, {Icon} from './AppIcon';
 import {useNavigation} from '@react-navigation/native';
 
-const AppHeader = ({}) => {
+const AppHeader = ({isBlack = false}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
@@ -19,7 +19,11 @@ const AppHeader = ({}) => {
         />
       </TouchableOpacity>
       <Image
-        source={require('../assets/Images/mainHeading.png')}
+        source={
+          isBlack
+            ? require('../assets/Images/mainHeading.png')
+            : require('../assets/Images/mainHeading.png')
+        }
         style={styles.image}
       />
     </View>

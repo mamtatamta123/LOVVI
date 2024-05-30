@@ -4,7 +4,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput
+  TextInput,
 } from 'react-native';
 import React, {useState} from 'react';
 import appColors from '../../../utils/appColors';
@@ -29,16 +29,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moments from 'moment';
 
 const DatePickrScreen = ({navigation}) => {
-
   const [dateofbirth, setDateOfBirth] = useState('');
-  
-
   const [showDatePicker, setShowDatePicker] = useState(false);
-  
   const handleDOBDateChange = (event, selectedDate) => {
-    console.log('selectedDate', selectedDate);
     const formattedDate = moments(selectedDate).format('YYYY-MM-DD');
-    console.log('fprmatdateeeee===', formattedDate);
     setShowDatePicker(false);
     setDateOfBirth(formattedDate.toString());
   };
@@ -49,61 +43,54 @@ const DatePickrScreen = ({navigation}) => {
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
       <AppHeader />
-      
-        <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Your</Text>
-          <Text style={styles.titleText}>Birthday?</Text>
-        </View>
 
-        <AppView style={styles.formContainer}>
-          
-         <TouchableOpacity
-              onPress={() => setShowDatePicker(true)}
-              style={styles.dateContainer}>
-              <View style={styles.dateIcon}>
-                <AppIcon
-                  Type={Icon.Fontisto}
-                  name={'date'}
-                  color={appColors.DARK_GRAY}
-                  size={20}
-                />
-              </View>
-            
-              <TextInput
-                value={dateofbirth}
-                editable={false}
-                placeholder="dd-mm-yyyy"
-                placeholderTextColor={appColors.BLACK}
-                style={styles.dateInput}
-              />
+      <View style={styles.infoContainer}>
+        <Text style={styles.titleText}>Your</Text>
+        <Text style={styles.titleText}>Birthday?</Text>
+      </View>
 
-             
-                <DateTimePicker
-                  value={new Date()}
-                  mode="date"
-                  dateFormat="YYYY-MM-DD"
-                  display="default"
-                  onChange={handleDOBDateChange}
-                  maximumDate={new Date()}
-                
-                //   onConfirm={text => console.log('item==', text)}
-                  onCancel={() => setShowDatePicker(false)}
-               
-                />
-          
-            </TouchableOpacity> 
-
-          <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
-          Your profile shows your age, not your date of birth.
-          </AppText>
-
-          <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
-            title={'Next'}
-            onPress={() => navigation.navigate(routes.Gender_Screen)}
+      <AppView style={styles.formContainer}>
+        <TouchableOpacity
+          onPress={() => setShowDatePicker(true)}
+          style={styles.dateContainer}>
+          <View style={styles.dateIcon}>
+            <AppIcon
+              Type={Icon.Fontisto}
+              name={'date'}
+              color={appColors.DARK_GRAY}
+              size={20}
+            />
+          </View>
+          <TextInput
+            value={dateofbirth}
+            editable={false}
+            placeholder="dd-mm-yyyy"
+            placeholderTextColor={appColors.BLACK}
+            style={styles.dateInput}
           />
-        </AppView>
-   
+          {showDatePicker && (
+            <DateTimePicker
+              value={new Date()}
+              mode="date"
+              dateFormat="YYYY-MM-DD"
+              display="default"
+              onChange={handleDOBDateChange}
+              maximumDate={new Date()}
+              onCancel={() => setShowDatePicker(false)}
+            />
+          )}
+        </TouchableOpacity>
+
+        <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
+          Your profile shows your age, not your date of birth.
+        </AppText>
+
+        <AppButton
+          style={{marginBottom: '3%', marginTop: '20%'}}
+          title={'Next'}
+          onPress={() => navigation.navigate(routes.Gender_Screen)}
+        />
+      </AppView>
     </AppGradientView>
   );
 };
@@ -175,6 +162,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginTop: 3,
     borderColor: '#D9D9D9',
+    gap: 5,
   },
   dateIcon: {
     paddingLeft: 15,
