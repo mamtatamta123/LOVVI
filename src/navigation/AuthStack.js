@@ -18,6 +18,10 @@ import DistanceRangeScreen from '../screens/authScreens/authOtherScreens/Distanc
 import SchoolScreen from '../screens/authScreens/authOtherScreens/SchoolScreen';
 import SelectInterest from '../screens/authScreens/authOtherScreens/SelectInterest';
 import UploadPhotos from '../screens/authScreens/PhotosScreens/UploadPhotos';
+import SelectSource from '../screens/authScreens/PhotosScreens/SelectSource';
+import LocationScreen from '../screens/authScreens/PhotosScreens/LocationScreen';
+import AllowLocation from '../screens/authScreens/PhotosScreens/AllowLocation';
+import EnterLocation from '../screens/authScreens/PhotosScreens/EnterLocation';
 
 const AuthStack = () => {
   const Stack = createNativeStackNavigator();
@@ -58,6 +62,10 @@ const AuthStack = () => {
       <Stack.Screen name={routes.School_Screen} component={SchoolScreen} />
       <Stack.Screen name={routes.Select_Interest} component={SelectInterest} />
       <Stack.Screen name={routes.Upload_Photos} component={UploadPhotos} />
+      <Stack.Screen name={routes.Select_Source} component={SelectSource} />
+      <Stack.Screen name={routes.Location_Screen} component={LocationScreen} />
+      <Stack.Screen name={routes.Allow_Location} component={AllowLocation}   />
+      <Stack.Screen name={routes.Enter_Location} component={EnterLocation}   />
     </Stack.Navigator>
   );
 };

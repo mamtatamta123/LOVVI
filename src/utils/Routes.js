@@ -1,3 +1,8 @@
+import AllowLocation from "../screens/authScreens/PhotosScreens/AllowLocation";
+import EnterLocation from "../screens/authScreens/PhotosScreens/EnterLocation";
+import LocationScreen from "../screens/authScreens/PhotosScreens/LocationScreen";
+import SelectSource from "../screens/authScreens/PhotosScreens/SelectSource";
+import ProfileScreen from "../screens/mainScreens/Profile/ProfileScreen";
 
 
 
@@ -29,6 +34,16 @@ Upload_Photos:'UploadPhotos',
 TermsAnd_Condition:'TermsAndCondition',
 Privacy_Policy:'PrivacyPolicy',
 Cookie_Policy:'CookiePolicy',
-Community_Guidelines:'CommunityGuidelines'
+Community_Guidelines:'CommunityGuidelines',
 
+
+
+
+
+// Profiles=================================
+Profile_Screen:'ProfileScreen',
+Select_Source:"SelectSource",
+Location_Screen:'LocationScreen',
+Allow_Location:'AllowLocation',
+Enter_Location:'EnterLocation'
 };

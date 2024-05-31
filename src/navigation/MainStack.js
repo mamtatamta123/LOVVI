@@ -7,11 +7,17 @@ import TermsAndCondition from '../screens/mainScreens/guidelines/TermsAndConditi
 import PrivacyPolicy from '../screens/mainScreens/guidelines/PrivacyPolicy';
 import CookiePolicy from '../screens/mainScreens/guidelines/CookiePolicy';
 import CommunityGuidelines from '../screens/mainScreens/guidelines/CommunityGuidelines';
+import ProfileScreen from '../screens/mainScreens/Profile/ProfileScreen';
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}initialRouteName={routes.Privacy_Policy}>
+   
+    <Stack.Navigator screenOptions={{headerShown: false}}initialRouteName={routes.Profile_Screen}>
+     <Stack.Screen
+        name={routes.Profile_Screen}
+        component={ProfileScreen}
+      />
       <Stack.Screen
         name={routes.TermsAnd_Condition}
         component={TermsAndCondition}
@@ -28,7 +34,9 @@ const MainStack = () => {
         name={routes.Community_Guidelines}
         component={CommunityGuidelines}
       />
+       
     </Stack.Navigator>
+   
   );
 };
 

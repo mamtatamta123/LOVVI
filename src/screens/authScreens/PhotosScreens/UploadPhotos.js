@@ -17,6 +17,7 @@ import AppText from '../../../libComponents/AppText';
 import AppButton from '../../../libComponents/AppButton';
 
 import { PermissionsAndroid } from 'react-native';
+import { routes } from '../../../utils/routes';
 
 
 const UploadPhotos = ({navigation}) => {
@@ -126,7 +127,8 @@ const UploadPhotos = ({navigation}) => {
             <AppButton
               title="Okay"
               style={{marginHorizontal: 20}}
-              onPress={getPermission}
+              // onPress={getPermission}
+              onPress={()=>navigation.navigate(routes.Select_Source)}
               
             />
           </View>
