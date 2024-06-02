@@ -7,16 +7,16 @@ import {
   StatusBar,
   Image,
   Alert,
+  PermissionsAndroid,
+  Linking,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
-
 import AppButton from '../../../libComponents/AppButton';
-
-import {PermissionsAndroid} from 'react-native';
 import {routes} from '../../../utils/routes';
 import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
@@ -24,6 +24,24 @@ import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
 
 const LocationScreen = ({navigation}) => {
+  const getPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const res = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        );
+        console.log('res', res);
+        if (res == 'granted') {
+          navigation.navigate(routes.Allow_Location);
+        } else {
+          Linking.openSettings();
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
   return (
     <>
       <AppView
@@ -44,19 +62,23 @@ const LocationScreen = ({navigation}) => {
 
         <View
           style={{
-            height: 200,
-            width: 200,
-            borderRadius: 100,
-            borderColor: appColors.IconColor,
-            backgroundColor: appColors.TextInput_BgColor,
+            flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-           
-          margin:50,
-          
-          
+            // backgroundColor: 'red',
           }}>
-          <View style={{justifyContent: 'center',}}>
+          <View
+            style={{
+              height: 250,
+              width: 250,
+              borderRadius: 125,
+              borderColor: appColors.IconColor,
+              backgroundColor: '#F7F7F7',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              marginBottom: '25%',
+            }}>
             <AppIcon
               Type={Icon.FontAwesome6}
               name={'location-dot'}
@@ -65,10 +87,14 @@ const LocationScreen = ({navigation}) => {
             />
           </View>
         </View>
+
         <AppButton
           title="Allow"
-          style={{marginTop:'40%'}}
-onPress={()=>navigation.navigate(routes.Allow_Location)}
+          style={{marginTop: 'auto', marginBottom: '10%'}}
+          onPress={() => {
+            getPermission();
+            // navigation.navigate(routes.Allow_Location)
+          }}
         />
       </AppView>
     </>
@@ -86,10 +112,10 @@ const styles = StyleSheet.create({
   textsubcontainer: {
     fontWeight: 'bold',
     color: appColors.Black_color,
-    fontSize: 15,
+    fontSize: 14,
     fontWeight: '500',
     opacity: 0.5,
-   
+    marginTop: 5,
   },
   container: {
     flexDirection: 'row',

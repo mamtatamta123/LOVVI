@@ -11,44 +11,44 @@ const ProfileScreen = () => {
     <View style={{backgroundColor: appColors.white, flex: 1}}>
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
-     
-        <AppText style={{fontWeight: 'bold', fontSize: 25}}>Profile</AppText>
-        <View style={{alignItems: 'center'}}>
+
+      <AppText style={{fontWeight: 'bold', fontSize: 25}}>Profile</AppText>
+      <View style={{alignItems: 'center'}}>
+        <View
+          style={{
+            height: 150,
+            width: 150,
+
+            borderRadius: 50,
+            position: 'relative',
+          }}>
+          <Image
+            source={require('../../../assets/Images/profile.png')}
+            style={{height: 150, width: 150}}
+          />
+
           <View
             style={{
-              height: 150,
-              width: 150,
-
-              borderRadius: 50,
-              position: 'relative',
+              backgroundColor: appColors.secondoryColor,
+              height: 30,
+              width: 30,
+              position: 'absolute',
+              bottom: 6,
+              right: 6,
+              borderRadius: 15,
+              alignItems: 'center',
+              justifyContent: 'center',
             }}>
-            <Image
-              source={require('../../../assets/Images/profile.png')}
-              style={{height: 150, width: 150}}
+            <AppIcon
+              Type={Icon.Entypo}
+              name={'pencil'}
+              color={appColors.BLACK}
+              size={20}
             />
-
-            <View
-              style={{
-                backgroundColor: appColors.secondoryColor,
-                height: 30,
-                width: 30,
-                position: 'absolute',
-                bottom: 6,
-                right: 6,
-                borderRadius: 15,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <AppIcon
-                Type={Icon.Entypo}
-                name={'pencil'}
-                color={appColors.BLACK}
-                size={20}
-              />
-            </View>
           </View>
         </View>
-        <View style={{paddingHorizontal:20}}>
+      </View>
+      <View style={{paddingHorizontal: 20}}>
         <View
           style={{
             flexDirection: 'row',
@@ -176,7 +176,6 @@ const ProfileScreen = () => {
           borderColor: appColors.TextInput_BgColor,
         }}></View>
     </View>
- 
   );
 };
 

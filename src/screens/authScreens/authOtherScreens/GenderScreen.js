@@ -68,6 +68,12 @@ const GenderScreen = ({navigation}) => {
                 setSelectedGender(item.value), scrollDown();
               }}
               key={index}
+              titleStyle={{
+                color:
+                  item.value == selectedGender
+                    ? appColors.white
+                    : appColors.Black_color,
+              }}
               style={{
                 marginTop: '8%',
                 borderWidth: item.value == selectedGender ? 0 : 0.8,
@@ -78,7 +84,6 @@ const GenderScreen = ({navigation}) => {
               title={item.name}
             />
           ))}
-
           <AppButton
             disabled={selectedGender ? false : true}
             style={{

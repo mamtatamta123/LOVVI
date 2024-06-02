@@ -69,6 +69,12 @@ const InterestedGender = ({navigation}) => {
                 backgroundColor:
                   item.value == selectedGender ? appColors.primaryColor : null,
               }}
+              titleStyle={{
+                color:
+                  item.value == selectedGender
+                    ? appColors.white
+                    : appColors.Black_color,
+              }}
               title={item.name}
             />
           ))}

@@ -13,9 +13,7 @@ import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
-
 import AppButton from '../../../libComponents/AppButton';
-
 import {PermissionsAndroid} from 'react-native';
 import {routes} from '../../../utils/routes';
 import LoginScreen from '../authVerificationScreens/LoginScreen';
@@ -35,22 +33,27 @@ const AllowLocation = ({navigation}) => {
         <AppStatusBar isDark={false} isbg={false} />
         <AppHeader isBlack={true} isColor={true} />
 
-        <View style={{justifyContent: 'center', alignItems: 'center',paddingVertical:'50%'}}>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: '50%',
+          }}>
           <AppText style={styles.textContainer}>What is your Location?</AppText>
           <AppText style={styles.textsubcontainer}>
-            To find Nearby Matches, Share your location 
+            To find Nearby Matches, Share your location
           </AppText>
-          <AppText style={styles.textsubcontainer}>
-          with us
-          </AppText>
+          <AppText style={styles.textsubcontainer}>with us</AppText>
         </View>
 
         <AppButton
           title="Allow Location Access "
-        //   style={{marginTop: '40%'}}
+          //   style={{marginTop: '40%'}}
           onPress={() => navigation.navigate(routes.Enter_Location)}
         />
-        <AppText style={{fontWeight:'500',textAlign:'center',marginTop:5}}>Enter Location Manually</AppText>
+        <AppText style={{fontWeight: '500', textAlign: 'center', marginTop: 5}}>
+          Enter Location Manually
+        </AppText>
       </AppView>
     </>
   );
@@ -70,10 +73,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '500',
     opacity: 0.5,
-    width:'90%',
-   textAlign:'center',
-   marginTop:6
-
+    width: '90%',
+    textAlign: 'center',
+    marginTop: 6,
   },
   container: {
     flexDirection: 'row',

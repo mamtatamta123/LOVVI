@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -22,52 +20,54 @@ import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
-import { routes } from '../../../utils/routes';
-import { Screen } from 'react-native-screens';
+import {routes} from '../../../utils/routes';
+import {Screen} from 'react-native-screens';
 
-const CardScreen = ({ navigation }) => {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(null);
+const CardScreen = ({navigation}) => {
+  const [selectedCardItem, setSelectedCardItem] = useState('');
 
   const cardArr = [
     {
+      id: 1,
       image: require('../../../assets/Images/Heart.png'),
       title: 'Long-term Partner',
     },
     {
+      id: 2,
       image: require('../../../assets/Images/Love.png'),
       title: 'Long-term, but short-term Ok',
     },
     {
+      id: 3,
       image: require('../../../assets/Images/champagne.png'),
       title: 'Long-term, but short-term Ok',
     },
     {
+      id: 4,
       image: require('../../../assets/Images/confetti.png'),
       title: 'Short-term Partner',
     },
     {
+      id: 5,
       image: require('../../../assets/Images/bye.png'),
       title: 'New friends',
     },
     {
+      id: 6,
       image: require('../../../assets/Images/thinking.png'),
       title: 'Still figuring it out',
     },
   ];
 
-  const handleCardPress = (index) => {
-    setSelectedCardIndex(index);
-  };
-
   return (
     <AppGradientView
-      style={{ height: '100%' }}
+      style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
       <AppHeader />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={{ flexGrow: 1 }}>
+        contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
           <Text style={styles.titleText}>Who are you</Text>
           <Text style={styles.titleText}>looking for?</Text>
@@ -85,25 +85,41 @@ const CardScreen = ({ navigation }) => {
               paddingVertical: 10,
               justifyContent: 'space-between',
             }}>
-            {cardArr.map((item, index) => (
-              <TouchableOpacity
-                key={index}
-                style={[
-                  styles.cardContainer,
-                  selectedCardIndex === index && styles.selectedCard,
-                ]}
-                onPress={() => handleCardPress(index)}>
-                <Image source={item.image} style={styles.cardImage} />
-                <AppText style={styles.cardTitle}>{item.title}</AppText>
-              </TouchableOpacity>
-            ))}
+            {cardArr.map(
+              (item, index) => (
+                console.log('item--', item),
+                (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.cardContainer,
+                      {
+                        borderWidth: item?.id == selectedCardItem?.id ? 1.5 : 0,
+                        borderColor:
+                          selectedCardItem.id == item.id
+                            ? appColors.primaryColor
+                            : null,
+                      },
+                    ]}
+                    onPress={() => setSelectedCardItem(item)}>
+                    <Image source={item.image} style={styles.cardImage} />
+                    <AppText style={styles.cardTitle}>{item.title}</AppText>
+                  </TouchableOpacity>
+                )
+              ),
+            )}
           </View>
 
           <AppButton
-          //  disabled={ selectedCardIndex ? false : true}
+            disabled={selectedCardItem ? false : true}
             style={[
               styles.button,
-              selectedCardIndex !== null && styles.buttonSelected,
+              {
+                backgroundColor: selectedCardItem
+                  ? appColors.secondoryColor
+                  : null,
+                borderWidth: selectedCardItem ? 0 : 1,
+              },
             ]}
             title={'Next'}
             onPress={() => navigation.navigate(routes.Distance_Range_Screen)}
@@ -147,14 +163,12 @@ const styles = StyleSheet.create({
     height: 132,
     width: '32%',
     backgroundColor: appColors.TextInput_BgColor,
-    borderRadius: 15,
+    borderRadius: 6,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 5,
     marginTop: 10,
-    borderWidth: 1,
     borderColor: appColors.TextInput_BgColor,
-  
   },
   selectedCard: {
     borderColor: appColors.primaryColor,

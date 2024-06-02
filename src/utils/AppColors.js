@@ -3,6 +3,7 @@ export default appColors = {
   PrimaryGradient2: ['#7DD12E', '#FECA06', '#FECA06', '#FECA06'],
   primaryColor: '#7DD12E',
   secondoryColor: '#FECA06',
+  greenShade: '#F4FFEB',
   TextInput_BgColor: '#D9D9D9',
   white: '#ffffff',
   Button_Color: '#FECA06',
@@ -31,5 +32,5 @@ export default appColors = {
   Noti_Text_color: ' #4B7DFD',
   Green_color: '#7ED957',
   brown_color: '#D8B06B',
-  modalbg:'rgba(0,0,0,0.8)'
+  modalbg: 'rgba(0,0,0,0.8)',
 };

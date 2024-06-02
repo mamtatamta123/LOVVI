@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  
   TouchableOpacity,
   TextInput,
 } from 'react-native';
@@ -70,10 +69,12 @@ const DatePickrScreen = ({navigation}) => {
           />
           {showDatePicker && (
             <DateTimePicker
+              // style={{backgroundColor: 'red'}}
+              Display="clock"
+              themeVariant={'light'}
               value={new Date()}
               mode="date"
               dateFormat="YYYY-MM-DD"
-              display="default"
               onChange={handleDOBDateChange}
               maximumDate={new Date()}
               onCancel={() => setShowDatePicker(false)}

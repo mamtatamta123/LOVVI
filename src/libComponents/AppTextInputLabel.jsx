@@ -37,6 +37,7 @@ const AppTextInputLabel = ({
   keyboardType,
   borderRadius = wp(3),
   editable = true,
+  autoFocus = false,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -50,6 +51,7 @@ const AppTextInputLabel = ({
           style={styles.icon}
         />
         <TextInput
+          autoFocus={autoFocus}
           editable={editable}
           keyboardType={keyboardType}
           // keyboardType="number-pad"

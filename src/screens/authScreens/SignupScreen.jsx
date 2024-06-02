@@ -11,6 +11,7 @@ import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
+
 import AppTextInputLabel, {
   keyboardType,
 } from '../../libComponents/AppTextInputLabel';
@@ -135,30 +136,28 @@ const SignupScreen = () => {
           </AppView>
 
           <AppButton
-            style={{ marginTop: '10%'}}
+            style={{marginTop: '10%'}}
             title={'Sign up'}
             // onPress={}
           />
-          <AppView style={{marginTop:10}}>
-          <AppView style={{flexDirection:'row',justifyContent:'center',marginBottom:'10%'}}>
-          <AppText style={{   fontSize:15}}>
-          Already have an account? 
-          </AppText>
-          <TouchableOpacity
-                onPress={() => navigation.navigate(routes.Login_Screen)}
-                
-                >
-              <AppText style={{color:appColors.primaryColor}}> Sign in</AppText>
+          <AppView style={{marginTop: 10}}>
+            <AppView
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginBottom: '10%',
+              }}>
+              <AppText style={{fontSize: 15}}>Already have an account?</AppText>
+              <TouchableOpacity
+                onPress={() => navigation.navigate(routes.Login_Screen)}>
+                <AppText style={{color: appColors.primaryColor}}>
+                  {' '}
+                  Sign in
+                </AppText>
               </TouchableOpacity>
-              </AppView>
-
+            </AppView>
+          </AppView>
         </AppView>
-         
-
-
-          
-        </AppView>
-        
       </ScrollView>
     </AppGradientView>
   );

@@ -7,6 +7,7 @@ import {
   StatusBar,
   Image,
   Alert,
+  Linking,
 } from 'react-native';
 import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
@@ -14,43 +15,42 @@ import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 
+import {PermissionsAndroid} from 'react-native';
+import {routes} from '../../../utils/routes';
 import AppButton from '../../../libComponents/AppButton';
-
-import { PermissionsAndroid } from 'react-native';
-import { routes } from '../../../utils/routes';
-
+import appColors from '../../../utils/appColors';
+import AppIcon, {Icon} from '../../../libComponents/AppIcon';
+import AppPrimaryButton from '../../../libComponents/AppPrimaryButton';
 
 const UploadPhotos = ({navigation}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [showSelectOptionModal, setShowSelectOptionModal] = useState(false);
 
   const openModal = () => {
     setIsModalVisible(true);
   };
+
   const getPermission = async () => {
     if (Platform.OS === 'android') {
       try {
-        const granted = await PermissionsAndroid.requestMultiple([
+        const granted = await PermissionsAndroid.request(
           PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        ]);
-
-        if (
-          Object.values(granted).every(
-            permission => permission === PermissionsAndroid.RESULTS.GRANTED,
-          )
-        ) {
-          console.log('All permissions granted');
+        );
+        console.log('granted====', granted);
+        // if (granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED &&
+        //   granted[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] === PermissionsAndroid.RESULTS.GRANTED &&){
+        //   }
+        if (granted !== 'granted') {
+          console.log('hello');
+          Linking.openSettings();
         } else {
-          console.log('Some permissions not granted');
+          setIsModalVisible(!isModalVisible);
         }
       } catch (err) {
         console.warn(err);
       }
     }
   };
-
 
   return (
     <>
@@ -66,75 +66,184 @@ const UploadPhotos = ({navigation}) => {
         <AppText style={styles.textsubcontainer}>
           To Boost Your Daily Match Potential, Include your Photos
         </AppText>
-
-        <View style={styles.container}>
-          <View style={styles.columnContainer}>
-            <View style={styles.redBox}></View>
-
-            <View style={{flexDirection: 'row'}}>
-              <View style={styles.blueBox}></View>
-              <View
-                style={{
-                  width: 10,
-                }}></View>
-              <View style={styles.greenBox}></View>
-            </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+          }}>
+          <TouchableOpacity
+            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            activeOpacity={0.5}
+            style={styles.redBox}>
+            <AppIcon
+              Type={Icon.AntDesign}
+              name={'pluscircle'}
+              color={appColors.primaryColor}
+              size={26}
+            />
+          </TouchableOpacity>
+          <View
+            style={{
+              justifyContent: 'space-between',
+              width: '35%',
+              alignItems: 'flex-end',
+            }}>
+            <TouchableOpacity
+              onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+              activeOpacity={0.5}
+              style={styles.blueBox}>
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+              activeOpacity={0.5}
+              style={styles.greenBox}>
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.columnContainer}>
-            <View style={styles.yellowBox}></View>
-            <View
-              style={{
-                height: 10,
-              }}></View>
-            <View style={styles.purpleBox}></View>
-            <View
-              style={{
-                height: 10,
-              }}></View>
-            <View style={styles.orangeBox}></View>
-          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: 10,
+          }}>
+          <TouchableOpacity
+            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            activeOpacity={0.5}
+            style={styles.yellowBox}>
+            <AppIcon
+              Type={Icon.AntDesign}
+              name={'pluscircle'}
+              color={appColors.primaryColor}
+              size={26}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            activeOpacity={0.5}
+            style={styles.purpleBox}>
+            <AppIcon
+              Type={Icon.AntDesign}
+              name={'pluscircle'}
+              color={appColors.primaryColor}
+              size={26}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            activeOpacity={0.5}
+            style={styles.orangeBox}>
+            <AppIcon
+              Type={Icon.AntDesign}
+              name={'pluscircle'}
+              color={appColors.primaryColor}
+              size={26}
+            />
+          </TouchableOpacity>
         </View>
 
         <AppButton
           title="Next"
           style={{marginTop: '20%'}}
-          
-          onPressIn={openModal}
-          
+          onPressIn={() => navigation.navigate(routes.Location_Screen)}
         />
       </AppView>
-  
-    <Modal
-      animationType="slide"
-      transparent={false}
-      visible={isModalVisible}
-      onRequestClose={() => setIsModalVisible(!isModalVisible)}>
-      <StatusBar backgroundColor={appColors.modalbg} />
 
-      <View style={styles.ModalViewContainer}>
-        <View style={styles.modalSubContent}>
-          <Text style={styles.modalTitle}>Photo Access </Text>
-          <Text style={styles.modalText}>
-            To upload photos from your device. Lovvi needs to access your
-            photos.
-          </Text>
-
-          <Text style={styles.modalText}>
-            Please tap "Allow" in the next step
-          </Text>
-          <View style={{width: '100%', marginTop: 20}}>
-            <AppButton
-              title="Okay"
-              style={{marginHorizontal: 20}}
-              // onPress={getPermission}
-              onPress={()=>navigation.navigate(routes.Select_Source)}
-              
-            />
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
+        <StatusBar backgroundColor={appColors.modalbg} />
+        <View style={styles.ModalViewContainer}>
+          <View style={styles.modalSubContent}>
+            <Text style={styles.modalTitle}>Photo Access </Text>
+            <Text style={styles.modalText}>
+              To upload photos from your device. Lovvi needs to access your
+              photos.
+            </Text>
+            <Text style={styles.modalText}>
+              Please tap "Allow" in the next step
+            </Text>
+            <View style={{width: '100%', marginTop: 20}}>
+              <AppButton
+                title="Okay"
+                style={{marginHorizontal: 20}}
+                // onPress={getPermission}
+                // onPress={() => navigation.navigate(routes.Select_Source)}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    </Modal>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={showSelectOptionModal}
+        onRequestClose={() => setShowSelectOptionModal(!showSelectOptionModal)}>
+        <View
+          style={{
+            width: '100%',
+            position: 'absolute',
+            backgroundColor: 'red',
+            bottom: 0,
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            backgroundColor: appColors.white,
+            borderTopWidth: 0.6,
+            borderRightWidth: 0.6,
+            borderLeftWidth: 0.6,
+            borderColor: appColors.Black_color,
+          }}>
+          <View
+            style={{
+              paddingHorizontal: 20,
+              paddingTop: 20,
+              paddingBottom: 30,
+              alignItems: 'center',
+            }}>
+            <AppText style={{fontSize: 18, fontWeight: 'bold'}}>
+              Select Option
+            </AppText>
+            <View
+              style={{
+                width: '100%',
+                paddingVertical: 30,
+              }}>
+              <AppButton
+                title="Take photo"
+                style={{
+                  width: '100%',
+                  backgroundColor: appColors.white,
+                  borderWidth: 1,
+                }}
+              />
+              <AppButton
+                title="Choose from gallery"
+                style={{
+                  width: '100%',
+                  marginTop: 30,
+                  backgroundColor: appColors.white,
+                  borderWidth: 1,
+                }}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 };
@@ -165,39 +274,69 @@ const styles = StyleSheet.create({
   },
   redBox: {
     height: 210,
-    width: 210,
-    backgroundColor: 'red',
+    width: '65%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderColor: appColors.primaryColor,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   blueBox: {
     height: 100,
-    width: 100,
-    backgroundColor: 'blue',
+    width: '90%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: appColors.primaryColor,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   greenBox: {
     height: 100,
-    width: 100,
-    backgroundColor: 'green',
+    width: '90%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: appColors.primaryColor,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   yellowBox: {
     height: 100,
-    width: 100,
-    backgroundColor: 'yellow',
+    width: '31%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: appColors.primaryColor,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   purpleBox: {
     height: 100,
-    width: 100,
-    backgroundColor: 'purple',
+    width: '31%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: appColors.primaryColor,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   orangeBox: {
     height: 100,
-    width: 100,
-    backgroundColor: 'orange',
+    width: '31%',
+    backgroundColor: appColors.greenShade,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: appColors.primaryColor,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   ModalViewContainer: {
     backgroundColor: appColors.modalbg,

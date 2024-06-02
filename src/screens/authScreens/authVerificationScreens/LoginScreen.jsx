@@ -52,6 +52,7 @@ const LoginScreen = ({navigation}) => {
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
+            autoFocus={true}
             keyboardType={keyboardType.number_pad}
             labelText="Phone Number"
             value={phoneNumber}
@@ -66,8 +67,8 @@ const LoginScreen = ({navigation}) => {
 
           <AppButton
             style={{marginTop: '20%'}}
-            title={'I agree'}
-            onPress={() => navigation.navigate(routes.Name_Screen)}
+            title={'Next'}
+            onPress={() => navigation.navigate(routes.Email_Verification)}
           />
         </AppView>
       </ScrollView>

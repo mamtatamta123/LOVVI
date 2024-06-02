@@ -3,6 +3,7 @@ import {
   Text,
   TouchableOpacity,
   ViewStyle,
+  TextStyle,
   TouchableOpacityProps,
 } from 'react-native';
 import React from 'react';
@@ -15,10 +16,16 @@ import {
 interface AppButtonProp extends TouchableOpacityProps {
   title?: string;
   style?: ViewStyle;
-  height?:55
+  titleStyle?: TextStyle;
+  height?: 55;
 }
 
-const AppButton: React.FC<AppButtonProp> = ({title, style, ...restProp}) => {
+const AppButton: React.FC<AppButtonProp> = ({
+  title,
+  style,
+  titleStyle,
+  ...restProp
+}) => {
   return (
     <TouchableOpacity
       {...restProp}
@@ -27,7 +34,7 @@ const AppButton: React.FC<AppButtonProp> = ({title, style, ...restProp}) => {
         {backgroundColor: appColors.secondoryColor},
         style,
       ]}>
-      <Text style={styles.title}>{title}</Text>
+      <Text style={[styles.title, titleStyle]}>{title}</Text>
     </TouchableOpacity>
   );
 };

@@ -57,14 +57,19 @@ const IdentityGender = ({navigation}) => {
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
         <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Your Sexual
-</Text>
+          <Text style={styles.titleText}>Your Sexual</Text>
           <Text style={styles.titleText}>Orientation?</Text>
         </View>
 
         <AppView style={styles.formContainer}>
           {genderArr.map((item, index) => (
             <AppButton
+              titleStyle={{
+                color:
+                  item.value == selectedGender
+                    ? appColors.white
+                    : appColors.Black_color,
+              }}
               onPress={() => {
                 setSelectedGender(item.value), scrollDown();
               }}

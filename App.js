@@ -6,8 +6,10 @@ import {DefaultTheme, DarkTheme, useTheme} from '@react-navigation/native';
 import {Text} from 'react-native';
 import MainStack from './src/navigation/MainStack';
 import {store} from './src/app/store';
-import GenderScreen from './src/screens/authScreens/authOtherScreens/GenderScreen';
-import ProfileScreen from './src/screens/mainScreens/Profile/ProfileScreen';
+import CardScreen from './src/screens/authScreens/authOtherScreens/CardScreen';
+import SchoolScreen from './src/screens/authScreens/authOtherScreens/SchoolScreen';
+import UploadPhotos from './src/screens/authScreens/PhotosScreens/UploadPhotos';
+import BottomNavigation from './src/navigation/BottomNavigation';
 
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
@@ -17,7 +19,9 @@ const App = () => {
   return (
     <NavigationContainer theme={appTheme}>
       {loggedIn ? <MainStack /> : <AuthStack />}
-     
+      {/* <CardScreen /> */}
+      {/* <SchoolScreen /> */}
+      {/* <UploadPhotos /> */}
     </NavigationContainer>
   );
 };
@@ -27,7 +31,6 @@ const AppWapper = () => {
     <Provider store={store}>
       <App />
     </Provider>
-   
   );
 };
 export default AppWapper;

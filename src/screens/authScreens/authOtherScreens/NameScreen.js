@@ -31,9 +31,6 @@ const NameScreen = ({navigation}) => {
   const [name, setName] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const openModal = () => {
-    setIsModalVisible(true);
-  };
   return (
     <>
       <AppGradientView
@@ -62,11 +59,9 @@ const NameScreen = ({navigation}) => {
               Iconcolor={appColors.IconColor}
               style={styles.input}
             />
-
             <AppText style={styles.subtitleText}>
               This is how it’ll appear on your profile.
             </AppText>
-
             <AppText
               style={{
                 color: appColors.BLACK,
@@ -83,7 +78,7 @@ const NameScreen = ({navigation}) => {
             <AppButton
               style={{marginBottom: '3%', marginTop: '20%'}}
               title={'Next'}
-              onPress={openModal}
+              onPress={() => setIsModalVisible(!isModalVisible)}
             />
           </AppView>
         </ScrollView>
@@ -96,10 +91,10 @@ const NameScreen = ({navigation}) => {
         visible={isModalVisible}
         onRequestClose={() => setIsModalVisible(!isModalVisible)}>
         <StatusBar backgroundColor={appColors.modalbg} />
-
         <View style={styles.ModalViewContainer}>
           <View style={styles.modalSubContent}>
             <Image
+              resizeMode="contain"
               source={require('../../../assets/Images/bye.png')}
               style={styles.modalImage}
             />
@@ -111,12 +106,12 @@ const NameScreen = ({navigation}) => {
             <View style={{width: '100%', marginTop: 20}}>
               <AppButton
                 title="Let’s go"
-                style={{marginHorizontal: 20}}
+                // style={{marginHorizontal: 20}}
                 onPress={() => navigation.navigate(routes.DatePickr_Screen)}
               />
             </View>
-            <TouchableOpacity
-              onPress={() => setIsModalVisible(!isModalVisible)}>
+
+            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
               <Text style={styles.editNameText}>Edit Name</Text>
             </TouchableOpacity>
           </View>
@@ -188,19 +183,21 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.modalbg,
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: '5%',
+    paddingHorizontal: '7%',
   },
-
   modalSubContent: {
     backgroundColor: appColors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '50%',
     borderRadius: 10,
+    paddingHorizontal: 15,
+    alignItems: 'center',
+    paddingBottom: 25,
   },
   modalImage: {
-    height: '35%',
-    width: '50%',
+    height: 100,
+    width: 100,
+    // height: '29%',
+    // width: '50%',
+    // backgroundColor: 'red',
   },
   modalTitle: {
     color: appColors.BLACK,
@@ -211,12 +208,11 @@ const styles = StyleSheet.create({
     color: appColors.BLACK,
     fontSize: 15,
     fontWeight: '400',
-    width: '80%',
     textAlign: 'center',
+    opacity: 0.6,
   },
   buttonContainer: {
-    width: '100%',
-    marginTop: 20,
+    // marginTop: 20,
   },
   editNameText: {
     color: appColors.BLACK,
