@@ -1,11 +1,15 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {routes} from '../utils/routes';
-import TermsAndConditions from '../screens/MainScreens/guidelines/TermsAndCondition';
-import PrivacyPolicy from '../screens/MainScreens/guidelines/PrivacyPolicy';
-import CookiePolicy from '../screens/MainScreens/guidelines/CommunityGuidelines';
-import CommunityGuidelines from '../screens/MainScreens/guidelines/CommunityGuidelines';
+
 import BottomNavigation from './BottomNavigation';
+import TermsAndConditions from '../screens/mainScreens/guidelines/TermsAndCondition';
+
+import PrivacyPolicy from '../screens/mainScreens/guidelines/PrivacyPolicy';
+import CookiePolicy from '../screens/mainScreens/guidelines/CookiePolicy';
+import CommunityGuidelines from '../screens/mainScreens/guidelines/CommunityGuidelines';
+
+
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
@@ -27,6 +31,10 @@ const MainStack = () => {
         name={routes.Community_Guidelines}
         component={CommunityGuidelines}
       />
+       {/* <Stack.Screen
+        name={routes.Home}
+        component={Home}
+      /> */}
     </Stack.Navigator>
   );
 };

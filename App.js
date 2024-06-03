@@ -18,10 +18,8 @@ const App = () => {
 
   return (
     <NavigationContainer theme={appTheme}>
-      {loggedIn ? <MainStack /> : <AuthStack />}
-      {/* <CardScreen /> */}
-      {/* <SchoolScreen /> */}
-      {/* <UploadPhotos /> */}
+      {!loggedIn ? <MainStack /> : <AuthStack />}
+    
     </NavigationContainer>
   );
 };

@@ -1,8 +1,10 @@
+
+
 export const routes = {
   //AUTHSCREENS====================================
   BottomNavigation: 'BottomNavigation',
   // BottomTab-----------------------
-  Home: 'Home',
+ Home:'Home',
   Recently_Added: 'RecentlyAdded',
   Messages_Sreen: 'MessagesSreen',
   Profile_Screen: 'ProfileScreen',
