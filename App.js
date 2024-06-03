@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <NavigationContainer theme={appTheme}>
-      {loggedIn ? <MainStack /> : <AuthStack />}
+      {!loggedIn ? <MainStack /> : <AuthStack />}
       {/* <CardScreen /> */}
       {/* <SchoolScreen /> */}
       {/* <UploadPhotos /> */}
