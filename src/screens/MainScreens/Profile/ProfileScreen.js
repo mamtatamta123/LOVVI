@@ -1,30 +1,91 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Linking,
+  Share,
+} from 'react-native';
 import React from 'react';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import appColors from '../../../utils/appColors';
 import AppText from '../../../libComponents/AppText';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
+import {routes} from '../../../utils/routes';
 
-const ProfileScreen = () => {
+const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginHorizontal: 15,
+        paddingVertical: 13,
+        borderBottomWidth: 1,
+        borderBottomColor: appColors.IconColor,
+      }}>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{width: 30}}>
+          <AppIcon
+            Type={iconType}
+            name={iconName}
+            size={iconSize}
+            color={appColors.primaryColor}
+          />
+        </View>
+        <Text style={{color: appColors.BLACK}}>{title}</Text>
+      </View>
+      <AppIcon
+        Type={Icon.Feather}
+        name={'chevron-right'}
+        size={19}
+        color={appColors.BLACK}
+      />
+    </TouchableOpacity>
+  );
+};
+
+const ProfileScreen = ({navigation}) => {
+  const share = async () => {
+    try {
+      const title = 'Checkout this awesome app 🔥🔥';
+      const url = 'https://www.google.co.in/';
+      const message = `${title}\n${url}`;
+      await Share.share({
+        message: message,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={{backgroundColor: appColors.white, flex: 1}}>
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
-
-      <AppText style={{fontWeight: 'bold', fontSize: 25}}>Profile</AppText>
-      <View style={{alignItems: 'center'}}>
+      <AppText
+        style={{
+          fontWeight: 'bold',
+          fontSize: 20,
+          marginHorizontal: 15,
+          marginTop: 30,
+        }}>
+        Profile
+      </AppText>
+      <View style={{alignItems: 'center', marginBottom: '7%'}}>
         <View
           style={{
-            height: 150,
-            width: 150,
+            height: 120,
+            width: 120,
 
             borderRadius: 50,
             position: 'relative',
           }}>
           <Image
             source={require('../../../assets/Images/profile.png')}
-            style={{height: 150, width: 150}}
+            style={{height: 120, width: 120}}
           />
 
           <View
@@ -47,134 +108,61 @@ const ProfileScreen = () => {
             />
           </View>
         </View>
-      </View>
-      <View style={{paddingHorizontal: 20}}>
-        <View
+        <AppText
           style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingVertical: 20,
+            fontWeight: '500',
+            fontSize: 20,
+            marginHorizontal: 15,
+            marginTop: 5,
+            color: appColors.Black_color,
           }}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <AppIcon Type={Icon.Ionicons} name={'person-sharp'} size={13} />
-            <Text
-              style={{
-                color: appColors.BLACK,
-                fontWeight: '500',
-                paddingHorizontal: 10,
-              }}>
-              Your Profile
-            </Text>
-          </View>
-
-          <AppIcon
-            Type={Icon.Feather}
-            name={'chevron-right'}
-            size={19}
-            color={appColors.BLACK}
-          />
-        </View>
+          Mamta
+        </AppText>
       </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderColor: appColors.TextInput_BgColor,
-        }}></View>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingVertical: 30,
-        }}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <AppIcon Type={Icon.Ionicons} name={'person-sharp'} size={13} />
-          <Text
-            style={{
-              color: appColors.BLACK,
-              fontWeight: '500',
-              paddingHorizontal: 10,
-            }}>
-            Your Profile
-          </Text>
-        </View>
+      <ProfileMenuButton
+        iconType={Icon.Ionicons}
+        iconName={'person-sharp'}
+        iconSize={20}
+        title={'Your Profile'}
+      />
+      <ProfileMenuButton
+        iconType={Icon.Ionicons}
+        iconName={'settings'}
+        iconSize={20}
+        title={'Settings'}
+      />
 
-        <AppIcon
-          Type={Icon.Feather}
-          name={'chevron-right'}
-          size={19}
-          color={appColors.BLACK}
-        />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderColor: appColors.TextInput_BgColor,
-        }}></View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingVertical: 30,
-        }}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <AppIcon Type={Icon.Ionicons} name={'person-sharp'} size={13} />
-          <Text
-            style={{
-              color: appColors.BLACK,
-              fontWeight: '500',
-              paddingHorizontal: 10,
-            }}>
-            Your Profile
-          </Text>
-        </View>
+      <ProfileMenuButton
+        iconType={Icon.Foundation}
+        iconName={'info'}
+        iconSize={23}
+        title={'Help Centre'}
+      />
 
-        <AppIcon
-          Type={Icon.Feather}
-          name={'chevron-right'}
-          size={19}
-          color={appColors.BLACK}
-        />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderColor: appColors.TextInput_BgColor,
-        }}></View>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          paddingVertical: 30,
-        }}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <AppIcon Type={Icon.Ionicons} name={'person-sharp'} size={13} />
-          <Text
-            style={{
-              color: appColors.BLACK,
-              fontWeight: '500',
-              paddingHorizontal: 10,
-            }}>
-            Your Profile
-          </Text>
-        </View>
+      <ProfileMenuButton
+        iconType={Icon.MaterialIcons}
+        iconName={'person-add-alt-1'}
+        iconSize={22}
+        title={'Invite Friends'}
+        onPress={share}
+      />
 
-        <AppIcon
-          Type={Icon.Feather}
-          name={'chevron-right'}
-          size={19}
-          color={appColors.BLACK}
-        />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderColor: appColors.TextInput_BgColor,
-        }}></View>
+      <ProfileMenuButton
+        iconType={Icon.MaterialIcons}
+        iconName={'privacy-tip'}
+        iconSize={20}
+        title={'Privacy Policy'}
+        onPress={() => navigation.navigate(routes.Privacy_Policy)}
+      />
+
+      <ProfileMenuButton
+        iconType={Icon.MaterialIcons}
+        iconName={'logout'}
+        iconSize={20}
+        title={'Log Out'}
+        onPress={() => {}}
+      />
     </View>
   );
 };

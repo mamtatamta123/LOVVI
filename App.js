@@ -3,13 +3,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './src/navigation/AuthStack';
 import {Provider, useSelector} from 'react-redux';
 import {DefaultTheme, DarkTheme, useTheme} from '@react-navigation/native';
-import {Text} from 'react-native';
 import MainStack from './src/navigation/MainStack';
 import {store} from './src/app/store';
-import CardScreen from './src/screens/authScreens/authOtherScreens/CardScreen';
-import SchoolScreen from './src/screens/authScreens/authOtherScreens/SchoolScreen';
-import UploadPhotos from './src/screens/authScreens/PhotosScreens/UploadPhotos';
-import BottomNavigation from './src/navigation/BottomNavigation';
+
 
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
@@ -18,8 +14,7 @@ const App = () => {
 
   return (
     <NavigationContainer theme={appTheme}>
-      {!loggedIn ? <MainStack /> : <AuthStack />}
-    
+      {loggedIn ? <MainStack /> : <AuthStack />}
     </NavigationContainer>
   );
 };

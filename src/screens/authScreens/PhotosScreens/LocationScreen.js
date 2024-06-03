@@ -22,8 +22,22 @@ import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
+import MapView from 'react-native-maps';
+
+
 
 const LocationScreen = ({navigation}) => {
+
+  
+<MapView
+style={{width:'100%',height:'100%'}}
+  initialRegion={{
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  }}
+/>
   const getPermission = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -92,8 +106,8 @@ const LocationScreen = ({navigation}) => {
           title="Allow"
           style={{marginTop: 'auto', marginBottom: '10%'}}
           onPress={() => {
-            getPermission();
-            // navigation.navigate(routes.Allow_Location)
+            // getPermission();
+            navigation.navigate(routes.Enter_Location)
           }}
         />
       </AppView>

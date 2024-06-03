@@ -8,6 +8,7 @@ import TermsAndConditions from '../screens/mainScreens/guidelines/TermsAndCondit
 import PrivacyPolicy from '../screens/mainScreens/guidelines/PrivacyPolicy';
 import CookiePolicy from '../screens/mainScreens/guidelines/CookiePolicy';
 import CommunityGuidelines from '../screens/mainScreens/guidelines/CommunityGuidelines';
+import Home from '../screens/mainScreens/Home/Home';
 
 
 
@@ -31,10 +32,10 @@ const MainStack = () => {
         name={routes.Community_Guidelines}
         component={CommunityGuidelines}
       />
-       {/* <Stack.Screen
+       <Stack.Screen
         name={routes.Home}
         component={Home}
-      /> */}
+      />
     </Stack.Navigator>
   );
 };

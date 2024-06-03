@@ -71,7 +71,10 @@ const UploadPhotos = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: '100%',
+            // paddingVertical:20
+            marginTop:30
           }}>
+        
           <TouchableOpacity
             onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
             activeOpacity={0.5}
