@@ -24,20 +24,7 @@ import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
 import MapView from 'react-native-maps';
 
-
-
 const LocationScreen = ({navigation}) => {
-
-  
-<MapView
-style={{width:'100%',height:'100%'}}
-  initialRegion={{
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  }}
-/>
   const getPermission = async () => {
     if (Platform.OS === 'android') {
       try {
@@ -58,6 +45,15 @@ style={{width:'100%',height:'100%'}}
 
   return (
     <>
+      <MapView
+        style={{width: '100%', height: '100%'}}
+        initialRegion={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+      />
       <AppView
         style={{
           backgroundColor: appColors.white,
@@ -79,7 +75,6 @@ style={{width:'100%',height:'100%'}}
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            // backgroundColor: 'red',
           }}>
           <View
             style={{
@@ -107,7 +102,7 @@ style={{width:'100%',height:'100%'}}
           style={{marginTop: 'auto', marginBottom: '10%'}}
           onPress={() => {
             // getPermission();
-            navigation.navigate(routes.Enter_Location)
+            navigation.navigate(routes.Enter_Location);
           }}
         />
       </AppView>

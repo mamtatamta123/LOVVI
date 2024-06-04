@@ -6,7 +6,6 @@ import {DefaultTheme, DarkTheme, useTheme} from '@react-navigation/native';
 import MainStack from './src/navigation/MainStack';
 import {store} from './src/app/store';
 
-
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
   const isarkMode = useSelector(state => state.auth.isDarkMode);

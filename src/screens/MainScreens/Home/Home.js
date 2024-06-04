@@ -4,8 +4,10 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Animated,
+  PanResponder,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -18,29 +20,80 @@ import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
-import AppView from '../../../libComponents/AppView';
-import AppText from '../../../libComponents/AppText';
-import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
-import {setLoggedIn} from '../../../redux/auth.reducer';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../../libComponents/AppTextInputLabel';
+import IdentityGender from '../../authScreens/authOtherScreens/IdentityGender';
+import TinderCard from '../../../components/TinderCard';
 
 const Home = ({navigation}) => {
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
-  const [email, setEmail] = useState();
-
+  const [data, setData] = useState([
+    {image: require('../../../assets/Images/women.png'), id: 1, title: 'hlo'},
+    {
+      image: require('../../../assets/Images/women.png'),
+      id: 2,
+      title: 'hello',
+    },
+    {
+      image: require('../../../assets/Images/women.png'),
+      id: 3,
+      title: 'world',
+    },
+    {
+      image: require('../../../assets/Images/women.png'),
+      id: 4,
+      title: 'example',
+    },
+    {
+      image: require('../../../assets/Images/women.png'),
+      id: 5,
+      title: 'sample',
+    },
+    {image: require('../../../assets/Images/women.png'), id: 6, title: 'test'},
+    {image: require('../../../assets/Images/women.png'), id: 7, title: 'data'},
+    {image: require('../../../assets/Images/women.png'), id: 8, title: 'code'},
+    {
+      image: require('../../../assets/Images/women.png'),
+      id: 9,
+      title: 'programming',
+    },
+    {
+      image: require('../../../assets/Images/man.png'),
+      id: 10,
+      title: 'developer',
+    },
+  ]);
+  const swipe = useRef(new Animated.ValueXY()).current;
+  const PanResponderInstance = PanResponder.create({
+    onMoveShouldSetPanResponder: () => true,
+    onPanResponderMove: (_, {dx, dy}) => {
+      console.log('dx:' + dx + 'dy:', dy);
+      swipe.setValue({x: dx, y: dy});
+    },
+    onPanResponderRelease: (_, {dx, dy}) => {
+      console.log('released: dx+' + dy + ' dy:', dy);
+    },
+  });
   return (
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
       <AppHeader />
-      
+      <Animated.View style={styles.container}>
+        {data
+          .map((item, index) => {
+            const isfirst = index === 0;
+            const dragHandlers = isfirst ? PanResponder.panHandlers : {};
+            return (
+              <TinderCard
+                key={index}
+                item={item}
+                isfirst={isfirst}
+                swipe={swipe}
+                {...dragHandlers}
+              />
+            );
+          })
+          .reverse()}
+      </Animated.View>
     </AppGradientView>
   );
 };

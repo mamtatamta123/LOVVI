@@ -9,8 +9,8 @@ import PrivacyPolicy from '../screens/mainScreens/guidelines/PrivacyPolicy';
 import CookiePolicy from '../screens/mainScreens/guidelines/CookiePolicy';
 import CommunityGuidelines from '../screens/mainScreens/guidelines/CommunityGuidelines';
 import Home from '../screens/mainScreens/Home/Home';
-
-
+import {Settings} from 'react-native';
+import SettingsScreen from '../screens/mainScreens/Settings/SettingsScreen';
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
@@ -32,10 +32,8 @@ const MainStack = () => {
         name={routes.Community_Guidelines}
         component={CommunityGuidelines}
       />
-       <Stack.Screen
-        name={routes.Home}
-        component={Home}
-      />
+      <Stack.Screen name={routes.Home} component={Home} />
+      <Stack.Screen name={routes.Settings_Screen} component={SettingsScreen} />
     </Stack.Navigator>
   );
 };

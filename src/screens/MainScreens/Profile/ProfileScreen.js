@@ -131,6 +131,7 @@ const ProfileScreen = ({navigation}) => {
         iconName={'settings'}
         iconSize={20}
         title={'Settings'}
+        onPress={() => navigation.navigate(routes.Settings_Screen)}
       />
 
       <ProfileMenuButton

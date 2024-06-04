@@ -33,9 +33,10 @@ const RecentlyAdded = ({navigation}) => {
               flexWrap: 'wrap',
               justifyContent: 'space-between',
             }}>
-            {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map(() => {
+            {[1, 1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) => {
               return (
                 <View
+                  key={index}
                   style={{
                     height: 200,
                     width: '48%',

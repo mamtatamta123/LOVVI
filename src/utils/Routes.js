@@ -1,10 +1,10 @@
-
+import {Settings} from 'react-native';
 
 export const routes = {
   //AUTHSCREENS====================================
   BottomNavigation: 'BottomNavigation',
   // BottomTab-----------------------
- Home:'Home',
+  Home: 'Home',
   Recently_Added: 'RecentlyAdded',
   Messages_Sreen: 'MessagesSreen',
   Profile_Screen: 'ProfileScreen',
@@ -43,4 +43,7 @@ export const routes = {
   Location_Screen: 'LocationScreen',
   Allow_Location: 'AllowLocation',
   Enter_Location: 'EnterLocation',
+
+  // Settings============================
+  Settings_Screen: 'SettingsScreen',
 };
