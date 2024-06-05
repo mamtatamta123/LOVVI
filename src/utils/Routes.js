@@ -1,4 +1,10 @@
 import {Settings} from 'react-native';
+import AllSettings from '../screens/mainScreens/Settings/AllSettings';
+import Appearance from '../screens/mainScreens/Settings/Appearance';
+import AutoPlayVideos from '../screens/mainScreens/Settings/AutoPlayVideos';
+import UserName from '../screens/mainScreens/Settings/UserName';
+import QandAEvants from '../screens/mainScreens/Settings/QandAEvants';
+import ManageDirectMsg from '../screens/mainScreens/Settings/ManageDirectMsg';
 
 export const routes = {
   //AUTHSCREENS====================================
@@ -46,4 +52,10 @@ export const routes = {
 
   // Settings============================
   Settings_Screen: 'SettingsScreen',
+  All_Settings: 'AllSettings',
+  Appearance: 'Appearance',
+  AutoPlayVideos: 'AutoPlayVideos',
+  UserName: 'UserName',
+  QandA_Evants: 'QandAEvants',
+  Manage_DirectMsg: 'ManageDirectMsg',
 };

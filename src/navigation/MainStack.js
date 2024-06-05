@@ -11,6 +11,12 @@ import CommunityGuidelines from '../screens/mainScreens/guidelines/CommunityGuid
 import Home from '../screens/mainScreens/Home/Home';
 import {Settings} from 'react-native';
 import SettingsScreen from '../screens/mainScreens/Settings/SettingsScreen';
+import AllSettings from '../screens/mainScreens/Settings/AllSettings';
+import Appearance from '../screens/mainScreens/Settings/Appearance';
+import AutoPlayVideos from '../screens/mainScreens/Settings/AutoPlayVideos';
+import UserName from '../screens/mainScreens/Settings/UserName';
+import QandAEvants from '../screens/mainScreens/Settings/QandAEvants';
+import ManageDirectMsg from '../screens/mainScreens/Settings/ManageDirectMsg';
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
@@ -34,6 +40,15 @@ const MainStack = () => {
       />
       <Stack.Screen name={routes.Home} component={Home} />
       <Stack.Screen name={routes.Settings_Screen} component={SettingsScreen} />
+      <Stack.Screen name={routes.All_Settings} component={AllSettings} />
+      <Stack.Screen name={routes.Appearance} component={Appearance} />
+      <Stack.Screen name={routes.AutoPlayVideos} component={AutoPlayVideos} />
+      <Stack.Screen name={routes.UserName} component={UserName} />
+      <Stack.Screen name={routes.QandA_Evants} component={QandAEvants} />
+      <Stack.Screen
+        name={routes.Manage_DirectMsg}
+        component={ManageDirectMsg}
+      />
     </Stack.Navigator>
   );
 };

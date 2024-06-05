@@ -54,7 +54,7 @@ const SettingsScreen = ({navigation}) => {
         iconName={'settings'}
         iconSize={20}
         title={'Settings'}
-        onPress={() => navigation.navigate(routes.Settings_Screen)}
+        onPress={() => navigation.navigate(routes.All_Settings)}
       />
       <ProfileMenuButton
         iconType={Icon.Ionicons}
