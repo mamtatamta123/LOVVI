@@ -17,6 +17,10 @@ import AutoPlayVideos from '../screens/mainScreens/Settings/AutoPlayVideos';
 import UserName from '../screens/mainScreens/Settings/UserName';
 import QandAEvants from '../screens/mainScreens/Settings/QandAEvants';
 import ManageDirectMsg from '../screens/mainScreens/Settings/ManageDirectMsg';
+import ManageSwipeSurge from '../screens/mainScreens/Settings/ManageSwipeSurge';
+import ActiveScreen from '../screens/mainScreens/Settings/ActiveScreen';
+import FriendsOfFriend from '../screens/mainScreens/Settings/FriendsOfFriend';
+import ResendEmail from '../screens/mainScreens/Settings/ResendEmail';
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
@@ -49,6 +53,17 @@ const MainStack = () => {
         name={routes.Manage_DirectMsg}
         component={ManageDirectMsg}
       />
+      <Stack.Screen
+        name={routes.Manage_Swipe_Surge}
+        component={ManageSwipeSurge}
+      />
+
+      <Stack.Screen name={routes.Active_Screen} component={ActiveScreen} />
+      <Stack.Screen
+        name={routes.FriendsOf_Friend}
+        component={FriendsOfFriend}
+      />
+      <Stack.Screen name={routes.Resend_Email} component={ResendEmail} />
     </Stack.Navigator>
   );
 };

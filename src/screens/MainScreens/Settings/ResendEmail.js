@@ -7,8 +7,9 @@ import AppText from '../../../libComponents/AppText';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import ToggleSwitch from 'toggle-switch-react-native';
 import appColors from '../../../utils/appColors';
+import AppButton from '../../../libComponents/AppButton';
 
-const ManageDirectMsg = () => {
+const ResendEmail = () => {
   const [isOn, setIsOn] = useState();
   const handleToggle = () => {
     setIsOn(!isOn); // Toggle the value of isOn
@@ -18,11 +19,24 @@ const ManageDirectMsg = () => {
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
       <View style={{marginHorizontal: 15}}>
-        <AppText style={styles.title}>Manage Direct Messages</AppText>
-        <AppText style={{fontWeight: 'bold', fontSize: 20}}>settings</AppText>
+        <AppText style={styles.title}>Email</AppText>
+        <Text style={styles.description}>
+          Control the emails you want to get- all of them, just the important
+          stuff or the bare minimum. You can always unsubscribe at the bottom of
+          any email
+        </Text>
+
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Text style={styles.rowTitle}>123@example.com</Text>
+          <Text>1ple.com</Text>
+        </View>
+        <Text style={{color: appColors.red, fontSize: 13}}>
+          Verification email sent. Please check your email.
+        </Text>
+
         <View style={styles.section}>
           <View style={styles.row}>
-            <AppText style={styles.rowTitle}>Receive Direct Messages</AppText>
+            <AppText style={styles.rowTitle}>New matches</AppText>
 
             <ToggleSwitch
               isOn={isOn}
@@ -34,18 +48,46 @@ const ManageDirectMsg = () => {
               onToggle={handleToggle}
             />
           </View>
+        </View>
 
-          <Text style={styles.description}>
-            Turning this off will prevent any SELECT member from sending Direct
-            Messages to you.
-          </Text>
+        <View style={styles.section}>
+          <View style={styles.row}>
+            <AppText style={styles.rowTitle}>New messages</AppText>
+
+            <ToggleSwitch
+              isOn={isOn}
+              onColor={appColors.primaryColor}
+              offColor={appColors.DARK_GRAY}
+              // label="Example label"
+              labelStyle={{color: 'black', fontWeight: '900'}}
+              size="small"
+              onToggle={handleToggle}
+            />
+          </View>
+        </View>
+
+        <View style={styles.section}>
+          <View style={styles.row}>
+            <AppText style={styles.rowTitle}>Promotions</AppText>
+
+            <ToggleSwitch
+              isOn={isOn}
+              onColor={appColors.primaryColor}
+              offColor={appColors.DARK_GRAY}
+              // label="Example label"
+              labelStyle={{color: 'black', fontWeight: '900'}}
+              size="small"
+              onToggle={handleToggle}
+            />
+          </View>
+          <Text>I want to receive news, update and offers from Lovvi</Text>
         </View>
       </View>
     </AppView>
   );
 };
 
-export default ManageDirectMsg;
+export default ResendEmail;
 
 const styles = StyleSheet.create({
   title: {

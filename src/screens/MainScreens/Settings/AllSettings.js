@@ -349,10 +349,13 @@ const AllSettings = ({navigation}) => {
           </View>
           {/* =============================================================== */}
           <View style={styles.section}>
-            <AppText style={styles.sectionTitle}>Direct Messages</AppText>
-            <AppText style={styles.sectionTitle}>
-              Manage Direct Messages
-            </AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Manage_DirectMsg)}>
+              <AppText style={styles.sectionTitle}>Direct Messages</AppText>
+              <AppText style={styles.sectionTitle}>
+                Manage Direct Messages
+              </AppText>
+            </TouchableOpacity>
             <View style={styles.row}>
               <AppText style={styles.rowTitle}>Settings</AppText>
               <View style={styles.rowContent}>
@@ -367,8 +370,11 @@ const AllSettings = ({navigation}) => {
           </View>
           {/* ================================================================ */}
           <View style={styles.section}>
-            <AppText style={styles.sectionTitle}>Swipe Surge</AppText>
-            <AppText style={styles.sectionTitle}>Manage Swipe Surge</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Manage_Swipe_Surge)}>
+              <AppText style={styles.sectionTitle}>Swipe Surge</AppText>
+              <AppText style={styles.sectionTitle}>Manage Swipe Surge</AppText>
+            </TouchableOpacity>
             <View style={styles.row}>
               <AppText style={styles.rowTitle}>Settings</AppText>
               <View style={styles.rowContent}>
@@ -383,8 +389,13 @@ const AllSettings = ({navigation}) => {
           </View>
           {/* =================================================================== */}
           <View style={styles.section}>
-            <AppText style={styles.sectionTitle}>Active status</AppText>
-            <AppText style={styles.sectionTitle}>Manage active status</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Active_Screen)}>
+              <AppText style={styles.sectionTitle}>Active status</AppText>
+              <AppText style={styles.sectionTitle}>
+                Manage active status
+              </AppText>
+            </TouchableOpacity>
             <View style={styles.row}>
               <AppText style={styles.rowTitle}>Settings</AppText>
               <View style={styles.rowContent}>
@@ -399,11 +410,18 @@ const AllSettings = ({navigation}) => {
           </View>
           {/* ============================================ */}
           <View style={styles.section}>
-            <AppText style={styles.sectionTitle}>Active status</AppText>
-            <AppText style={styles.sectionTitle}>Manage active status</AppText>
-            <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Settings</AppText>
-              <View style={styles.rowContent}>
+            <AppText style={styles.sectionTitle}>Connections</AppText>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.FriendsOf_Friend)}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <AppText style={styles.sectionTitle}>
+                  Friends of Friends
+                </AppText>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
@@ -411,7 +429,50 @@ const AllSettings = ({navigation}) => {
                   color={appColors.BLACK}
                 />
               </View>
+            </TouchableOpacity>
+            <View style={styles.row}>
+              <AppText style={styles.description}>
+                Select people from your contact list who you don’t want to see
+                or be seen by on Lovvi. This works with Friends of Friends
+              </AppText>
             </View>
+          </View>
+          {/* ============================================================== */}
+          <View style={styles.section}>
+            <AppText style={styles.sectionTitle}>App Settings</AppText>
+
+            <AppText style={styles.sectionTitle}>Notifications</AppText>
+
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Resend_Email)}>
+              <AppText
+                style={{
+                  fontSize: 16,
+                  color: appColors.BLACK,
+                  fontWeight: '500',
+                  marginTop: 10,
+                }}>
+                Email
+              </AppText>
+            </TouchableOpacity>
+            <AppText
+              style={{
+                fontSize: 16,
+                color: appColors.BLACK,
+                fontWeight: '500',
+                marginTop: 10,
+              }}>
+              Push notifications
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 16,
+                color: appColors.BLACK,
+                fontWeight: '500',
+                marginTop: 10,
+              }}>
+              Team Lovvis
+            </AppText>
           </View>
         </View>
       </ScrollView>

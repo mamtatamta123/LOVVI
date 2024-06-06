@@ -5,6 +5,10 @@ import AutoPlayVideos from '../screens/mainScreens/Settings/AutoPlayVideos';
 import UserName from '../screens/mainScreens/Settings/UserName';
 import QandAEvants from '../screens/mainScreens/Settings/QandAEvants';
 import ManageDirectMsg from '../screens/mainScreens/Settings/ManageDirectMsg';
+import ManageSwipeSurge from '../screens/mainScreens/Settings/ManageSwipeSurge';
+import ActiveScreen from '../screens/mainScreens/Settings/ActiveScreen';
+import FriendsOfFriend from '../screens/mainScreens/Settings/FriendsOfFriend';
+import ResendEmail from '../screens/mainScreens/Settings/ResendEmail';
 
 export const routes = {
   //AUTHSCREENS====================================
@@ -58,4 +62,8 @@ export const routes = {
   UserName: 'UserName',
   QandA_Evants: 'QandAEvants',
   Manage_DirectMsg: 'ManageDirectMsg',
+  Manage_Swipe_Surge: 'ManageSwipeSurge',
+  Active_Screen: 'ActiveScreen',
+  FriendsOf_Friend: 'FriendsOfFriend',
+  Resend_Email: 'ResendEmail',
 };

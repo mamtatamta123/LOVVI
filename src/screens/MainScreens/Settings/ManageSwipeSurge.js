@@ -8,7 +8,7 @@ import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import ToggleSwitch from 'toggle-switch-react-native';
 import appColors from '../../../utils/appColors';
 
-const ManageDirectMsg = () => {
+const ManageSwipeSurge = () => {
   const [isOn, setIsOn] = useState();
   const handleToggle = () => {
     setIsOn(!isOn); // Toggle the value of isOn
@@ -18,11 +18,13 @@ const ManageDirectMsg = () => {
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
       <View style={{marginHorizontal: 15}}>
-        <AppText style={styles.title}>Manage Direct Messages</AppText>
-        <AppText style={{fontWeight: 'bold', fontSize: 20}}>settings</AppText>
+        <AppText style={styles.title}>Manage Swipe Surge</AppText>
+
         <View style={styles.section}>
           <View style={styles.row}>
-            <AppText style={styles.rowTitle}>Receive Direct Messages</AppText>
+            <AppText style={styles.rowTitle}>
+              Participate in Swipe Surge
+            </AppText>
 
             <ToggleSwitch
               isOn={isOn}
@@ -36,8 +38,8 @@ const ManageDirectMsg = () => {
           </View>
 
           <Text style={styles.description}>
-            Turning this off will prevent any SELECT member from sending Direct
-            Messages to you.
+            Turning this off will prevent you from being shown as swiping to
+            other active users during a Swipe Surge.
           </Text>
         </View>
       </View>
@@ -45,7 +47,7 @@ const ManageDirectMsg = () => {
   );
 };
 
-export default ManageDirectMsg;
+export default ManageSwipeSurge;
 
 const styles = StyleSheet.create({
   title: {

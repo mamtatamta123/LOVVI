@@ -1,12 +1,18 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
+import ToggleSwitch from 'toggle-switch-react-native';
+import appColors from '../../../utils/appColors';
 
 const QandAEvants = () => {
+  const [isOn, setIsOn] = useState();
+  const handleToggle = () => {
+    setIsOn(!isOn); // Toggle the value of isOn
+  };
   return (
     <AppView>
       <AppStatusBar isDark={false} isbg={false} />
@@ -17,8 +23,17 @@ const QandAEvants = () => {
           <View style={styles.row}>
             <AppText style={styles.rowTitle}>Participate in Q&A events</AppText>
 
-            <Text style={styles.phoneNumber}>0000</Text>
+            <ToggleSwitch
+              isOn={isOn}
+              onColor={appColors.primaryColor}
+              offColor={appColors.DARK_GRAY}
+              // label="Example label"
+              labelStyle={{color: 'black', fontWeight: '900'}}
+              size="small"
+              onToggle={handleToggle}
+            />
           </View>
+
           <Text style={styles.description}>
             Turning this off will remove Q&A event content from your profile,
             and you’ll no longer see profiles with Q&A events content.
