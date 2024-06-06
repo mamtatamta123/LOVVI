@@ -21,6 +21,7 @@ import ManageSwipeSurge from '../screens/mainScreens/Settings/ManageSwipeSurge';
 import ActiveScreen from '../screens/mainScreens/Settings/ActiveScreen';
 import FriendsOfFriend from '../screens/mainScreens/Settings/FriendsOfFriend';
 import ResendEmail from '../screens/mainScreens/Settings/ResendEmail';
+import DummyChat from '../screens/mainScreens/Chat/DummyChat';
 
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
@@ -64,6 +65,7 @@ const MainStack = () => {
         component={FriendsOfFriend}
       />
       <Stack.Screen name={routes.Resend_Email} component={ResendEmail} />
+      <Stack.Screen name={routes.Dummy_Chat} component={DummyChat} />
     </Stack.Navigator>
   );
 };

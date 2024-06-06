@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -28,49 +28,14 @@ import AppTextInputLabel, {
 } from '../../../libComponents/AppTextInputLabel';
 
 import {SelectCountry} from 'react-native-element-dropdown';
+import {countries} from '../../../utils/constants';
 
 const LoginScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
 
-  const [country, setCountry] = useState('1');
-  const local_data = [
-    {
-      value: '1',
-      lable: 'Country 1',
-      image: {
-        uri: 'https://www.vigcenter.com/public/all/images/default-image.jpg',
-      },
-    },
-    {
-      value: '2',
-      lable: 'Country 2',
-      image: {
-        uri: 'https://www.vigcenter.com/public/all/images/default-image.jpg',
-      },
-    },
-    {
-      value: '3',
-      lable: 'Country 3',
-      image: {
-        uri: 'https://www.vigcenter.com/public/all/images/default-image.jpg',
-      },
-    },
-    {
-      value: '4',
-      lable: 'Country 4',
-      image: {
-        uri: 'https://www.vigcenter.com/public/all/images/default-image.jpg',
-      },
-    },
-    {
-      value: '5',
-      lable: 'Country 5',
-      image: {
-        uri: 'https://www.vigcenter.com/public/all/images/default-image.jpg',
-      },
-    },
-  ];
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
+  const countryDropdownRef = useRef(countries);
   return (
     <AppGradientView
       style={{height: '100%'}}
@@ -88,25 +53,31 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
-          <View>
-            {/* <SelectCountry
-              style={styles.dropdown}
-              selectedTextStyle={styles.selectedTextStyle}
-              placeholderStyle={styles.placeholderStyle}
-              imageStyle={styles.imageStyle}
-              iconStyle={styles.iconStyle}
-              maxHeight={200}
-              value={country}
-              data={local_data}
-              valueField="value"
-              labelField="lable"
-              imageField="image"
-              placeholder="Select country"
-              searchPlaceholder="Search..."
-              onChange={e => {
-                setCountry(e.value);
-              }}
-            /> */}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-end',
+            }}>
+            <View
+              style={{
+                borderWidth: 1,
+                width: '40%',
+                borderRadius: 10,
+                borderColor: appColors.TextInput_BgColor,
+                backgroundColor: appColors.TextInput_BgColor,
+                // backgroundColor: 'red',
+                height: 50,
+                marginRight: 2,
+              }}>
+              <SelectCountry
+                ref={countryDropdownRef}
+                value={selectedCountry}
+                data={countries}
+                placeholder="Select country"
+                searchPlaceholder="Search..."
+                onChange={country => setSelectedCountry(country.value)}
+              />
+            </View>
             <AppTextInputLabel
               autoFocus={true}
               keyboardType={keyboardType.number_pad}
@@ -114,10 +85,6 @@ const LoginScreen = ({navigation}) => {
               value={phoneNumber}
               placeholder="Enter Your Phone Number"
               onChangeText={text => setPhoneNumber(text)}
-              IconType={Icon.FontAwesome5}
-              Iconsize={20}
-              Iconname={'phone-alt'}
-              Iconcolor={appColors.IconColor}
               style={styles.input}
             />
           </View>
@@ -175,8 +142,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   input: {
-    marginTop: 20,
+    // marginTop: 20,
     // marginHorizontal: 20,
+    width: '60%',
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -204,17 +172,35 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   dropdown: {
+    // margin: 16,
+  },
+  // imageStyle: {
+  //   width: 24,
+  //   height: 24,
+  //   borderRadius: 12,
+  // },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    marginLeft: 8,
+    color: appColors.BLACK,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+
+  dropdown: {
     margin: 16,
     height: 50,
-    width: 150,
-    backgroundColor: '#EEEEEE',
-    borderRadius: 22,
-    paddingHorizontal: 8,
+    borderBottomColor: 'gray',
+    borderBottomWidth: 0.5,
   },
   imageStyle: {
     width: 24,
     height: 24,
-    borderRadius: 12,
   },
   placeholderStyle: {
     fontSize: 16,
@@ -226,5 +212,9 @@ const styles = StyleSheet.create({
   iconStyle: {
     width: 20,
     height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
