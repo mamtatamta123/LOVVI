@@ -26,7 +26,7 @@ const AppTextInputLabel = ({
   placeholder,
   onChangeText,
   secureEntry = false,
-  labelText = 'Enter label',
+  labelText = false,
   IconType,
   Iconsize,
   Iconname,

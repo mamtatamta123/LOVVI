@@ -1,5 +1,4 @@
 export const countries = [
-  {country: 'Afghanistan', code: 'AF', prefix: '+93'},
   {country: 'Albania', code: 'AL', prefix: '+355'},
   {country: 'Algeria', code: 'DZ', prefix: '+213'},
   {country: 'Andorra', code: 'AD', prefix: '+376'},

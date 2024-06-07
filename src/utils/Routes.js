@@ -1,14 +1,4 @@
-import {Settings} from 'react-native';
-import AllSettings from '../screens/mainScreens/Settings/AllSettings';
-import Appearance from '../screens/mainScreens/Settings/Appearance';
-import AutoPlayVideos from '../screens/mainScreens/Settings/AutoPlayVideos';
-import UserName from '../screens/mainScreens/Settings/UserName';
-import QandAEvants from '../screens/mainScreens/Settings/QandAEvants';
-import ManageDirectMsg from '../screens/mainScreens/Settings/ManageDirectMsg';
-import ManageSwipeSurge from '../screens/mainScreens/Settings/ManageSwipeSurge';
-import ActiveScreen from '../screens/mainScreens/Settings/ActiveScreen';
-import FriendsOfFriend from '../screens/mainScreens/Settings/FriendsOfFriend';
-import ResendEmail from '../screens/mainScreens/Settings/ResendEmail';
+import EditProfile from '../screens/mainScreens/Profile/EditProfile';
 
 export const routes = {
   //AUTHSCREENS====================================
@@ -66,4 +56,6 @@ export const routes = {
   Active_Screen: 'ActiveScreen',
   FriendsOf_Friend: 'FriendsOfFriend',
   Resend_Email: 'ResendEmail',
+  Chat_Screen: 'ChatScreen',
+  Edit_Profile: 'EditProfile',
 };

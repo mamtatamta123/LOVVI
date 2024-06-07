@@ -35,7 +35,6 @@ const LoginScreen = ({navigation}) => {
 
   const [selectedCountry, setSelectedCountry] = useState(null);
 
-  const countryDropdownRef = useRef(countries);
   return (
     <AppGradientView
       style={{height: '100%'}}
@@ -65,23 +64,25 @@ const LoginScreen = ({navigation}) => {
                 borderRadius: 10,
                 borderColor: appColors.TextInput_BgColor,
                 backgroundColor: appColors.TextInput_BgColor,
-                // backgroundColor: 'red',
+
                 height: 50,
                 marginRight: 2,
               }}>
               <SelectCountry
-                ref={countryDropdownRef}
+                labelField="country"
+                valueField="country"
                 value={selectedCountry}
                 data={countries}
                 placeholder="Select country"
-                searchPlaceholder="Search..."
+                searchPlaceholder={true}
                 onChange={country => setSelectedCountry(country.value)}
+                // style={{marginHorizontal: 10}}
               />
             </View>
             <AppTextInputLabel
               autoFocus={true}
               keyboardType={keyboardType.number_pad}
-              labelText="Phone Number"
+              // labelText="Phone Number"
               value={phoneNumber}
               placeholder="Enter Your Phone Number"
               onChangeText={text => setPhoneNumber(text)}
@@ -116,7 +117,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   infoContainer: {
-    // marginHorizontal: wp(5),
     paddingHorizontal: 15,
     paddingVertical: '8%',
   },
@@ -142,21 +142,9 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   input: {
-    // marginTop: 20,
-    // marginHorizontal: 20,
     width: '60%',
   },
-  checkboxContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: wp(5),
-    marginTop: hp(0.5),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  checkboxText: {
-    color: appColors.BLACK,
-    fontSize: fp(2),
-  },
+
   labelText: {
     fontSize: fp(2),
     color: appColors.BLACK,
@@ -171,9 +159,9 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     width: '100%',
   },
-  dropdown: {
-    // margin: 16,
-  },
+  // dropdown: {
+  //   margin: 16,
+  // },
   // imageStyle: {
   //   width: 24,
   //   height: 24,

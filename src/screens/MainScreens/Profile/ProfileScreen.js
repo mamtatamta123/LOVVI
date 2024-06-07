@@ -125,6 +125,7 @@ const ProfileScreen = ({navigation}) => {
         iconName={'person-sharp'}
         iconSize={20}
         title={'Your Profile'}
+        onPress={() => navigation.navigate(routes.Chat_Screen)}
       />
       <ProfileMenuButton
         iconType={Icon.Ionicons}
