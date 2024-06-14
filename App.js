@@ -7,6 +7,7 @@ import MainStack from './src/navigation/MainStack';
 import {store} from './src/app/store';
 import {PermissionsAndroid} from 'react-native';
 import LocationScreen from './src/screens/authScreens/PhotosScreens/LocationScreen';
+import ChatScreen from './src/screens/mainScreens/Chat/ChatScreen';
 
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
@@ -35,8 +36,9 @@ const App = () => {
 
   return (
     <NavigationContainer theme={appTheme}>
-      {loggedIn ? <MainStack /> : <AuthStack />}
+      {/* {loggedIn ? <MainStack /> : <AuthStack />} */}
       {/* <LocationScreen /> */}
+      <ChatScreen />
     </NavigationContainer>
   );
 };

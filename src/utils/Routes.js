@@ -1,7 +1,3 @@
-import EditProfile from '../screens/mainScreens/Profile/EditProfile';
-import GalleryScreen from '../screens/mainScreens/Profile/GalleryScreen';
-import Block from '../screens/mainScreens/Settings/Block';
-
 export const routes = {
   //AUTHSCREENS====================================
   BottomNavigation: 'BottomNavigation',

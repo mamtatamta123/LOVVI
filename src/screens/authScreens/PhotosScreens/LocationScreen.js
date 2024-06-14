@@ -40,11 +40,12 @@ const LocationScreen = ({navigation}) => {
       },
       {
         enableHighAccuracy: true,
-        timeout: 30000,
+        timeout: 50000,
         maximumAge: 1000,
       },
     );
   }, []);
+  console.log('latitude=========', latitude, longitude);
 
   const getLocation = () => {
     setButtonLoder(true);
