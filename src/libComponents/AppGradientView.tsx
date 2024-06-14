@@ -5,7 +5,7 @@ import appColors from '../utils/appColors';
 
 interface customAppGradientProp extends ViewProps {
   style?: ViewStyle;
-  colors: any;
+  colors: string[];
 }
 const AppGradientView: React.FC<customAppGradientProp> = ({
   children,

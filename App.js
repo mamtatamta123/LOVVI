@@ -1,19 +1,42 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './src/navigation/AuthStack';
 import {Provider, useSelector} from 'react-redux';
-import {DefaultTheme, DarkTheme, useTheme} from '@react-navigation/native';
+import {DefaultTheme, DarkTheme} from '@react-navigation/native';
 import MainStack from './src/navigation/MainStack';
 import {store} from './src/app/store';
+import {PermissionsAndroid} from 'react-native';
+import LocationScreen from './src/screens/authScreens/PhotosScreens/LocationScreen';
 
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const appTheme = isarkMode ? DarkTheme : DefaultTheme;
+  useEffect(() => {
+    getPermission();
+  }, []);
+
+  const getPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const res = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
+        );
+        console.log('res', res);
+        if (res === 'granted') {
+        } else {
+          Linking.openSettings();
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
 
   return (
     <NavigationContainer theme={appTheme}>
       {loggedIn ? <MainStack /> : <AuthStack />}
+      {/* <LocationScreen /> */}
     </NavigationContainer>
   );
 };
@@ -26,10 +49,3 @@ const AppWapper = () => {
   );
 };
 export default AppWapper;
-
-// use-------------------------
-// import colors from useTheme  in any screeen where to use----
-// const {colors} = useTheme(); like this-----
-// <Text style={{color: colors.text}}></Text> ------it will give to you like colors.text
-// colors.background
-// use-------------------------

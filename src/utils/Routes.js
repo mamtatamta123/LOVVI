@@ -1,4 +1,6 @@
 import EditProfile from '../screens/mainScreens/Profile/EditProfile';
+import GalleryScreen from '../screens/mainScreens/Profile/GalleryScreen';
+import Block from '../screens/mainScreens/Settings/Block';
 
 export const routes = {
   //AUTHSCREENS====================================
@@ -58,4 +60,6 @@ export const routes = {
   Resend_Email: 'ResendEmail',
   Chat_Screen: 'ChatScreen',
   Edit_Profile: 'EditProfile',
+  Gallery_Screen: 'GalleryScreen',
+  Block: 'Block',
 };

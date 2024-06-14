@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {routes} from '../utils/routes';
 
@@ -24,9 +24,20 @@ import ResendEmail from '../screens/mainScreens/Settings/ResendEmail';
 
 import ChatScreen from '../screens/mainScreens/Chat/ChatScreen';
 import EditProfile from '../screens/mainScreens/Profile/EditProfile';
-
+import GalleryScreen from '../screens/mainScreens/Profile/GalleryScreen';
+import messaging from '@react-native-firebase/messaging';
+import {notificationListeners} from '../notification/notificationOndisplay';
+import Block from '../screens/mainScreens/Settings/Block';
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
+  useEffect(() => {
+    getDeviceToken();
+    notificationListeners();
+  }, []);
+  const getDeviceToken = async () => {
+    const token = await messaging().getToken();
+    console.log('========Device FCM -----Token=======', token);
+  };
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}
@@ -69,6 +80,8 @@ const MainStack = () => {
       <Stack.Screen name={routes.Resend_Email} component={ResendEmail} />
       <Stack.Screen name={routes.Chat_Screen} component={ChatScreen} />
       <Stack.Screen name={routes.Edit_Profile} component={EditProfile} />
+      <Stack.Screen name={routes.Gallery_Screen} component={GalleryScreen} />
+      <Stack.Screen name={routes.Block} component={Block} />
     </Stack.Navigator>
   );
 };

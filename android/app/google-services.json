@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565730263477",
+    "project_id": "lovvi-ba14b",
+    "storage_bucket": "lovvi-ba14b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565730263477:android:0a4eae46b5d005af22d9fc",
+        "android_client_info": {
+          "package_name": "com.lovvi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqCh5Qs1RsxjlqBM9l-SI2b_hnxaIeh34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

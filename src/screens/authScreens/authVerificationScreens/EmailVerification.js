@@ -47,7 +47,7 @@ const EmailVerification = ({navigation}) => {
 
         <AppView style={styles.formContainer}>
           <AppTextInputLabel
-           
+            autoFocus={true}
             labelText="Email"
             value={email}
             placeholder="Enter Your Email"
@@ -57,6 +57,8 @@ const EmailVerification = ({navigation}) => {
             Iconname={'mail'}
             Iconcolor={appColors.IconColor}
             style={styles.input}
+            line={true}
+            icon={true}
           />
 
           <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>

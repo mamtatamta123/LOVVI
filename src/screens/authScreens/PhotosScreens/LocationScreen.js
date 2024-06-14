@@ -1,17 +1,12 @@
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
-  TouchableOpacity,
-  Modal,
-  StatusBar,
-  Image,
-  Alert,
   PermissionsAndroid,
   Linking,
   Platform,
+  Text,
 } from 'react-native';
-import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
@@ -20,92 +15,120 @@ import AppButton from '../../../libComponents/AppButton';
 import {routes} from '../../../utils/routes';
 import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
-import MapView from 'react-native-maps';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
+import {useDispatch} from 'react-redux';
+import {setCurrentAddress} from '../../../redux/auth.reducer';
+import LottieView from 'lottie-react-native';
 
 const LocationScreen = ({navigation}) => {
-  const getPermission = async () => {
-    if (Platform.OS === 'android') {
-      try {
-        const res = await PermissionsAndroid.request(
-          PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
-        );
-        console.log('res', res);
-        if (res == 'granted') {
-          navigation.navigate(routes.Allow_Location);
-        } else {
-          Linking.openSettings();
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    }
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setlongitude] = useState('');
+  const [buttonLoder, setButtonLoder] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      info => {
+        console.log(info?.coords, '-----------coords');
+        setLatitude(info.coords.latitude);
+        setlongitude(info.coords.longitude);
+      },
+      error => {
+        console.warn(error, '---error ');
+      },
+      {
+        enableHighAccuracy: true,
+        timeout: 30000,
+        maximumAge: 1000,
+      },
+    );
+  }, []);
+
+  const getLocation = () => {
+    setButtonLoder(true);
+    const reverseGeocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAKfvrGBxXsxJ2AovOGAdltyorLy4ytT1I`;
+    fetch(reverseGeocodingUrl)
+      .then(response => response.json())
+      .then(result => {
+        dispatch(setCurrentAddress(result?.results[0]?.formatted_address));
+        navigation.navigate(routes.Enter_Location);
+        setButtonLoder(false);
+      })
+      .catch(e => {
+        console.log('error', e);
+        setButtonLoder(false);
+      });
   };
 
   return (
     <>
-      <MapView
-        style={{width: '100%', height: '100%'}}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
-        }}
-      />
-      <AppView
-        style={{
-          backgroundColor: appColors.white,
-          flex: 1,
-          paddingHorizontal: 15,
-        }}>
-        <AppStatusBar isDark={false} isbg={false} />
-        <AppHeader isBlack={true} isColor={true} />
-        <AppText style={styles.textContainer}>
-          So, are you from around here?
-        </AppText>
-        <AppText style={styles.textsubcontainer}>
-          Set your location to see who' in your area or beyond. You won't be
-          able to match with people otherwise.
-        </AppText>
-
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <View
-            style={{
-              height: 250,
-              width: 250,
-              borderRadius: 125,
-              borderColor: appColors.IconColor,
-              backgroundColor: '#F7F7F7',
-              justifyContent: 'center',
-              alignItems: 'center',
-              alignSelf: 'center',
-              marginBottom: '25%',
+      <AppStatusBar isbg={false} isDark={true} />
+      {latitude && longitude ? (
+        <>
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            showsUserLocation={true}
+            zoomControlEnabled={true}
+            showsCompass={true}
+            style={{width: '100%', height: '90%'}}
+            region={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.005,
+              longitudeDelta: 0.005,
             }}>
-            <AppIcon
-              Type={Icon.FontAwesome6}
-              name={'location-dot'}
-              size={80}
-              color={appColors.DARK_GRAY}
+            <Marker
+              description="hello"
+              coordinate={{
+                latitude: latitude,
+                longitude: longitude,
+              }}
+            />
+          </MapView>
+
+          <View style={{paddingHorizontal: 20, marginTop: 20}}>
+            <AppButton
+              disabled={buttonLoder}
+              loading={buttonLoder}
+              title="Use my current location"
+              style={{marginTop: 'auto', marginBottom: '10%'}}
+              onPress={() => {
+                getLocation();
+              }}
             />
           </View>
+        </>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <LottieView
+            style={{height: '90%', width: '100%'}}
+            source={require('../../../assets/animations/findLocation.json')}
+            autoPlay
+            loop
+          />
+          <View
+            style={{position: 'absolute', bottom: '30%', alignItems: 'center'}}>
+            <AppText
+              style={{
+                fontSize: 19,
+                color: appColors.Black_color,
+                fontWeight: '600',
+              }}>
+              Please wait
+            </AppText>
+            <AppText
+              style={{
+                fontSize: 16,
+                color: appColors.DARK_GRAY,
+                fontWeight: '400',
+              }}>
+              Finding your current location
+            </AppText>
+          </View>
         </View>
-
-        <AppButton
-          title="Allow"
-          style={{marginTop: 'auto', marginBottom: '10%'}}
-          onPress={() => {
-            // getPermission();
-            navigation.navigate(routes.Enter_Location);
-          }}
-        />
-      </AppView>
+      )}
     </>
   );
 };

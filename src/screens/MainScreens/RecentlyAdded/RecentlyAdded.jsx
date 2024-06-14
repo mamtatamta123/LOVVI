@@ -13,11 +13,8 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 import AppView from '../../../libComponents/AppView';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-import AppButton from '../../../libComponents/AppButton';
-import {routes} from '../../../utils/routes';
-
 import appColors from '../../../utils/appColors';
-import {flingGestureHandlerProps} from 'react-native-gesture-handler/lib/typescript/handlers/FlingGestureHandler';
+import {routes} from '../../../utils/routes';
 
 const RecentlyAdded = ({navigation}) => {
   return (
@@ -47,7 +44,9 @@ const RecentlyAdded = ({navigation}) => {
                     alignItems: 'center',
                     elevation: 5,
                   }}>
-                  <TouchableOpacity activeOpacity={0.8}>
+                  <TouchableOpacity
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate(routes.Edit_Profile)}>
                     <ImageBackground
                       resizeMode="cover"
                       borderRadius={15}

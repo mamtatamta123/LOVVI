@@ -26,13 +26,18 @@ import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import WelcomeModal from '../../../Modals/WelcomeModal';
 
 const NameScreen = ({navigation}) => {
   const [name, setName] = useState();
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isOpenWelcomeModal, setIsOpenWelcomeModal] = useState(false);
 
   return (
     <>
+      <WelcomeModal
+        isOpenWelcomeModal={isOpenWelcomeModal}
+        setIsOpenWelcomeModal={setIsOpenWelcomeModal}
+      />
       <AppGradientView
         style={{height: '100%'}}
         colors={appColors.PrimaryGradient2}>
@@ -74,49 +79,14 @@ const NameScreen = ({navigation}) => {
             </AppText>
             <AppText
               style={{fontSize: 13, width: '100%', marginTop: 5}}></AppText>
-
             <AppButton
               style={{marginBottom: '3%', marginTop: '20%'}}
               title={'Next'}
-              onPress={() => setIsModalVisible(!isModalVisible)}
+              onPress={() => setIsOpenWelcomeModal(true)}
             />
           </AppView>
         </ScrollView>
       </AppGradientView>
-
-      {/* ////////////////MODAL/////////////////////////////////////////////////// */}
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
-        <StatusBar backgroundColor={appColors.modalbg} />
-        <View style={styles.ModalViewContainer}>
-          <View style={styles.modalSubContent}>
-            <Image
-              resizeMode="contain"
-              source={require('../../../assets/Images/bye.png')}
-              style={styles.modalImage}
-            />
-            <Text style={styles.modalTitle}>Welcome, User!</Text>
-            <Text style={styles.modalText}>
-              There's a lot to discover out there. But let's get your profile
-              set up first.
-            </Text>
-            <View style={{width: '100%', marginTop: 20}}>
-              <AppButton
-                title="Let’s go"
-                // style={{marginHorizontal: 20}}
-                onPress={() => navigation.navigate(routes.DatePickr_Screen)}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-              <Text style={styles.editNameText}>Edit Name</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 };
@@ -138,7 +108,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   infoContainer: {
-    // marginHorizontal: wp(5),
     paddingHorizontal: 15,
     paddingVertical: '8%',
   },
@@ -166,7 +135,6 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    // marginHorizontal: 20,
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -195,9 +163,6 @@ const styles = StyleSheet.create({
   modalImage: {
     height: 100,
     width: 100,
-    // height: '29%',
-    // width: '50%',
-    // backgroundColor: 'red',
   },
   modalTitle: {
     color: appColors.BLACK,

@@ -22,6 +22,7 @@ import SelectSource from '../screens/authScreens/PhotosScreens/SelectSource';
 import LocationScreen from '../screens/authScreens/PhotosScreens/LocationScreen';
 import AllowLocation from '../screens/authScreens/PhotosScreens/AllowLocation';
 import EnterLocation from '../screens/authScreens/PhotosScreens/EnterLocation';
+import Home from '../screens/mainScreens/Home/Home';
 
 const AuthStack = () => {
   const Stack = createNativeStackNavigator();
@@ -64,8 +65,9 @@ const AuthStack = () => {
       <Stack.Screen name={routes.Upload_Photos} component={UploadPhotos} />
       <Stack.Screen name={routes.Select_Source} component={SelectSource} />
       <Stack.Screen name={routes.Location_Screen} component={LocationScreen} />
-      <Stack.Screen name={routes.Allow_Location} component={AllowLocation}   />
-      <Stack.Screen name={routes.Enter_Location} component={EnterLocation}   />
+      <Stack.Screen name={routes.Allow_Location} component={AllowLocation} />
+      <Stack.Screen name={routes.Enter_Location} component={EnterLocation} />
+      <Stack.Screen name={routes.Home} component={Home} />
     </Stack.Navigator>
   );
 };

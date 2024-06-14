@@ -14,7 +14,7 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
+import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
@@ -29,16 +29,41 @@ import AppTextInputLabel, {
 
 import {SelectCountry} from 'react-native-element-dropdown';
 import {countries} from '../../../utils/constants';
+import {CountryPicker, CountryButton} from 'react-native-country-codes-picker';
+import Loader from '../../../libComponents/Loader';
 
 const LoginScreen = ({navigation}) => {
+  const [showCountryModal, setShowCountryModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumberError, setPhoneNumberError] = useState('');
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
 
-  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [buttonLoader, setButtonLoader] = useState(false);
+  function ListHeaderComponent({countries, lang, onPress}) {
+    return (
+      <View
+        style={{
+          paddingBottom: 20,
+        }}>
+        <Text>Popular countries</Text>
+        {countries?.map((country, index) => {
+          return (
+            <CountryButton
+              key={index}
+              item={country}
+              name={country?.name?.[lang || 'en']}
+              onPress={() => onPress(country)}
+            />
+          );
+        })}
+      </View>
+    );
+  }
 
   return (
     <AppGradientView
       style={{height: '100%'}}
-      colors={appColors.PrimaryGradient2}>
+      colors={appColors.HomeGradientPrimaryGradient2}>
       <AppStatusBar />
       <AppHeader />
       <ScrollView
@@ -47,7 +72,6 @@ const LoginScreen = ({navigation}) => {
         <View style={styles.infoContainer}>
           <Text style={styles.titleText}>Sign In with Phone</Text>
           <Text style={styles.titleText}>Number</Text>
-
           <Text style={styles.subtitleText}>Enter your details to sign in</Text>
         </View>
 
@@ -56,30 +80,36 @@ const LoginScreen = ({navigation}) => {
             style={{
               flexDirection: 'row',
               alignItems: 'flex-end',
+              gap: 10,
             }}>
-            <View
+            <TouchableOpacity
+              onPress={() => setShowCountryModal(true)}
               style={{
                 borderWidth: 1,
-                width: '40%',
+                // width: '25%',
                 borderRadius: 10,
                 borderColor: appColors.TextInput_BgColor,
                 backgroundColor: appColors.TextInput_BgColor,
-
                 height: 50,
-                marginRight: 2,
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'row',
+                gap: 5,
+                paddingHorizontal: 10,
               }}>
-              <SelectCountry
-                labelField="country"
-                valueField="country"
-                value={selectedCountry}
-                data={countries}
-                placeholder="Select country"
-                searchPlaceholder={true}
-                onChange={country => setSelectedCountry(country.value)}
-                // style={{marginHorizontal: 10}}
+              <Text style={{color: appColors.DARK_GRAY}}>
+                {selectedCountryCode}
+              </Text>
+              <AppIcon
+                Type={Icon.Entypo}
+                name={'chevron-small-down'}
+                size={20}
+                color={appColors.DARK_GRAY}
               />
-            </View>
+            </TouchableOpacity>
+
             <AppTextInputLabel
+              maxLength={10}
               autoFocus={true}
               keyboardType={keyboardType.number_pad}
               // labelText="Phone Number"
@@ -87,15 +117,31 @@ const LoginScreen = ({navigation}) => {
               placeholder="Enter Your Phone Number"
               onChangeText={text => setPhoneNumber(text)}
               style={styles.input}
+              validationError={phoneNumberError}
             />
           </View>
+
           <AppButton
+            setButtonLoader={true}
             style={{marginTop: '20%'}}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.Email_Verification)}
+            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
           />
         </AppView>
       </ScrollView>
+      <CountryPicker
+        // searchMessage={'ind'}
+        show={showCountryModal}
+        onRequestClose={() => setShowCountryModal(!showCountryModal)}
+        // when picker button press you will get the country object with dial code
+        pickerButtonOnPress={item => {
+          // console.log('item=-----', item);
+          setSelectedCountryCode(item.dial_code);
+          setShowCountryModal(false);
+        }}
+        ListHeaderComponent={ListHeaderComponent}
+        popularCountries={['in', 'na', 'pl']}
+      />
     </AppGradientView>
   );
 };
@@ -142,7 +188,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   input: {
-    width: '60%',
+    // width: '82%',
+    flex: 1,
   },
 
   labelText: {
@@ -204,5 +251,9 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  imageStyle: {
+    width: 24,
+    height: 24,
   },
 });

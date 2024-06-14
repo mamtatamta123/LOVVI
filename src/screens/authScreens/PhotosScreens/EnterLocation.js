@@ -9,7 +9,7 @@ import {
   Alert,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
@@ -24,9 +24,23 @@ import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
 import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import {setLoggedIn, setUsedAddres} from '../../../redux/auth.reducer';
+import {useDispatch, useSelector} from 'react-redux';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {cleanSingle} from 'react-native-image-crop-picker';
 
 const EnterLocation = ({navigation}) => {
-  const [streetLocation, setstreetLocation] = useState();
+  const dispatch = useDispatch();
+  const [streetLocation, setstreetLocation] = useState('');
+  const [inputKey, setInputKey] = useState(0);
+  const current = useSelector(state => state.auth.currentAddress);
+
+  useEffect(() => {
+    if (current) {
+      setstreetLocation(current);
+      setInputKey(prevKey => prevKey + 1);
+    }
+  }, [current]);
 
   return (
     <>
@@ -39,39 +53,90 @@ const EnterLocation = ({navigation}) => {
         <AppStatusBar isDark={false} isbg={false} />
         <AppHeader isBlack={true} isColor={true} />
         <AppText style={styles.textContainer}>Enter Your Location?</AppText>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', width: '100%'}}>
+          <AppIcon Type={Icon.EvilIcons} name={'search'} />
+          <GooglePlacesAutocomplete
+            key={inputKey}
+            textInputProps={{
+              value: streetLocation,
+              // onChangeText: text => setstreetLocation(text),
+            }}
+            placeholder="Search"
+            minLength={2}
+            fetchDetails={false}
+            onPress={(data, details = null) => {
+              // console.log(data, 'details?.formatted_address');
+              setstreetLocation(details?.description);
+            }}
+            query={{
+              key: 'AIzaSyAKfvrGBxXsxJ2AovOGAdltyorLy4ytT1I',
+              language: 'en',
+            }}
+          />
+
+          <TouchableOpacity onPress={() => setstreetLocation(null)}>
+            <AppIcon Type={Icon.MaterialIcons} name={'cancel'} size={20} />
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.textInput}>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <AppIcon Type={Icon.EvilIcons} name={'search'} />
-            <TextInput
-              value={setstreetLocation}
-              placeholder="Golden Street Lane 2"
-              placeholderTextColor={appColors.DARK_GRAY}
-              onChangeText={text => setstreetLocation(text)}
-              IconType={Icon.FontAwesome5}
-              Iconsize={20}
-              Iconname={'phone-alt'}
-              Iconcolor={appColors.IconColor}
-              style={styles.input}
+          <TouchableOpacity
+            onPress={() => {
+              setstreetLocation(current);
+              // dispatch(setLoggedIn(true));
+            }}
+            style={{flexDirection: 'row', alignItems: 'center', gap: 8}}>
+            <AppIcon
+              Type={Icon.MaterialCommunityIcons}
+              name={'near-me'}
+              size={18}
+              color={appColors.primaryColor}
             />
-          </View>
-          <AppIcon Type={Icon.MaterialIcons} name={'cancel'} size={20}/>
-        </View>
-        <View style={styles.textInput}>
-          <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
-            <AppIcon Type={Icon.MaterialCommunityIcons} name={'near-me'} size={18} color={appColors.primaryColor}/>
-   <AppText style={{color:appColors.Black_color,fontSize:14,fontWeight:'600'}}>Use my current location</AppText>
+            <AppText
+              style={{
+                color: appColors.Black_color,
+                fontSize: 14,
+                fontWeight: '600',
+              }}>
+              Use my current location
+            </AppText>
           </TouchableOpacity>
-        <View style={{borderBottomWidth:1,borderColor:appColors.BLACK}}></View>
+          <View
+            style={{borderBottomWidth: 1, borderColor: appColors.BLACK}}></View>
         </View>
-        <View style={styles.textInput}>
-          <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}}>
-            <AppIcon Type={Icon.MaterialCommunityIcons} name={'near-me'} size={18} color={appColors.primaryColor}/>
-   <AppText style={{color:appColors.Black_color,fontSize:14,fontWeight:'600'}}>Golden Street Lane 2</AppText>
+        {/* <View style={styles.textInput}>
+          <TouchableOpacity
+            onPress={() => {
+              setstreetLocation(currentAddress);
+              dispatch(setLoggedIn(true));
+            }}
+            style={{flexDirection: 'row', alignItems: 'center'}}>
+            <AppIcon
+              Type={Icon.MaterialCommunityIcons}
+              name={'near-me'}
+              size={18}
+              color={appColors.primaryColor}
+            />
+            <AppText
+              style={{
+                color: appColors.Black_color,
+                fontSize: 14,
+                fontWeight: '600',
+              }}>
+              {streetLocation}
+            </AppText>
           </TouchableOpacity>
-        
-        </View>
-        <AppButton title="next" style={{marginTop: 30}} onPress={()=>navigation.navigate(routes.Home)} />
+        </View> */}
+        <AppButton
+          title="next"
+          style={{marginTop: 30}}
+          onPress={() => {
+            // dispatch(setLoggedIn(true));
+            navigation.navigate(routes.Home);
+            dispatch(setUsedAddres(streetLocation));
+          }}
+        />
       </AppView>
     </>
   );
@@ -91,9 +156,12 @@ const styles = StyleSheet.create({
     borderColor: appColors.TextInput_BgColor,
     // paddingHorizontal: 20,
     marginVertical: 10,
-    flexDirection:"row",
-    justifyContent:'space-between',
-    alignItems:'center',
-   paddingHorizontal:10
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  predefinedPlacesDescription: {
+    color: appColors.primaryColor,
   },
 });

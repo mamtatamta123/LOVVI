@@ -38,6 +38,10 @@ const AppTextInputLabel = ({
   borderRadius = wp(3),
   editable = true,
   autoFocus = false,
+  validationError = '',
+  maxLength,
+  line = false,
+  icon = false,
 }) => {
   return (
     <View style={[styles.container, style]}>
@@ -50,7 +54,17 @@ const AppTextInputLabel = ({
           color={Iconcolor}
           style={styles.icon}
         />
+        {line && (
+          <View
+            style={{
+              borderLeftWidth: 0.6,
+              borderColor: appColors.DARK_GRAY,
+              height: '50%',
+            }}></View>
+        )}
+
         <TextInput
+          maxLength={maxLength}
           autoFocus={autoFocus}
           editable={editable}
           keyboardType={keyboardType}
@@ -73,6 +87,11 @@ const AppTextInputLabel = ({
           </TouchableOpacity>
         )}
       </View>
+      {validationError && (
+        <Text style={{fontSize: 12, color: appColors.red}}>
+          {validationError}
+        </Text>
+      )}
     </View>
   );
 };
@@ -80,12 +99,13 @@ const AppTextInputLabel = ({
 export default AppTextInputLabel;
 
 const styles = StyleSheet.create({
-  container: {},
+  // container: {height: 100, backgroundColor: 'red'},
   labelText: {
     fontSize: fp(1.8),
     color: appColors.BLACK,
     fontWeight: '600',
     marginBottom: 3,
+    // backgroundColor: 'red',
   },
   inputContainer: {
     borderWidth: 1,
@@ -95,6 +115,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: appColors.TextInput_BgColor,
+    gap: 5,
   },
   icon: {
     marginRight: wp(2),

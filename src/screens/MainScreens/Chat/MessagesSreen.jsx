@@ -14,7 +14,7 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 import AppView from '../../../libComponents/AppView';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-import AppButton from '../../../libComponents/AppButton';
+
 import {routes} from '../../../utils/routes';
 
 import appColors from '../../../utils/appColors';
@@ -31,6 +31,7 @@ const MessageScreen = ({navigation}) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
+
             gap: 6,
           }}>
           <AppText style={styles.title}> Messages</AppText>
@@ -51,7 +52,7 @@ const MessageScreen = ({navigation}) => {
           <AppIcon
             Type={Icon.EvilIcons}
             name={'search'}
-            style={{marginLeft: 5}}
+            style={{marginLeft: 5, alignSelf: 'center'}}
           />
           <TextInput
             value={onSearchCourses}
@@ -64,35 +65,36 @@ const MessageScreen = ({navigation}) => {
           showsVerticalScrollIndicator={false}
           style={{marginBottom: '50%'}}>
           {array.map((item, index) => (
-            <View
+            <TouchableOpacity
+              onPress={() => navigation.navigate(routes.Chat_Screen)}
               key={index}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                borderBottomWidth: 1,
+                borderBottomWidth: 0.5,
                 borderBottomColor: appColors.IconColor,
               }}>
               <Image
                 source={require('../../../assets/Images/profile.png')}
-                style={{height: 80, width: 80}}
+                style={{height: 50, width: 50}}
               />
 
-              <View style={{marginHorizontal: 10, paddingVertical: '10%'}}>
+              <View style={{marginHorizontal: 10, paddingVertical: '4%'}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   <Text style={styles.title}>Jennifer</Text>
                   <View
                     style={{
-                      height: 30,
-                      width: 70,
                       borderRadius: 14,
                       backgroundColor: appColors.secondoryColor,
                       alignItems: 'center',
                       justifyContent: 'center',
                       marginHorizontal: 7,
+                      paddingHorizontal: 8,
+                      paddingVertical: 3,
                     }}>
                     <Text
                       style={{
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: '500',
                         color: appColors.BLACK,
                       }}>
@@ -112,7 +114,7 @@ const MessageScreen = ({navigation}) => {
                   </Text>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </ScrollView>
       </View>
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 14,
     // marginBottom: 20,
     color: appColors.BLACK,
   },

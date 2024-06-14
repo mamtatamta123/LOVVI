@@ -1,6 +1,7 @@
 export default appColors = {
   PrimaryGradient: ['#7DD12E', '#FECA06', '#FECA06'],
   PrimaryGradient2: ['#7DD12E', '#FECA06', '#FECA06', '#FECA06'],
+  HomeGradient: ['#7DD12E', '#7DD12E', '#FECA06'],
   primaryColor: '#7DD12E',
   secondoryColor: '#FECA06',
   greenShade: '#F4FFEB',

@@ -67,9 +67,11 @@ const DatePickrScreen = ({navigation}) => {
             placeholderTextColor={appColors.BLACK}
             style={styles.dateInput}
           />
+
           {showDatePicker && (
             <DateTimePicker
-              // style={{backgroundColor: 'red'}}
+              textColor="red"
+              // accentColor="red"
               Display="clock"
               themeVariant={'light'}
               value={new Date()}
@@ -78,6 +80,18 @@ const DatePickrScreen = ({navigation}) => {
               onChange={handleDOBDateChange}
               maximumDate={new Date()}
               onCancel={() => setShowDatePicker(false)}
+
+              // customStyles={{
+              //   datePicker: {
+              //     backgroundColor: 'red',
+              //   },
+              //   datePickerHeader: {
+              //     backgroundColor: 'red',
+              //   },
+              //   dateInput: {
+              //     color: 'red',
+              //   },
+              // }}
             />
           )}
         </TouchableOpacity>
@@ -173,5 +187,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: appColors.BLACK,
     zIndex: -1,
+  },
+  pickerBackground: {
+    backgroundColor: 'red', // Your desired background color
+    padding: 10,
   },
 });

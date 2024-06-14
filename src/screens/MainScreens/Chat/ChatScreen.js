@@ -25,7 +25,7 @@ import {configureLayoutAnimationBatch} from 'react-native-reanimated/lib/typescr
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 
 const ChatScreen = ({navigation}) => {
-  const [inputMessage, setInputMessage] = useState();
+  const [inputMessage, setInputMessage] = useState('');
   const flatListRef = useRef(null);
   const dummyChat = [
     {
@@ -233,18 +233,49 @@ const ChatScreen = ({navigation}) => {
                 }}>
                 {item?.message?.message}
               </Text>
+
+              <Text
+                style={{
+                  fontSize: 13,
+                  color:
+                    item.message.from === 'user'
+                      ? appColors.BLACK
+                      : appColors.white,
+                }}>
+                {'12:10 PM'}
+              </Text>
             </View>
           )}
         />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={inputMessage}
+            onChangeText={setInputMessage}
+            placeholder="Type a message..."
+            placeholderTextColor={appColors.IconColor}
+          />
+
+          <TouchableOpacity
+            disabled={!inputMessage}
+            // onPress={() => sendMessage()}
+            style={[
+              styles.sendButton,
+              {
+                backgroundColor: inputMessage
+                  ? appColors.white
+                  : appColors.primaryColor,
+              },
+            ]}>
+            <AppIcon
+              type={Icon.Ionicons}
+              name="send"
+              color={appColors.white}
+              size={20}
+            />
+          </TouchableOpacity>
+        </View>
       </AppView>
-      <View style={{backgroundColor: appColors.TextInput_BgColor}}>
-        <TextInput
-          value={inputMessage}
-          onChangeText={setInputMessage}
-          placeholder="Type a message..."
-          placeholderTextColor={appColors.BLACK}
-        />
-      </View>
     </AppGradientView>
   );
 };
@@ -300,16 +331,14 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 12,
   },
-  button: {
-    backgroundColor: appColors.white,
-    marginBottom: '3%',
-    marginTop: '20%',
-    borderWidth: 1,
-    borderColor: appColors.BLACK,
-  },
-  buttonSelected: {
-    backgroundColor: appColors.secondoryColor,
-  },
+  // button: {
+  //   backgroundColor: appColors.white,
+  //   marginBottom: '3%',
+  //   marginTop: '20%',
+  //   borderWidth: 1,
+  //   borderColor: appColors.BLACK,
+  // },
+
   mesageContainer: {
     maxWidth: '80%',
     paddingVertical: 8,
@@ -327,5 +356,32 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 5,
     gap: 6,
+  },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ddd',
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    gap: 6,
+  },
+  input: {
+    borderRadius: 30,
+    flex: 1,
+    borderWidth: 0.8,
+    borderColor: appColors.DARK_GRAY,
+    paddingHorizontal: 25,
+    color: appColors.BLACK,
+    fontSize: 16,
+    backgroundColor: appColors.white,
+  },
+  sendButton: {
+    height: 45,
+    width: 45,
+    borderRadius: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

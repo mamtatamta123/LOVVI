@@ -5,6 +5,7 @@ import {
   ViewStyle,
   TextStyle,
   TouchableOpacityProps,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import appColors from '../utils/appColors';
@@ -18,12 +19,20 @@ interface AppButtonProp extends TouchableOpacityProps {
   style?: ViewStyle;
   titleStyle?: TextStyle;
   height?: 55;
+  backgroundColor?: string;
+  color?: string;
+  loading?: boolean;
+  loaderColor?: string;
 }
 
 const AppButton: React.FC<AppButtonProp> = ({
   title,
   style,
   titleStyle,
+  backgroundColor,
+  loading = false,
+  color = 'black',
+  loaderColor = appColors.Black_color,
   ...restProp
 }) => {
   return (
@@ -32,9 +41,17 @@ const AppButton: React.FC<AppButtonProp> = ({
       style={[
         styles.buttonContainer,
         {backgroundColor: appColors.secondoryColor},
+        {backgroundColor: backgroundColor || appColors.secondoryColor},
         style,
       ]}>
-      <Text style={[styles.title, titleStyle]}>{title}</Text>
+      {loading ? (
+        <ActivityIndicator color={loaderColor} size={27} />
+      ) : (
+        <Text
+          style={[styles.title, titleStyle, {color: color || appColors.BLACK}]}>
+          {title}
+        </Text>
+      )}
     </TouchableOpacity>
   );
 };
@@ -42,7 +59,7 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   title: {
-    color: appColors.BLACK,
+    // color: color?appColors.IconColor.appColors.Black,
     fontSize: 17.5,
     fontWeight: 'bold',
   },

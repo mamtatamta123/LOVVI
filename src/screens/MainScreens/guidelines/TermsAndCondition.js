@@ -5,7 +5,7 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppView from '../../../libComponents/AppView';
 import styles from './styles';
-const TermsAndConditions = () => {
+const TermsAndCondition = () => {
   return (
     <AppView style={{backgroundColor: appColors.white}}>
       <AppStatusBar isDark={true} isbg={false} />
@@ -90,4 +90,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default TermsAndCondition;

@@ -8,6 +8,8 @@ import {
   Image,
   Alert,
   Linking,
+  ToastAndroid,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
@@ -20,15 +22,21 @@ import {routes} from '../../../utils/routes';
 import AppButton from '../../../libComponents/AppButton';
 import appColors from '../../../utils/appColors';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-import AppPrimaryButton from '../../../libComponents/AppPrimaryButton';
+
+import ImagePicker from 'react-native-image-crop-picker';
+
+import ImageSelectModal from '../../../Modals/ImageSelectModal';
+import {TextInput} from 'react-native-gesture-handler';
 
 const UploadPhotos = ({navigation}) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [showSelectOptionModal, setShowSelectOptionModal] = useState(false);
-
-  const openModal = () => {
-    setIsModalVisible(true);
-  };
+  const [showSelectOptionModal, setIsOpenageSelectModal] = useState(false);
+  const [isOpenImageSelectModal, setIsOpenImageSelectModal] = useState(false);
+  const [image1, setSelectedImage1] = useState('');
+  const [image2, setSelectedImage2] = useState('');
+  const [image3, setSelectedImage3] = useState('');
+  const [image4, setSelectedImage4] = useState('');
+  const [image5, setSelectedImage5] = useState('');
+  const [image6, setSelectedImage6] = useState('');
 
   const getPermission = async () => {
     if (Platform.OS === 'android') {
@@ -37,14 +45,11 @@ const UploadPhotos = ({navigation}) => {
           PermissionsAndroid.PERMISSIONS.CAMERA,
         );
         console.log('granted====', granted);
-        // if (granted[PermissionsAndroid.PERMISSIONS.CAMERA] === PermissionsAndroid.RESULTS.GRANTED &&
-        //   granted[PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION] === PermissionsAndroid.RESULTS.GRANTED &&){
-        //   }
-        if (granted !== 'granted') {
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          setIsOpenImageSelectModal(!isOpenImageSelectModal);
+        } else {
           console.log('hello');
           Linking.openSettings();
-        } else {
-          setIsModalVisible(!isModalVisible);
         }
       } catch (err) {
         console.warn(err);
@@ -52,201 +57,226 @@ const UploadPhotos = ({navigation}) => {
     }
   };
 
+  const pickImagesFromGallery = () => {
+    getPermission();
+    ImagePicker.openPicker({
+      width: 1000,
+      height: 1000,
+      cropping: true,
+    })
+      .then(image => {
+        console.log(image);
+        setSelectedImage1(image.path);
+
+        setIsOpenImageSelectModal(false);
+      })
+      .catch(error => {
+        setIsOpenImageSelectModal(false);
+        console.log('Error selecting image: ', error);
+      });
+  };
+
+  const takeImageFromCamera = () => {
+    ImagePicker.openCamera({
+      width: 40,
+      height: 18,
+      cropping: true,
+    })
+      .then(image => {
+        console.log(image);
+        setIsOpenImageSelectModal(false);
+        setSelectedImage1(image.path);
+      })
+      .catch(error => {
+        setIsOpenImageSelectModal(false);
+        console.log('Error taking image: ', error);
+      });
+  };
+
+  const handleSubmitImages = () => {
+    if (image1) {
+      navigation.navigate(routes.Location_Screen);
+    } else {
+      ToastAndroid.show('All fields required!', ToastAndroid.BOTTOM);
+    }
+  };
+
   return (
     <>
+      <AppStatusBar isDark={false} isbg={false} />
       <AppView
         style={{
           backgroundColor: appColors.white,
           flex: 1,
           paddingHorizontal: 15,
         }}>
-        <AppStatusBar isDark={false} isbg={false} />
         <AppHeader isBlack={true} isColor={true} />
         <AppText style={styles.textContainer}>Upload Your Photos</AppText>
         <AppText style={styles.textsubcontainer}>
           To Boost Your Daily Match Potential, Include your Photos
         </AppText>
+
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: '100%',
-            // paddingVertical:20
-            marginTop:30
+
+            marginTop: 30,
           }}>
-        
           <TouchableOpacity
-            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
             activeOpacity={0.5}
             style={styles.redBox}>
-            <AppIcon
-              Type={Icon.AntDesign}
-              name={'pluscircle'}
-              color={appColors.primaryColor}
-              size={26}
-            />
+            {image1 ? (
+              <Image
+                resizeMode="cover"
+                source={{uri: image1}}
+                style={{
+                  height: '100%',
+                  width: '100%',
+                  paddingVertical: 100,
+                  borderRadius: 20,
+                }}
+              />
+            ) : (
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            )}
           </TouchableOpacity>
           <View
             style={{
               justifyContent: 'space-between',
               width: '35%',
               alignItems: 'flex-end',
+              gap: 5,
             }}>
             <TouchableOpacity
-              onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+              onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
               activeOpacity={0.5}
               style={styles.blueBox}>
-              <AppIcon
-                Type={Icon.AntDesign}
-                name={'pluscircle'}
-                color={appColors.primaryColor}
-                size={26}
-              />
+              {image2 ? (
+                <Image
+                  source={{uri: image2}}
+                  style={{height: '100%', width: '100%', borderRadius: 10}}
+                />
+              ) : (
+                <AppIcon
+                  Type={Icon.AntDesign}
+                  name={'pluscircle'}
+                  color={appColors.primaryColor}
+                  size={26}
+                />
+              )}
             </TouchableOpacity>
+
             <TouchableOpacity
-              onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+              onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
               activeOpacity={0.5}
-              style={styles.greenBox}>
-              <AppIcon
-                Type={Icon.AntDesign}
-                name={'pluscircle'}
-                color={appColors.primaryColor}
-                size={26}
-              />
+              style={[
+                styles.greenBox,
+                image1 ? null : {borderStyle: 'dashed', borderWidth: 2},
+              ]}>
+              {image3 ? (
+                <Image
+                  source={{uri: image3}}
+                  style={{height: '100%', width: '100%', borderRadius: 10}}
+                />
+              ) : (
+                <AppIcon
+                  Type={Icon.AntDesign}
+                  name={'pluscircle'}
+                  color={appColors.primaryColor}
+                  size={26}
+                />
+              )}
             </TouchableOpacity>
           </View>
         </View>
+
         <View
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginTop: 10,
+            width: '100%',
+            gap: 5,
           }}>
           <TouchableOpacity
-            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
             activeOpacity={0.5}
             style={styles.yellowBox}>
-            <AppIcon
-              Type={Icon.AntDesign}
-              name={'pluscircle'}
-              color={appColors.primaryColor}
-              size={26}
-            />
+            {image4 ? (
+              <Image
+                source={{uri: image4}}
+                style={{width: '100%', height: '100%', borderRadius: 10}}
+              />
+            ) : (
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            )}
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
             activeOpacity={0.5}
             style={styles.purpleBox}>
-            <AppIcon
-              Type={Icon.AntDesign}
-              name={'pluscircle'}
-              color={appColors.primaryColor}
-              size={26}
-            />
+            {image5 ? (
+              <Image
+                source={{uri: image5}}
+                style={{width: '100%', height: '100%', borderRadius: 10}}
+              />
+            ) : (
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            )}
           </TouchableOpacity>
+
           <TouchableOpacity
-            onPress={() => setShowSelectOptionModal(!showSelectOptionModal)}
+            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
             activeOpacity={0.5}
             style={styles.orangeBox}>
-            <AppIcon
-              Type={Icon.AntDesign}
-              name={'pluscircle'}
-              color={appColors.primaryColor}
-              size={26}
-            />
+            {image6 ? (
+              <Image
+                source={{uri: image6}}
+                style={{height: '100%', width: '100%', borderRadius: 10}}
+              />
+            ) : (
+              <AppIcon
+                Type={Icon.AntDesign}
+                name={'pluscircle'}
+                color={appColors.primaryColor}
+                size={26}
+              />
+            )}
           </TouchableOpacity>
         </View>
 
         <AppButton
           title="Next"
           style={{marginTop: '20%'}}
-          onPressIn={() => navigation.navigate(routes.Location_Screen)}
+          onPress={handleSubmitImages}
         />
       </AppView>
-
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
-        <StatusBar backgroundColor={appColors.modalbg} />
-        <View style={styles.ModalViewContainer}>
-          <View style={styles.modalSubContent}>
-            <Text style={styles.modalTitle}>Photo Access </Text>
-            <Text style={styles.modalText}>
-              To upload photos from your device. Lovvi needs to access your
-              photos.
-            </Text>
-            <Text style={styles.modalText}>
-              Please tap "Allow" in the next step
-            </Text>
-            <View style={{width: '100%', marginTop: 20}}>
-              <AppButton
-                title="Okay"
-                style={{marginHorizontal: 20}}
-                // onPress={getPermission}
-                // onPress={() => navigation.navigate(routes.Select_Source)}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showSelectOptionModal}
-        onRequestClose={() => setShowSelectOptionModal(!showSelectOptionModal)}>
-        <View
-          style={{
-            width: '100%',
-            position: 'absolute',
-            backgroundColor: 'red',
-            bottom: 0,
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-            backgroundColor: appColors.white,
-            borderTopWidth: 0.6,
-            borderRightWidth: 0.6,
-            borderLeftWidth: 0.6,
-            borderColor: appColors.Black_color,
-          }}>
-          <View
-            style={{
-              paddingHorizontal: 20,
-              paddingTop: 20,
-              paddingBottom: 30,
-              alignItems: 'center',
-            }}>
-            <AppText style={{fontSize: 18, fontWeight: 'bold'}}>
-              Select Option
-            </AppText>
-            <View
-              style={{
-                width: '100%',
-                paddingVertical: 30,
-              }}>
-              <AppButton
-                title="Take photo"
-                style={{
-                  width: '100%',
-                  backgroundColor: appColors.white,
-                  borderWidth: 1,
-                }}
-              />
-              <AppButton
-                title="Choose from gallery"
-                style={{
-                  width: '100%',
-                  marginTop: 30,
-                  backgroundColor: appColors.white,
-                  borderWidth: 1,
-                }}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal>
+      <ImageSelectModal
+        isOpenImageSelectModal={isOpenImageSelectModal}
+        onPickImagesFromGallery={pickImagesFromGallery}
+        onTakeImageFromCamera={takeImageFromCamera}
+        onRequestClose={() => setIsOpenImageSelectModal(false)}
+        onPress={() => setIsOpenImageSelectModal(false)}
+      />
     </>
   );
 };
@@ -302,9 +332,9 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: appColors.greenShade,
     borderRadius: 10,
-    borderWidth: 2,
+
     borderColor: appColors.primaryColor,
-    borderStyle: 'dashed',
+
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -318,6 +348,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'yellow',
   },
   purpleBox: {
     height: 100,
@@ -329,6 +360,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'purple',
   },
   orangeBox: {
     height: 100,
@@ -340,6 +372,7 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: 'orange',
   },
   ModalViewContainer: {
     backgroundColor: appColors.modalbg,
