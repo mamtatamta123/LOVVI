@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
@@ -14,8 +14,11 @@ import appColors from '../../../utils/appColors';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {routes} from '../../../utils/routes';
+import {useSelector} from 'react-redux';
 
 const AllSettings = ({navigation}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
+  const [prigeRange, setPriceRange] = useState([0, 10]);
   return (
     <AppView>
       <AppStatusBar isDark={false} isbg={false} />
@@ -23,11 +26,29 @@ const AllSettings = ({navigation}) => {
       <ScrollView>
         <View style={styles.container}>
           <View style={styles.section}>
-            <AppText style={styles.sectionTitle}>Account settings</AppText>
+            <AppText
+              style={[
+                styles.sectionTitle,
+                {color: isarkMode ? appColors.white : appColors.BLACK},
+              ]}>
+              Account settings
+            </AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Phone Number</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Phone Number
+              </AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.phoneNumber}>+01 00000 00000</Text>
+                <Text
+                  style={[
+                    styles.phoneNumber,
+                    {color: isarkMode ? appColors.white : appColors.BLACK},
+                  ]}>
+                  +01 00000 00000
+                </Text>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
@@ -45,9 +66,21 @@ const AllSettings = ({navigation}) => {
           <View style={styles.section}>
             <AppText style={styles.sectionTitle}>Discovery settings</AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Location</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Location
+              </AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.rowTitle}>My current location</Text>
+                <Text
+                  style={[
+                    styles.rowTitle,
+                    {color: isarkMode ? appColors.white : appColors.BLACK},
+                  ]}>
+                  My current location
+                </Text>
               </View>
             </View>
             <Text style={styles.description}>
@@ -58,9 +91,21 @@ const AllSettings = ({navigation}) => {
           {/* =======================GLOBALSETTING================================= */}
           <View style={styles.section}>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Global</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Global
+              </AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.rowTitle}>My location</Text>
+                <Text
+                  style={[
+                    styles.rowTitle,
+                    {color: isarkMode ? appColors.white : appColors.BLACK},
+                  ]}>
+                  My location
+                </Text>
               </View>
             </View>
             <Text style={styles.description}>
@@ -84,10 +129,12 @@ const AllSettings = ({navigation}) => {
                 50mi.
               </AppText>
             </View>
-            <MultiSlider
-              values={[0, 1000]}
-              onValuesChangeFinish={val => setPriceRange(val)}
-            />
+            <View style={{alignItems: 'center'}}>
+              <MultiSlider
+                values={[0, 1000]}
+                onValuesChangeFinish={val => setPriceRange(val)}
+              />
+            </View>
             <View style={styles.row}>
               <AppText style={styles.description}>
                 Show people further away if i run out of profiles to see
@@ -109,7 +156,13 @@ const AllSettings = ({navigation}) => {
           <View style={styles.section}>
             <AppText style={styles.sectionTitle}>Show me</AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Women</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Women
+              </AppText>
               <View style={styles.rowContent}>
                 <AppIcon
                   Type={Icon.Feather}
@@ -135,10 +188,12 @@ const AllSettings = ({navigation}) => {
                 18 - 35
               </AppText>
             </View>
-            <MultiSlider
-              values={[0, 1000]}
-              onValuesChangeFinish={val => setPriceRange(val)}
-            />
+            <View style={{alignItems: 'center'}}>
+              <MultiSlider
+                values={[0, 1000]}
+                onValuesChangeFinish={val => setPriceRange(val)}
+              />
+            </View>
             <View style={styles.row}>
               <AppText style={styles.description}>
                 Show people slightly out of my preferred range if i run out of
@@ -198,9 +253,21 @@ const AllSettings = ({navigation}) => {
               Control who messages you
             </AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Photo verified chat</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Photo verified chat
+              </AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.phoneNumber}>00000</Text>
+                <Text
+                  style={[
+                    styles.phoneNumber,
+                    {color: isarkMode ? appColors.white : appColors.BLACK},
+                  ]}>
+                  00000
+                </Text>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
@@ -219,9 +286,21 @@ const AllSettings = ({navigation}) => {
           <View style={styles.section}>
             <AppText style={styles.sectionTitle}>Read Receipts</AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Send Read Receipts </AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Send Read Receipts{' '}
+              </AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.phoneNumber}>00000</Text>
+                <Text
+                  style={[
+                    styles.phoneNumber,
+                    {color: isarkMode ? appColors.white : appColors.BLACK},
+                  ]}>
+                  00000
+                </Text>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
@@ -246,13 +325,19 @@ const AllSettings = ({navigation}) => {
             onPress={() => navigation.navigate(routes.Appearance)}>
             <AppText style={styles.sectionTitle}>Appearance</AppText>
             <View style={styles.row}>
-              <AppText style={styles.rowTitle}>Dark Mode</AppText>
+              <AppText
+                style={[
+                  styles.rowTitle,
+                  {color: isarkMode ? appColors.white : appColors.BLACK},
+                ]}>
+                Dark Mode
+              </AppText>
               <View style={styles.rowContent}>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
                   size={19}
-                  color={appColors.BLACK}
+                  // color={appColors.BLACK}
                 />
               </View>
             </View>
@@ -283,7 +368,7 @@ const AllSettings = ({navigation}) => {
               onPress={() => navigation.navigate(routes.UserName)}>
               <AppText style={styles.rowTitle}>Username</AppText>
               <View style={styles.rowContent}>
-                <Text style={styles.phoneNumber}>Claim yours</Text>
+                <AppText style={styles.phoneNumber}>Claim yours</AppText>
                 <AppIcon
                   Type={Icon.Feather}
                   name={'chevron-right'}
@@ -426,7 +511,7 @@ const AllSettings = ({navigation}) => {
                   Type={Icon.Feather}
                   name={'chevron-right'}
                   size={19}
-                  color={appColors.BLACK}
+                  color={appColors.white}
                 />
               </View>
             </TouchableOpacity>
@@ -448,7 +533,7 @@ const AllSettings = ({navigation}) => {
               <AppText
                 style={{
                   fontSize: 16,
-                  color: appColors.BLACK,
+                  // color: appColors.BLACK,
                   fontWeight: '500',
                   marginTop: 10,
                 }}>
@@ -458,7 +543,7 @@ const AllSettings = ({navigation}) => {
             <AppText
               style={{
                 fontSize: 16,
-                color: appColors.BLACK,
+                // color: appColors.BLACK,
                 fontWeight: '500',
                 marginTop: 10,
               }}>
@@ -467,7 +552,7 @@ const AllSettings = ({navigation}) => {
             <AppText
               style={{
                 fontSize: 16,
-                color: appColors.BLACK,
+                // color: appColors.BLACK,
                 fontWeight: '500',
                 marginTop: 10,
               }}>
@@ -493,7 +578,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   sectionTitle: {
-    color: appColors.BLACK,
     fontWeight: 'bold',
     fontSize: 18,
   },
@@ -504,7 +588,7 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     fontSize: 16,
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontWeight: '500',
   },
   rowContent: {
@@ -513,7 +597,7 @@ const styles = StyleSheet.create({
   phoneNumber: {
     marginLeft: 10,
     fontSize: 13,
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontWeight: '500',
   },
   description: {

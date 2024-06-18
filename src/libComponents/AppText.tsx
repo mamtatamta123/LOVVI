@@ -1,7 +1,7 @@
 import {StyleSheet, Text, TextProps, TextStyle} from 'react-native';
 import React from 'react';
 import appColors from '../utils/appColors';
-import {useTheme} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
 interface AppTextProp extends TextProps {
   style: TextStyle;
@@ -14,15 +14,14 @@ const AppText: React.FC<AppTextProp> = ({
   fontSize = 16,
   ...restProp
 }) => {
-  const {colors} = useTheme();
+  const isarkMode = useSelector<any>(state => state.auth.isDarkMode);
   return (
     <Text
       {...restProp}
       style={[
         {
           fontSize: fontSize,
-          color: false ? appColors.white : appColors.Black_color,
-          // color: colors.text,
+          color: isarkMode ? appColors.white : appColors.Black_color,
         },
         {...style},
       ]}>
@@ -32,4 +31,3 @@ const AppText: React.FC<AppTextProp> = ({
 };
 
 export default AppText;
-const styles = StyleSheet.create({});

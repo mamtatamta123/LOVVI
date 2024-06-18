@@ -3,8 +3,10 @@ import React from 'react';
 import appColors from '../utils/appColors';
 import AppIcon, {Icon} from './AppIcon';
 import {useNavigation} from '@react-navigation/native';
+import {useSelector} from 'react-redux';
 
-const AppHeader = ({isBlack = false,isColor=false}) => {
+const AppHeader = ({isBlack = false, isColor = false}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
@@ -14,7 +16,7 @@ const AppHeader = ({isBlack = false,isColor=false}) => {
         <AppIcon
           Type={Icon.Ionicons}
           name={'chevron-back-outline'}
-          color={isColor ?appColors.BLACK: appColors.white } // Fixed color logic
+          color={isarkMode ? appColors.white : appColors.BLACK} // Fixed color logic
           size={29}
         />
       </TouchableOpacity>

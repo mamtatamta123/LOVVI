@@ -28,6 +28,9 @@ import GalleryScreen from '../screens/mainScreens/Profile/GalleryScreen';
 import messaging from '@react-native-firebase/messaging';
 import {notificationListeners} from '../notification/notificationOndisplay';
 import Block from '../screens/mainScreens/Settings/Block';
+import Notification from '../screens/mainScreens/NotificationScreen';
+import NotificationScreen from '../screens/mainScreens/NotificationScreen';
+
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
   useEffect(() => {
@@ -82,6 +85,10 @@ const MainStack = () => {
       <Stack.Screen name={routes.Edit_Profile} component={EditProfile} />
       <Stack.Screen name={routes.Gallery_Screen} component={GalleryScreen} />
       <Stack.Screen name={routes.Block} component={Block} />
+      <Stack.Screen
+        name={routes.NotificationScreen}
+        component={NotificationScreen}
+      />
     </Stack.Navigator>
   );
 };

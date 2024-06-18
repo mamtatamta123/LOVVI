@@ -26,19 +26,20 @@ import {setLoggedIn} from '../../../redux/auth.reducer';
 import AppTextInputLabel, {
   keyboardType,
 } from '../../../libComponents/AppTextInputLabel';
-
 import {SelectCountry} from 'react-native-element-dropdown';
 import {countries} from '../../../utils/constants';
 import {CountryPicker, CountryButton} from 'react-native-country-codes-picker';
 import Loader from '../../../libComponents/Loader';
+import {useSelector} from 'react-redux';
 
 const LoginScreen = ({navigation}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [showCountryModal, setShowCountryModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
-
   const [buttonLoader, setButtonLoader] = useState(false);
+
   function ListHeaderComponent({countries, lang, onPress}) {
     return (
       <View
@@ -74,7 +75,6 @@ const LoginScreen = ({navigation}) => {
           <Text style={styles.titleText}>Number</Text>
           <Text style={styles.subtitleText}>Enter your details to sign in</Text>
         </View>
-
         <AppView style={styles.formContainer}>
           <View
             style={{
@@ -85,11 +85,8 @@ const LoginScreen = ({navigation}) => {
             <TouchableOpacity
               onPress={() => setShowCountryModal(true)}
               style={{
-                borderWidth: 1,
-                // width: '25%',
                 borderRadius: 10,
-                borderColor: appColors.TextInput_BgColor,
-                backgroundColor: appColors.TextInput_BgColor,
+                backgroundColor: isarkMode ? '#474747' : appColors.grayShade,
                 height: 50,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -179,7 +176,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

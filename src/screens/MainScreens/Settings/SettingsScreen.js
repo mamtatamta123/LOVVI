@@ -6,8 +6,11 @@ import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppText from '../../../libComponents/AppText';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import {routes} from '../../../utils/routes';
+import appColors from '../../../utils/appColors';
+import {useSelector} from 'react-redux';
 
 const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -28,7 +31,9 @@ const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
             color={appColors.primaryColor}
           />
         </View>
-        <Text style={{color: appColors.BLACK}}>{title}</Text>
+        <Text style={{color: isarkMode ? appColors.white : appColors.BLACK}}>
+          {title}
+        </Text>
       </View>
       <AppIcon
         Type={Icon.Feather}

@@ -15,6 +15,8 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Zocial from 'react-native-vector-icons/Zocial';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
+import appColors from '../utils/appColors';
+import {useSelector} from 'react-redux';
 
 export const Icon = {
   MaterialCommunityIcons,
@@ -35,9 +37,16 @@ export const Icon = {
 };
 
 const AppIcon = ({Type, name, color, size = 24, style}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   return (
     <View style={{...style}}>
-      {Type && name && <Type name={name} color={color} size={size} />}
+      {Type && name && (
+        <Type
+          name={name}
+          color={isarkMode ? appColors.white : appColors.BLACK}
+          size={size}
+        />
+      )}
     </View>
   );
 };

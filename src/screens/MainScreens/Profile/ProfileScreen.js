@@ -25,8 +25,10 @@ import {
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
 import ImagePicker from 'react-native-image-crop-picker';
+import {useSelector} from 'react-redux';
 
 const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -44,25 +46,28 @@ const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
             Type={iconType}
             name={iconName}
             size={iconSize}
-            color={appColors.primaryColor}
+            color={isarkMode ? appColors.white : appColors.primaryColor}
           />
         </View>
-        <Text style={{color: appColors.BLACK}}>{title}</Text>
+        <Text style={{color: isarkMode ? appColors.white : appColors.BLACK}}>
+          {title}
+        </Text>
       </View>
       <AppIcon
         Type={Icon.Feather}
         name={'chevron-right'}
         size={19}
-        color={appColors.BLACK}
+        color={isarkMode ? appColors.white : appColors.BLACK}
       />
     </TouchableOpacity>
   );
 };
 
 const ProfileScreen = ({navigation}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [image, setSelectedImage] = useState('');
   const dispatch = useDispatch();
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [logoutModal, setLogOutModal] = useState(true);
   const share = async () => {
     try {
       const title = 'Checkout this awesome app 🔥🔥';
@@ -108,10 +113,20 @@ const ProfileScreen = ({navigation}) => {
     takeImageFromCamera();
     pickImagesFromGallery();
   };
+  const handlelogout = async () => {
+    setTimeout(() => {
+      dispatch(setLoggedIn(false));
+      AsyncStorage.clear();
+    }, 500);
+  };
 
   return (
     <>
-      <View style={{backgroundColor: appColors.white, flex: 1}}>
+      <View
+        style={{
+          backgroundColor: isarkMode ? appColors.Black_color : appColors.white,
+          flex: 1,
+        }}>
         <AppStatusBar isDark={false} isbg={false} />
         <AppHeader isBlack={true} isColor={true} />
         <AppText
@@ -166,7 +181,7 @@ const ProfileScreen = ({navigation}) => {
               fontSize: 20,
               marginHorizontal: 15,
               marginTop: 5,
-              color: appColors.Black_color,
+              // color: appColors.Black_color,
             }}>
             Mamta
           </AppText>
@@ -217,7 +232,7 @@ const ProfileScreen = ({navigation}) => {
           iconSize={20}
           title={'Log Out'}
           onPress={() => {
-            dispatch(setLoggedIn(false));
+            dispatch(setLoggedIn(true));
           }}
         />
       </View>
@@ -225,35 +240,8 @@ const ProfileScreen = ({navigation}) => {
       {/* <Modal
         animationType="fade"
         transparent={true}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
-        <StatusBar backgroundColor={appColors.modalbg} />
-        <View style={styles.ModalViewContainer}>
-          <View style={styles.modalSubContent}>
-            <Text style={styles.modalTitle}>Logout</Text>
-            <Text style={styles.modalText}>
-              Are you sure you want to log out ?
-            </Text>
-            <View style={{width: '100%', marginTop: 20}}>
-              <AppButton
-                title="Yes, Logout"
-                // style={{marginHorizontal: 20}}
-                // onPress={() => navigation.navigate(routes.DatePickr_Screen)}
-              />
-            </View>
-
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
-              <Text style={styles.editNameText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>  */}
-
-      {/* <Modal
-        animationType="fade"
-        transparent={false}
-        visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(!isModalVisible)}>
+        visible={logoutModal}
+        onRequestClose={() => setLogOutModal(!isModalVisible)}>
         <StatusBar backgroundColor={appColors.modalbg} />
         <View style={styles.ModalViewContainer}>
           <View style={styles.modalSubContent}>
@@ -264,12 +252,14 @@ const ProfileScreen = ({navigation}) => {
             <View style={{width: '100%', marginTop: 20}}>
               <AppButton
                 title="Yes, Logout"
-                // style={{marginHorizontal: 20}}
-                // onPress={() => navigation.navigate(routes.DatePickr_Screen)}
+                onPress={() => {
+                  navigation.navigate(routes.Login_Screen),
+                    setLogOutModal(false);
+                }}
               />
             </View>
 
-            <TouchableOpacity onPress={() => setIsModalVisible(false)}>
+            <TouchableOpacity onPress={() => setLogOutModal(false)}>
               <Text style={styles.editNameText}>Cancel</Text>
             </TouchableOpacity>
           </View>

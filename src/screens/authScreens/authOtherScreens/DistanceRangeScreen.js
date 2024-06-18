@@ -4,7 +4,6 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
-  
 } from 'react-native';
 import React, {useCallback, useState} from 'react';
 import appColors from '../../../utils/appColors';
@@ -26,10 +25,9 @@ import CheckBox from '@react-native-community/checkbox';
 import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 const DistanceRangeScreen = ({navigation}) => {
- 
-    const [range, setRange] = useState([0, 100]);
-    const [prigeRange, setPriceRange] = useState([]);
-
+  const [range, setRange] = useState([0, 100]);
+  const [prigeRange, setPriceRange] = useState([0, 10]);
+  console.log(prigeRange, 'uday');
 
   return (
     <AppGradientView
@@ -51,13 +49,24 @@ const DistanceRangeScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
-          <AppText style={styles.labelText}>Distance Preference?</AppText>
-         
-          <MultiSlider
-                      values={[0, 1000]}
-                      onValuesChangeFinish={val => setPriceRange(val)}
-                    />
-
+          <AppText style={styles.labelText}>
+            Distance Preference (in miles) ?
+          </AppText>
+          <View style={{alignItems: 'center'}}>
+            <MultiSlider
+              values={[0, 10]}
+              onValuesChangeFinish={val => setPriceRange(val)}
+              min={0}
+              max={10}
+              enableLabel
+            />
+          </View>
+          {/* <AppText style={styles.labelText}>
+            Min Distance : {prigeRange[0]}
+          </AppText>
+          <AppText style={styles.labelText}>
+            Max Distance : {prigeRange[1]}
+          </AppText> */}
           <AppButton
             style={{marginTop: '50%'}}
             title={'Next'}
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
     elevation: 2,
     marginTop: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     paddingTop: 10,
   },
   input: {
@@ -131,6 +140,7 @@ const styles = StyleSheet.create({
     color: appColors.BLACK,
     fontWeight: '600',
     marginTop: 20,
+    marginBottom: 50,
   },
 
   Sublabel: {

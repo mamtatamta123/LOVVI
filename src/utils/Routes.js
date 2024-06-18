@@ -1,3 +1,5 @@
+import NotificationScreen from '../screens/mainScreens/NotificationScreen';
+
 export const routes = {
   //AUTHSCREENS====================================
   BottomNavigation: 'BottomNavigation',
@@ -58,4 +60,5 @@ export const routes = {
   Edit_Profile: 'EditProfile',
   Gallery_Screen: 'GalleryScreen',
   Block: 'Block',
+  NotificationScreen: 'NotificationScreen',
 };

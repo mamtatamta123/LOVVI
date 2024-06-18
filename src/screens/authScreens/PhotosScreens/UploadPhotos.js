@@ -10,6 +10,7 @@ import {
   Linking,
   ToastAndroid,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 import AppView from '../../../libComponents/AppView';
@@ -31,6 +32,7 @@ import {TextInput} from 'react-native-gesture-handler';
 const UploadPhotos = ({navigation}) => {
   const [showSelectOptionModal, setIsOpenageSelectModal] = useState(false);
   const [isOpenImageSelectModal, setIsOpenImageSelectModal] = useState(false);
+  const [imageNumber, setImageNumber] = useState('');
   const [image1, setSelectedImage1] = useState('');
   const [image2, setSelectedImage2] = useState('');
   const [image3, setSelectedImage3] = useState('');
@@ -66,8 +68,19 @@ const UploadPhotos = ({navigation}) => {
     })
       .then(image => {
         console.log(image);
-        setSelectedImage1(image.path);
-
+        if (imageNumber === 'image1') {
+          setSelectedImage1(image.path);
+        } else if (imageNumber === 'image2') {
+          setSelectedImage2(image.path);
+        } else if (imageNumber === 'image3') {
+          setSelectedImage3(image.path);
+        } else if (imageNumber === 'image4') {
+          setSelectedImage4(image.path);
+        } else if (imageNumber === 'image5') {
+          setSelectedImage5(image.path);
+        } else if (imageNumber === 'image6') {
+          setSelectedImage6(image.path);
+        }
         setIsOpenImageSelectModal(false);
       })
       .catch(error => {
@@ -85,7 +98,19 @@ const UploadPhotos = ({navigation}) => {
       .then(image => {
         console.log(image);
         setIsOpenImageSelectModal(false);
-        setSelectedImage1(image.path);
+        if (imageNumber === 'image1') {
+          setSelectedImage1(image.path);
+        } else if (imageNumber === 'image2') {
+          setSelectedImage2(image.path);
+        } else if (imageNumber === 'image3') {
+          setSelectedImage3(image.path);
+        } else if (imageNumber === 'image4') {
+          setSelectedImage4(image.path);
+        } else if (imageNumber === 'image5') {
+          setSelectedImage5(image.path);
+        } else if (imageNumber === 'image6') {
+          setSelectedImage6(image.path);
+        }
       })
       .catch(error => {
         setIsOpenImageSelectModal(false);
@@ -121,13 +146,15 @@ const UploadPhotos = ({navigation}) => {
             flexDirection: 'row',
             justifyContent: 'space-between',
             width: '100%',
-
             marginTop: 30,
           }}>
           <TouchableOpacity
-            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+            onPress={() => {
+              setIsOpenImageSelectModal(!isOpenImageSelectModal);
+              setImageNumber('image1');
+            }}
             activeOpacity={0.5}
-            style={styles.redBox}>
+            style={[styles.redBox, {borderWidth: image1 ? 0 : 2}]}>
             {image1 ? (
               <Image
                 resizeMode="cover"
@@ -156,9 +183,12 @@ const UploadPhotos = ({navigation}) => {
               gap: 5,
             }}>
             <TouchableOpacity
-              onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+              onPress={() => {
+                setIsOpenImageSelectModal(!isOpenImageSelectModal);
+                setImageNumber('image2');
+              }}
               activeOpacity={0.5}
-              style={styles.blueBox}>
+              style={[styles.blueBox, {borderWidth: image2 ? 0 : 2}]}>
               {image2 ? (
                 <Image
                   source={{uri: image2}}
@@ -175,12 +205,12 @@ const UploadPhotos = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+              onPress={() => {
+                setIsOpenImageSelectModal(!isOpenImageSelectModal);
+                setImageNumber('image3');
+              }}
               activeOpacity={0.5}
-              style={[
-                styles.greenBox,
-                image1 ? null : {borderStyle: 'dashed', borderWidth: 2},
-              ]}>
+              style={[styles.greenBox, {borderWidth: image3 ? 0 : 2}]}>
               {image3 ? (
                 <Image
                   source={{uri: image3}}
@@ -207,9 +237,12 @@ const UploadPhotos = ({navigation}) => {
             gap: 5,
           }}>
           <TouchableOpacity
-            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+            onPress={() => {
+              setIsOpenImageSelectModal(!isOpenImageSelectModal);
+              setImageNumber('image4');
+            }}
             activeOpacity={0.5}
-            style={styles.yellowBox}>
+            style={[styles.yellowBox, {borderWidth: image4 ? 0 : 2}]}>
             {image4 ? (
               <Image
                 source={{uri: image4}}
@@ -226,9 +259,12 @@ const UploadPhotos = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+            onPress={() => {
+              setIsOpenImageSelectModal(!isOpenImageSelectModal);
+              setImageNumber('image5');
+            }}
             activeOpacity={0.5}
-            style={styles.purpleBox}>
+            style={[styles.purpleBox, {borderWidth: image5 ? 0 : 2}]}>
             {image5 ? (
               <Image
                 source={{uri: image5}}
@@ -245,9 +281,12 @@ const UploadPhotos = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setIsOpenImageSelectModal(!isOpenImageSelectModal)}
+            onPress={() => {
+              setIsOpenImageSelectModal(!isOpenImageSelectModal);
+              setImageNumber('image6');
+            }}
             activeOpacity={0.5}
-            style={styles.orangeBox}>
+            style={[styles.orangeBox, {borderWidth: image6 ? 0 : 2}]}>
             {image6 ? (
               <Image
                 source={{uri: image6}}
@@ -293,7 +332,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: appColors.Black_color,
     fontSize: 15,
-    fontWeight: '500',
     opacity: 0.5,
   },
   container: {
@@ -311,7 +349,6 @@ const styles = StyleSheet.create({
     backgroundColor: appColors.greenShade,
     borderRadius: 10,
     borderColor: appColors.primaryColor,
-    borderWidth: 2,
     borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
@@ -332,9 +369,9 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: appColors.greenShade,
     borderRadius: 10,
-
+    borderWidth: 2,
+    borderStyle: 'dashed',
     borderColor: appColors.primaryColor,
-
     justifyContent: 'center',
     alignItems: 'center',
   },

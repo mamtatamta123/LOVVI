@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -27,19 +27,163 @@ import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import EmojiSelector, {Categories} from 'react-native-emoji-selector';
 import {FadeIn} from 'react-native-reanimated';
 import {TriggerType} from '@notifee/react-native';
+import Feather from 'react-native-vector-icons/Feather';
 
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import ImagePicker from 'react-native-image-crop-picker';
+const dummyChat = [
+  {
+    id: '1',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Hello, how can I help you?',
+      from: 'me',
+    },
+  },
+  {
+    id: '2',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'I need some advice regarding my career.',
+      from: 'user',
+    },
+  },
+  {
+    id: '3',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Sure, please tell me your birth details.',
+      from: 'me',
+    },
+  },
+  {
+    id: '4',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'I was born on April 5, 1990.',
+      from: 'user',
+    },
+  },
+  {
+    id: '5',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Thank you. Could you also provide the time and place of birth?',
+      from: 'me',
+    },
+  },
+  {
+    id: '6',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'I was born at 2:30 PM in New York.',
+      from: 'user',
+    },
+  },
+  {
+    id: '7',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Great, let me analyze your chart. Please wait a moment.',
+      from: 'me',
+    },
+  },
+  {
+    id: '8',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Sure, take your time.',
+      from: 'user',
+    },
+  },
+  {
+    id: '9',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message:
+        'Based on your birth details, it looks like you have a strong career in the arts or communication.',
+      from: 'me',
+    },
+  },
+  {
+    id: '10',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message:
+        'That sounds interesting! I have been thinking about pursuing a career in writing.',
+      from: 'user',
+    },
+  },
+  {
+    id: '11',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message:
+        'That’s a good choice. Your chart shows strong potential in creative fields.',
+      from: 'me',
+    },
+  },
+  {
+    id: '12',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Thank you for the guidance. I feel more confident now.',
+      from: 'user',
+    },
+  },
+  {
+    id: '13',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'You’re welcome! Do you have any other questions?',
+      from: 'me',
+    },
+  },
+  {
+    id: '14',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'Not at the moment. Thanks again!',
+      from: 'user',
+    },
+  },
+  {
+    id: '15',
+    message: {
+      sender: 'user1',
+      me: 'me',
+      message: 'My pleasure. Have a great day!',
+      from: 'me',
+    },
+  },
+];
 
 const ChatScreen = ({navigation}) => {
   const [inputMessage, setInputMessage] = useState('');
   const flatListRef = useRef(null);
   const [isEmojiSelectorVisible, setEmojiSelectorVisible] = useState(false);
-
   const [modalVisible, setModalVisible] = useState(false);
-
   const [image1, setSelectedImage1] = useState('');
+  const [allmessages, setAllmessages] = useState(dummyChat);
+
+  // useEffect(() => {
+  //   setAllmessages(pre => console.log('pre----', pre));
+  // }, []);
 
   const handleEmojiSelected = emoji => {
     console.log(emoji);
@@ -97,147 +241,16 @@ const ChatScreen = ({navigation}) => {
       setModalVisible(false);
     }
   };
-  const dummyChat = [
-    {
-      id: '1',
+
+  const sendMessage = () => {
+    const data = {
       message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Hello, how can I help you?',
+        message: inputMessage,
         from: 'me',
       },
-    },
-    {
-      id: '2',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'I need some advice regarding my career.',
-        from: 'user',
-      },
-    },
-    {
-      id: '3',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Sure, please tell me your birth details.',
-        from: 'me',
-      },
-    },
-    {
-      id: '4',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'I was born on April 5, 1990.',
-        from: 'user',
-      },
-    },
-    {
-      id: '5',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message:
-          'Thank you. Could you also provide the time and place of birth?',
-        from: 'me',
-      },
-    },
-    {
-      id: '6',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'I was born at 2:30 PM in New York.',
-        from: 'user',
-      },
-    },
-    {
-      id: '7',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Great, let me analyze your chart. Please wait a moment.',
-        from: 'me',
-      },
-    },
-    {
-      id: '8',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Sure, take your time.',
-        from: 'user',
-      },
-    },
-    {
-      id: '9',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message:
-          'Based on your birth details, it looks like you have a strong career in the arts or communication.',
-        from: 'me',
-      },
-    },
-    {
-      id: '10',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message:
-          'That sounds interesting! I have been thinking about pursuing a career in writing.',
-        from: 'user',
-      },
-    },
-    {
-      id: '11',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message:
-          'That’s a good choice. Your chart shows strong potential in creative fields.',
-        from: 'me',
-      },
-    },
-    {
-      id: '12',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Thank you for the guidance. I feel more confident now.',
-        from: 'user',
-      },
-    },
-    {
-      id: '13',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'You’re welcome! Do you have any other questions?',
-        from: 'me',
-      },
-    },
-    {
-      id: '14',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'Not at the moment. Thanks again!',
-        from: 'user',
-      },
-    },
-    {
-      id: '15',
-      message: {
-        sender: 'user1',
-        me: 'me',
-        message: 'My pleasure. Have a great day!',
-        from: 'me',
-      },
-    },
-  ];
+    };
+    setAllmessages(pre => [...pre, data]);
+  };
 
   return (
     <AppGradientView
@@ -275,46 +288,50 @@ const ChatScreen = ({navigation}) => {
           }
           keyExtractor={item => item.id}
           style={styles.messagesList}
-          data={dummyChat}
+          data={allmessages}
           renderItem={({item}) => (
-            <View
-              style={[
-                styles.mesageContainer,
-                {
-                  borderBottomLeftRadius: item.message.from === 'user' ? 0 : 10,
-                  borderBottomRightRadius:
-                    item.message.from === 'user' ? 10 : 0,
-                  backgroundColor:
-                    item.message.from === 'user'
-                      ? appColors.white
-                      : appColors.primaryColor,
-                  borderRadius: 5,
-                  alignSelf:
-                    item.message.from === 'user' ? 'flex-start' : 'flex-end',
-                },
-              ]}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color:
-                    item.message.from === 'user'
-                      ? appColors.BLACK
-                      : appColors.white,
-                }}>
-                {item?.message?.message}
-              </Text>
+            console.log('item', item),
+            (
+              <View
+                style={[
+                  styles.mesageContainer,
+                  {
+                    borderBottomLeftRadius:
+                      item.message.from === 'user' ? 0 : 10,
+                    borderBottomRightRadius:
+                      item.message.from === 'user' ? 10 : 0,
+                    backgroundColor:
+                      item.message.from === 'user'
+                        ? appColors.white
+                        : appColors.primaryColor,
+                    borderRadius: 5,
+                    alignSelf:
+                      item.message.from === 'user' ? 'flex-start' : 'flex-end',
+                  },
+                ]}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    color:
+                      item.message.from === 'user'
+                        ? appColors.BLACK
+                        : appColors.white,
+                  }}>
+                  {item?.message?.message}
+                </Text>
 
-              <Text
-                style={{
-                  fontSize: 13,
-                  color:
-                    item.message.from === 'user'
-                      ? appColors.BLACK
-                      : appColors.white,
-                }}>
-                {'12:10 PM'}
-              </Text>
-            </View>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color:
+                      item.message.from === 'user'
+                        ? appColors.BLACK
+                        : appColors.white,
+                  }}>
+                  {'12:10 PM'}
+                </Text>
+              </View>
+            )
           )}
         />
 
@@ -326,7 +343,7 @@ const ChatScreen = ({navigation}) => {
               <Text style={styles.emojiText}>😀</Text>
             </TouchableOpacity>
 
-            {/* emoji modal====================================================== */}
+            {/* ============emoji modal====================================================== */}
             <Modal
               visible={isEmojiSelectorVisible}
               transparent={true}
@@ -337,60 +354,77 @@ const ChatScreen = ({navigation}) => {
                   category={Categories.symbols}
                   onEmojiSelected={handleEmojiSelected}
                   showSearchBar={true}
+                  columns={10}
+                  // columns={10}
+                  showHistory={true}
+                  // emojiStyle={styles.emoji}
                 />
               </View>
             </Modal>
           </View>
 
           {/* =========================== attachment modal================================ */}
-          <View style={styles.container}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
-              <AppIcon
-                Type={Icon.Entypo}
-                name={'attachment'}
-                color={appColors.DARK_GRAY}
-                size={20}
-              />
-            </TouchableOpacity>
 
-            <Modal
-              animationType="slide"
-              transparent={true}
-              visible={modalVisible}
-              onRequestClose={() => {
-                setModalVisible(!modalVisible);
+          <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <AppIcon
+              Type={Icon.Entypo}
+              name={'attachment'}
+              color={appColors.DARK_GRAY}
+              size={20}
+            />
+          </TouchableOpacity>
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                width: '100%',
+                elevation: 10,
               }}>
-              <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                  <Text style={styles.modalText}>Select Option</Text>
+              <View
+                style={{
+                  backgroundColor: appColors.TextInput_BgColor,
+                  alignItems: 'center',
+                  paddingHorizontal: 70,
+                  paddingVertical: 10,
+                }}>
+                <Text
+                  style={{
+                    color: appColors.Black_color,
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                  }}>
+                  Select Option
+                </Text>
 
-                  <TouchableOpacity
-                    style={styles.optionButton}
-                    onPress={takeImageFromCamera}>
-                    <Text style={styles.textStyle}>Open Camera</Text>
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={takeImageFromCamera}>
+                  <Text style={styles.textStyle}>Open Camera</Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.optionButton}
-                    onPress={pickImagesFromGallery}>
-                    <Text style={styles.textStyle}>Open Gallery</Text>
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={pickImagesFromGallery}>
+                  <Text style={styles.textStyle}>Open Gallery</Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    style={styles.optionButton}
-                    onPress={openDocument}>
-                    <Text style={styles.textStyle}>Attach Document</Text>
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={styles.optionButton}
-                    onPress={() => setModalVisible(!modalVisible)}>
-                    <Text style={styles.textStyle}>Cancel</Text>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  style={styles.optionButton}
+                  onPress={openDocument}>
+                  <Text style={styles.textStyle}>Attach Document</Text>
+                </TouchableOpacity>
               </View>
-            </Modal>
-          </View>
+            </View>
+          </Modal>
+
           {/* ============================================================================================== */}
 
           <TextInput
@@ -402,20 +436,21 @@ const ChatScreen = ({navigation}) => {
           />
 
           <TouchableOpacity
+            onPress={sendMessage}
             disabled={!inputMessage}
             style={[
               styles.sendButton,
               {
                 backgroundColor: inputMessage
-                  ? appColors.white
-                  : appColors.primaryColor,
+                  ? appColors.Green_color
+                  : appColors.grayShade,
               },
             ]}>
             <AppIcon
-              type={Icon.Ionicons}
+              Type={Icon.Feather}
               name="send"
-              color={appColors.white}
-              size={20}
+              color={appColors.Black_color}
+              size={15}
             />
           </TouchableOpacity>
         </View>
@@ -513,11 +548,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  // container: {
-  //   // flex: 1,
-  //   // justifyContent: 'center',
-  //   // alignItems: 'center',
-  // },
+
   emojiButton: {
     // padding: 6,
     // backgroundColor: '#ccc',
@@ -556,51 +587,16 @@ const styles = StyleSheet.create({
     height: 100,
     width: 100,
   },
-  modalTitle: {
-    color: appColors.BLACK,
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  modalText: {
-    color: appColors.BLACK,
-    fontSize: 15,
-    fontWeight: '400',
-    textAlign: 'center',
-    opacity: 0.6,
+
+  centeredView: {
+    // justifyContent: 'center',
+    // alignItems: 'center',
+    // marginTop: 22,
+    position: 'absolute',
+    bottom: '10%',
+    // paddingHorizontal: 40,
   },
 
-  editNameText: {
-    color: appColors.BLACK,
-    fontSize: 15,
-    fontWeight: '500',
-    marginTop: 10,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
   optionButton: {
     backgroundColor: appColors.secondoryColor,
     borderRadius: 20,
@@ -613,31 +609,7 @@ const styles = StyleSheet.create({
   textStyle: {
     color: 'white',
     fontWeight: 'bold',
-    container: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    centeredView: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 22,
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: 'red',
-      borderRadius: 20,
-      padding: 35,
-      alignItems: 'center',
-      shadowColor: 'red',
-      shadowOffset: {
-        width: 0,
-        height: 2,
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5,
-    },
+
     optionButton: {
       backgroundColor: 'red',
       borderRadius: 20,

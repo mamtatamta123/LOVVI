@@ -9,7 +9,7 @@ import MessagesSreen from '../screens/mainScreens/Chat/MessagesSreen';
 import ProfileScreen from '../screens/mainScreens/Profile/ProfileScreen';
 import Home from '../screens/mainScreens/Home/Home';
 import LinearGradient from 'react-native-linear-gradient';
-import AppIcon, { Icon } from '../libComponents/AppIcon';
+import AppIcon, {Icon} from '../libComponents/AppIcon';
 import appColors from '../utils/appColors';
 
 const BottomNavigation = () => {
@@ -24,25 +24,20 @@ const BottomNavigation = () => {
       }}></LinearGradient>
   );
   return (
-
     // <Tab.Navigator screenOptions={{headerShown: false, tabBarShowLabel: false}}>
     // <Tab.Screen name={routes.Home} component={Home} />
-
 
     //   <Tab.Screen name={routes.Recently_Added} component={RecentlyAdded} />
     //   <Tab.Screen name={routes.Messages_Sreen} component={MessagesSreen} />
     //   <Tab.Screen name={routes.Profile_Screen} component={ProfileScreen} />
     // </Tab.Navigator>
 
-
     <Tab.Navigator
- 
       initialRouteName="HomeScreen"
       screenOptions={{
         tabBarStyle: {
           backgroundColor: appColors.primaryColor,
           height: 55,
-        
         },
         tabBarActiveTintColor: appColors.primaryColor,
         tabBarInactiveTintColor: '#8A8A8A',
@@ -54,59 +49,59 @@ const BottomNavigation = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <AppIcon  Type={Icon.Foundation}
-              name="home" size={30} color={color} />
-              
+            <AppIcon
+              Type={Icon.Foundation}
+              name="home"
+              size={30}
+              color={color}
+            />
           ),
         }}
-        name={routes.Home} component={Home}
+        name={routes.Home}
+        component={Home}
       />
       <Tab.Screen
         options={{
           headerShown: false,
-         
+
           tabBarIcon: ({color, size}) => (
             <AppIcon
-            Type={Icon.AntDesign}
+              Type={Icon.AntDesign}
               name="heart"
               color={color}
               size={27}
             />
           ),
         }}
-        name={routes.Recently_Added} component={RecentlyAdded} 
+        name={routes.Recently_Added}
+        component={RecentlyAdded}
       />
-
 
       <Tab.Screen
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
-            <AppIcon
-            Type={Icon.Entypo}
-            name={'chat'}
-              color={color}
-              size={30}
-            />
+            <AppIcon Type={Icon.Entypo} name={'chat'} color={color} size={30} />
           ),
         }}
-        name={routes.Messages_Sreen} component={MessagesSreen} 
+        name={routes.Messages_Sreen}
+        component={MessagesSreen}
       />
       <Tab.Screen
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
             <AppIcon
-            Type={Icon.Ionicons}
-            name={'person-circle-outline'}
+              Type={Icon.Ionicons}
+              name={'person-circle-outline'}
               color={color}
               size={32}
             />
           ),
         }}
-        name={routes.Profile_Screen} component={ProfileScreen} 
+        name={routes.Profile_Screen}
+        component={ProfileScreen}
       />
-     
     </Tab.Navigator>
   );
 };

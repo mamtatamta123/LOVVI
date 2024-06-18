@@ -4,6 +4,7 @@ import {
   View,
   ScrollView,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -11,12 +12,6 @@ import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
-
-
-
-
-
-
 
 import {
   CodeField,
@@ -32,9 +27,13 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import appColors from '../../../utils/appColors';
-import { routes } from '../../../utils/routes';
+import {routes} from '../../../utils/routes';
+import {useDispatch, useSelector} from 'react-redux';
+import {setIsDarkMode} from '../../../redux/auth.reducer';
 
 const OtpVerificationScreen = ({navigation}) => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
+  const dispatch = useDispatch();
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -47,8 +46,8 @@ const OtpVerificationScreen = ({navigation}) => {
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
-     <AppStatusBar/>
-    <AppHeader/>
+      <AppStatusBar />
+      <AppHeader />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
@@ -60,7 +59,7 @@ const OtpVerificationScreen = ({navigation}) => {
           </Text>
         </View>
 
-        <AppView   style={styles.formContainer}>
+        <AppView style={styles.formContainer}>
           <CodeField
             ref={ref}
             {...props}
@@ -68,7 +67,10 @@ const OtpVerificationScreen = ({navigation}) => {
             value={value}
             onChangeText={setValue}
             cellCount={CELL_COUNT}
-            rootStyle={styles.codeFieldRoot}
+            rootStyle={[
+              styles.codeFieldRoot,
+              // {backgroundColor: isarkMode ? '#474747' : appColors.grayShade},
+            ]}
             keyboardType="number-pad"
             textContentType="oneTimeCode"
             autoComplete={Platform.select({
@@ -79,7 +81,17 @@ const OtpVerificationScreen = ({navigation}) => {
             renderCell={({index, symbol, isFocused}) => (
               <Text
                 key={index}
-                style={[styles.cell, isFocused && styles.focusCell]}
+                style={[
+                  styles.cell,
+
+                  isFocused && styles.focusCell,
+                  {
+                    backgroundColor: isarkMode
+                      ? '#474747'
+                      : appColors.grayShade,
+                    color: isarkMode ? appColors.white : appColors.Black_color,
+                  },
+                ]}
                 onLayout={getCellOnLayoutHandler(index)}>
                 {symbol || (isFocused ? <Cursor /> : null)}
               </Text>
@@ -93,10 +105,9 @@ const OtpVerificationScreen = ({navigation}) => {
           <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
             <AppText style={{fontSize: 15}}>Didn't received code?</AppText>
             <TouchableOpacity
-              onPress={() => navigation.navigate(routes.Email_Verification)}
-              
-              
-              >
+            // onPress={() => dispatch(setIsDarkMode(!isarkMode))}
+            // onPress={() => navigation.navigate(routes.Email_Verification)}
+            >
               <AppText
                 style={{
                   color: appColors.primaryColor,
@@ -149,7 +160,7 @@ const styles = StyleSheet.create({
     width: '75%',
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,
@@ -170,12 +181,12 @@ const styles = StyleSheet.create({
     height: wp(16),
     lineHeight: wp(15),
     fontSize: fp(4),
-    borderWidth: 2,
-    borderColor: appColors.TextInput_BgColor,
+    // borderWidth: 2,
+    // borderColor: appColors.TextInput_BgColor,
     textAlign: 'center',
     borderRadius: wp(4),
-    color: appColors.BLACK,
-    backgroundColor: appColors.TextInput_BgColor,
+    // color: appColors.BLACK,
+    // backgroundColor: appColors.TextInput_BgColor,
   },
   focusCell: {
     borderColor: '#000',

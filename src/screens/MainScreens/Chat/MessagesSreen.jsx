@@ -81,7 +81,7 @@ const MessageScreen = ({navigation}) => {
 
               <View style={{marginHorizontal: 10, paddingVertical: '4%'}}>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Text style={styles.title}>Jennifer</Text>
+                  <AppText style={styles.title}>Jennifer</AppText>
                   <View
                     style={{
                       borderRadius: 14,

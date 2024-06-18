@@ -6,6 +6,9 @@ import {
   Linking,
   Platform,
   Text,
+  Alert,
+  ToastAndroid,
+  TouchableOpacity,
 } from 'react-native';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
@@ -17,35 +20,111 @@ import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import appColors from '../../../utils/appColors';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from 'react-native-geolocation-service';
 import {useDispatch} from 'react-redux';
 import {setCurrentAddress} from '../../../redux/auth.reducer';
 import LottieView from 'lottie-react-native';
+import GetLocation from 'react-native-get-location';
+import {SuccessToast, ErrorToast} from '../../../utils/Toasters';
+import {isLocationEnabled} from 'react-native-android-location-enabler';
+import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
 
 const LocationScreen = ({navigation}) => {
   const [latitude, setLatitude] = useState('');
   const [longitude, setlongitude] = useState('');
   const [buttonLoder, setButtonLoder] = useState(false);
+  const [locationUpdate, setLocationUpdate] = useState('');
+  const [updateComponent, setUpdateComponent] = useState(false);
   const dispatch = useDispatch();
 
+  async function handleEnabledPressed() {
+    if (Platform.OS === 'android') {
+      try {
+        const enableResult = await promptForEnableLocationIfNeeded();
+        console.log('enableResult', enableResult);
+        if (enableResult === 'enabled') {
+          return true;
+        }
+        // The user has accepted to enable the location services
+        // data can be :
+        //  - "already-enabled" if the location services has been already enabled
+        //  - "enabled" if user has clicked on OK button in the popup
+      } catch (error) {
+        if (error) {
+          console.error(error.message);
+          return false;
+          // The user has not accepted to enable the location services or something went wrong during the process
+          // "err" : { "code" : "ERR00|ERR01|ERR02|ERR03", "message" : "message"}
+          // codes :
+          //  - ERR00 : The user has clicked on Cancel button in the popup
+          //  - ERR01 : If the Settings change are unavailable
+          //  - ERR02 : If the popup has failed to open
+          //  - ERR03 : Internal error
+        }
+      }
+    }
+  }
+
+  async function handleCheckPressed() {
+    if (Platform.OS === 'android') {
+      const checkEnabled = await isLocationEnabled();
+      if (checkEnabled) {
+        return true;
+      } else {
+        return handleEnabledPressed();
+      }
+    }
+  }
+
+  const requestLocationPermission = async () => {
+    try {
+      const isEnabled = await handleCheckPressed();
+      if (isEnabled) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        console.log('granted', granted);
+        if (granted === 'granted') {
+          console.log('granteddddddddddddddddd');
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } catch (err) {
+      return false;
+    }
+  };
+
   useEffect(() => {
-    Geolocation.getCurrentPosition(
-      info => {
-        console.log(info?.coords, '-----------coords');
-        setLatitude(info.coords.latitude);
-        setlongitude(info.coords.longitude);
-      },
-      error => {
-        console.warn(error, '---error ');
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 50000,
-        maximumAge: 1000,
-      },
-    );
-  }, []);
-  console.log('latitude=========', latitude, longitude);
+    const getLocation = async () => {
+      const result = await requestLocationPermission();
+      if (result) {
+        try {
+          const location = await GetLocation.getCurrentPosition({
+            enableHighAccuracy: true,
+            timeout: 60000,
+            forceRequestLocation: true,
+          });
+          console.log('location', location);
+          setLatitude(location.latitude);
+          setlongitude(location.longitude);
+        } catch (error) {
+          console.log('Error in getLocation:', error);
+          const {code, message} = error;
+          console.log('UDAY', code, message);
+          // if (code === 'UNAVAILABLE') {
+          //   ErrorToast('Please Enable your mobile location');
+          //   setLocationUpdate('UNAVAILABLE');
+          // } else if (code === 'CANCELLED') {
+          //   ErrorToast('Location is mandatory');
+          // }
+        }
+      }
+    };
+    getLocation();
+  }, [updateComponent]);
 
   const getLocation = () => {
     setButtonLoder(true);
@@ -111,22 +190,78 @@ const LocationScreen = ({navigation}) => {
           />
           <View
             style={{position: 'absolute', bottom: '30%', alignItems: 'center'}}>
-            <AppText
-              style={{
-                fontSize: 19,
-                color: appColors.Black_color,
-                fontWeight: '600',
-              }}>
-              Please wait
-            </AppText>
-            <AppText
-              style={{
-                fontSize: 16,
-                color: appColors.DARK_GRAY,
-                fontWeight: '400',
-              }}>
-              Finding your current location
-            </AppText>
+            {locationUpdate === 'UNAVAILABLE' ? (
+              <>
+                <AppText
+                  style={{
+                    fontSize: 19,
+                    color: appColors.Black_color,
+                    fontWeight: '600',
+                  }}>
+                  Please enable your mobile location
+                </AppText>
+                <TouchableOpacity
+                  onPress={() => setUpdateComponent(!updateComponent)}>
+                  <AppIcon
+                    Type={Icon.Feather}
+                    name="refresh-ccw"
+                    size={30}
+                    color={appColors.Black_color}
+                  />
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                {locationUpdate === 'never_ask_again' ? (
+                  <>
+                    <AppText
+                      style={{
+                        fontSize: 19,
+                        color: appColors.Black_color,
+                        fontWeight: '600',
+                      }}>
+                      Allow location permission in settings
+                    </AppText>
+                    <TouchableOpacity onPress={() => Linking.openSettings()}>
+                      <AppIcon
+                        Type={Icon.AntDesign}
+                        name="setting"
+                        size={30}
+                        color={appColors.Black_color}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => setUpdateComponent(!updateComponent)}>
+                      <AppIcon
+                        Type={Icon.Feather}
+                        name="refresh-ccw"
+                        size={30}
+                        color={appColors.Black_color}
+                      />
+                    </TouchableOpacity>
+                  </>
+                ) : (
+                  <>
+                    <AppText
+                      style={{
+                        fontSize: 19,
+                        color: appColors.Black_color,
+                        fontWeight: '600',
+                      }}>
+                      Please wait
+                    </AppText>
+                    <AppText
+                      style={{
+                        fontSize: 16,
+                        color: appColors.DARK_GRAY,
+                        fontWeight: '400',
+                      }}>
+                      Finding your current location
+                    </AppText>
+                  </>
+                )}
+              </>
+            )}
           </View>
         </View>
       )}
@@ -146,7 +281,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: appColors.Black_color,
     fontSize: 14,
-    fontWeight: '500',
     opacity: 0.5,
     marginTop: 5,
   },

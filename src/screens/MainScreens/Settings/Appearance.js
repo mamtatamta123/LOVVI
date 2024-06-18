@@ -5,8 +5,12 @@ import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 import appColors from '../../../utils/appColors';
+import {useDispatch, useSelector} from 'react-redux';
+import {setIsDarkMode} from '../../../redux/auth.reducer';
 
 const Appearance = () => {
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
+  const dispatch = useDispatch();
   return (
     <AppView>
       <AppStatusBar isDark={false} isbg={false} />
@@ -14,13 +18,35 @@ const Appearance = () => {
       <View style={{marginHorizontal: 15}}>
         <AppText style={styles.title}>Appearance</AppText>
         <TouchableOpacity style={styles.contanier}>
-          <Text style={styles.TextColor}>Use System Settings</Text>
+          <Text
+            style={[
+              styles.TextColor,
+              {color: isarkMode ? appColors.white : appColors.BLACK},
+            ]}>
+            Use System Settings
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.contanier}>
-          <Text style={styles.TextColor}>Light Mode</Text>
+        <TouchableOpacity
+          onPress={() => dispatch(setIsDarkMode(false))}
+          style={styles.contanier}>
+          <Text
+            style={[
+              styles.TextColor,
+              {color: isarkMode ? appColors.white : appColors.BLACK},
+            ]}>
+            Light Mode
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.contanier}>
-          <Text style={styles.TextColor}>Dark Mode</Text>
+        <TouchableOpacity
+          onPress={() => dispatch(setIsDarkMode(true))}
+          style={styles.contanier}>
+          <Text
+            style={[
+              styles.TextColor,
+              {color: isarkMode ? appColors.white : appColors.BLACK},
+            ]}>
+            Dark Mode
+          </Text>
         </TouchableOpacity>
         <Text style={{color: appColors.IconColor, fontSize: 13}}>
           Using the system settings will automatically adjust Lovvi appearance
@@ -45,7 +71,6 @@ const styles = StyleSheet.create({
     paddingVertical: 9,
   },
   TextColor: {
-    color: appColors.BLACK,
     fontSize: 15,
     fontWeight: '400',
   },

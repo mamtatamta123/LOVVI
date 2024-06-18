@@ -1,4 +1,5 @@
-import {createSlice, current} from '@reduxjs/toolkit';
+import {Tuple, createSlice, current} from '@reduxjs/toolkit';
+import {tapGestureHandlerProps} from 'react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler';
 
 const initialState = {
   loggedIn: false,

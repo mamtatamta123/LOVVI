@@ -28,12 +28,14 @@ import {setLoggedIn, setUsedAddres} from '../../../redux/auth.reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {cleanSingle} from 'react-native-image-crop-picker';
+import {ErrorToast} from '../../../utils/Toasters';
 
 const EnterLocation = ({navigation}) => {
   const dispatch = useDispatch();
   const [streetLocation, setstreetLocation] = useState('');
   const [inputKey, setInputKey] = useState(0);
   const current = useSelector(state => state.auth.currentAddress);
+  console.log('STREET LOCATION', streetLocation);
 
   useEffect(() => {
     if (current) {
@@ -129,12 +131,15 @@ const EnterLocation = ({navigation}) => {
           </TouchableOpacity>
         </View> */}
         <AppButton
-          title="next"
+          title="Next"
           style={{marginTop: 30}}
           onPress={() => {
-            // dispatch(setLoggedIn(true));
-            navigation.navigate(routes.Home);
-            dispatch(setUsedAddres(streetLocation));
+            if (streetLocation) {
+              dispatch(setLoggedIn(false));
+              dispatch(setUsedAddres(streetLocation));
+            } else {
+              ErrorToast('Enter your location to continue');
+            }
           }}
         />
       </AppView>

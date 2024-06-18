@@ -112,20 +112,20 @@ const styles = StyleSheet.create({
     paddingVertical: '8%',
   },
   titleText: {
-    color: appColors.Black_color,
+    // color: appColors.Black_color,
     fontSize: 24,
     fontWeight: '900',
     width: '70%',
   },
   subtitleText: {
-    color: appColors.Black_color,
+    // color: appColors.Black_color,
     fontSize: 14,
     fontWeight: '500',
     opacity: 0.7,
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

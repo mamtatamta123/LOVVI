@@ -64,7 +64,7 @@ const DatePickrScreen = ({navigation}) => {
             value={dateofbirth}
             editable={false}
             placeholder="dd-mm-yyyy"
-            placeholderTextColor={appColors.BLACK}
+            placeholderTextColor={appColors.DARK_GRAY}
             style={styles.dateInput}
           />
 
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

@@ -11,14 +11,11 @@ import {
   responsiveFontSize as fp,
 } from 'react-native-responsive-dimensions';
 
-
-
-
-
 import AppButton from '../../../libComponents/AppButton';
 import AppText from '../../../libComponents/AppText';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
-import { routes } from '../../../utils/routes';
+import {routes} from '../../../utils/routes';
+import appColors from '../../../utils/appColors';
 
 const WelcomeScreen = ({navigation}) => {
   return (
@@ -43,6 +40,7 @@ const WelcomeScreen = ({navigation}) => {
           title={'Sign Up'}
         /> */}
         <AppButton
+          titleStyle={{color: appColors.Black_color}}
           onPress={() => navigation.navigate(routes.Login_Screen)}
           style={{marginTop: '8%', borderWidth: 1, backgroundColor: null}}
           title={'Sign In'}

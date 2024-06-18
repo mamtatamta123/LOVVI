@@ -40,7 +40,6 @@ const AppButton: React.FC<AppButtonProp> = ({
       {...restProp}
       style={[
         styles.buttonContainer,
-        {backgroundColor: appColors.secondoryColor},
         {backgroundColor: backgroundColor || appColors.secondoryColor},
         style,
       ]}>
@@ -48,7 +47,7 @@ const AppButton: React.FC<AppButtonProp> = ({
         <ActivityIndicator color={loaderColor} size={27} />
       ) : (
         <Text
-          style={[styles.title, titleStyle, {color: color || appColors.BLACK}]}>
+          style={[styles.title, {color: color || appColors.BLACK}, titleStyle]}>
           {title}
         </Text>
       )}

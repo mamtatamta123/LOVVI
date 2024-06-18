@@ -19,39 +19,62 @@ import {
 } from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
 import AppButton from '../libComponents/AppButton';
+import {useSelector} from 'react-redux';
+import AppText from '../libComponents/AppText';
+import LinearGradient from 'react-native-linear-gradient';
 
 const WelcomeModal = ({isOpenWelcomeModal, setIsOpenWelcomeModal}) => {
   const navigation = useNavigation();
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
+
   return (
     <>
-      <Modal visible={isOpenWelcomeModal}>
+      <Modal visible={isOpenWelcomeModal} transparent={true}>
         <StatusBar backgroundColor={appColors.modalbg} />
         <View style={styles.ModalViewContainer}>
-          <View style={styles.modalSubContent}>
-            <Image
-              resizeMode="contain"
-              source={require('../assets/Images/bye.png')}
-              style={styles.modalImage}
-            />
-            <Text style={styles.modalTitle}>Welcome, User!</Text>
-            <Text style={styles.modalText}>
-              There's a lot to discover out there. But let's get your profile
-              set up first.
-            </Text>
-            <View style={{width: '100%', marginTop: 20}}>
-              <AppButton
-                title="Let’s go"
-                onPress={() => {
-                  navigation.navigate(routes.DatePickr_Screen),
-                    setIsOpenWelcomeModal(false);
-                }}
+          <LinearGradient
+            style={{
+              borderRadius: 10,
+            }}
+            colors={
+              isDarkMode
+                ? ['#454545', '#2D2D2D']
+                : [appColors.white, appColors.white]
+            }>
+            <View
+              style={[
+                styles.modalSubContent,
+                // {
+                //   backgroundColor: isDarkMode
+                //     ? appColors.Black_color
+                //     : appColors.white,
+                // },
+              ]}>
+              <Image
+                resizeMode="contain"
+                source={require('../assets/Images/bye.png')}
+                style={styles.modalImage}
               />
-            </View>
+              <AppText style={styles.modalTitle}>Welcome, User!</AppText>
+              <AppText style={styles.modalText}>
+                There's a lot to discover out there. But let's get your profile
+                set up first.
+              </AppText>
+              <View style={{width: '100%', marginTop: 20}}>
+                <AppButton
+                  title="Let’s go"
+                  onPress={() => {
+                    navigation.navigate(routes.DatePickr_Screen),
+                      setIsOpenWelcomeModal(false);
+                  }}
+                />
+              </View>
 
-            <TouchableOpacity onPress={() => setIsOpenWelcomeModal(false)}>
-              <Text style={styles.editNameText}>Edit Name</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity onPress={() => setIsOpenWelcomeModal(false)}>
+                <AppText style={styles.editNameText}>Edit Name</AppText>
+              </TouchableOpacity>
+            </View>
+          </LinearGradient>
         </View>
       </Modal>
     </>
@@ -68,7 +91,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '7%',
   },
   modalSubContent: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderRadius: 10,
     paddingHorizontal: 15,
     alignItems: 'center',
@@ -82,12 +105,12 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
   },
   modalTitle: {
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontSize: 20,
     fontWeight: 'bold',
   },
   modalText: {
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontSize: 15,
     fontWeight: '400',
     textAlign: 'center',
@@ -97,7 +120,7 @@ const styles = StyleSheet.create({
     // marginTop: 20,
   },
   editNameText: {
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontSize: 15,
     fontWeight: '500',
     marginTop: 10,

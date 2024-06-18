@@ -56,22 +56,17 @@ const HouseRules = ({navigation}) => {
           </AppText>
           <AppText style={styles.labelText}>Stay safe.</AppText>
 
-<AppText style={styles.Sublabel}>
-Don't be too quick to give out personal information. Date Safely
-</AppText>
- <AppText style={styles.labelText}>Play  it cool.</AppText>
+          <AppText style={styles.Sublabel}>
+            Don't be too quick to give out personal information. Date Safely
+          </AppText>
+          <AppText style={styles.labelText}>Play it cool.</AppText>
 
-<AppText style={styles.Sublabel}>
-Respect others and treat them as you would like to be treated.
-</AppText>
- <AppText style={styles.labelText}>Be proactive.</AppText>
+          <AppText style={styles.Sublabel}>
+            Respect others and treat them as you would like to be treated.
+          </AppText>
+          <AppText style={styles.labelText}>Be proactive.</AppText>
 
-<AppText style={styles.Sublabel}>
-Always report bad behaviour
-</AppText>
-
-
-
+          <AppText style={styles.Sublabel}>Always report bad behaviour</AppText>
 
           <AppButton
             style={{marginTop: '50%'}}
@@ -118,7 +113,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,
@@ -143,13 +138,13 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: fp(2),
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontWeight: '600',
     marginTop: 20,
   },
 
   Sublabel: {
-    color: appColors.Black_color,
+    // color: appColors.Black_color,
     fontSize: 12,
     fontWeight: '500',
     opacity: 0.6,

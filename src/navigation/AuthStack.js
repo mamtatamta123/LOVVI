@@ -67,7 +67,6 @@ const AuthStack = () => {
       <Stack.Screen name={routes.Location_Screen} component={LocationScreen} />
       <Stack.Screen name={routes.Allow_Location} component={AllowLocation} />
       <Stack.Screen name={routes.Enter_Location} component={EnterLocation} />
-      <Stack.Screen name={routes.Home} component={Home} />
     </Stack.Navigator>
   );
 };
