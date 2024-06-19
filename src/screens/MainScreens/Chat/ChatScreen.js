@@ -28,10 +28,11 @@ import EmojiSelector, {Categories} from 'react-native-emoji-selector';
 import {FadeIn} from 'react-native-reanimated';
 import {TriggerType} from '@notifee/react-native';
 import Feather from 'react-native-vector-icons/Feather';
-
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import ImagePicker from 'react-native-image-crop-picker';
+import {useSelector} from 'react-redux';
+
 const dummyChat = [
   {
     id: '1',
@@ -180,6 +181,7 @@ const ChatScreen = ({navigation}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [image1, setSelectedImage1] = useState('');
   const [allmessages, setAllmessages] = useState(dummyChat);
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
 
   // useEffect(() => {
   //   setAllmessages(pre => console.log('pre----', pre));
@@ -273,8 +275,8 @@ const ChatScreen = ({navigation}) => {
             />
           </View>
           <View style={{}}>
-            <Text style={styles.titleText}>Jerom Hazeal</Text>
-            <Text style={styles.titleText}>Online</Text>
+            <AppText style={styles.titleText}>Jerom Hazeal</AppText>
+            <AppText style={styles.titleText}>Online</AppText>
           </View>
         </View>
       </View>
@@ -467,7 +469,7 @@ const styles = StyleSheet.create({
     paddingVertical: '8%',
   },
   titleText: {
-    color: appColors.Black_color,
+    // color: appColors.Black_color,
     fontSize: 24,
     fontWeight: '900',
     // width: '70%',
@@ -481,7 +483,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

@@ -50,7 +50,7 @@ const SchoolScreen = ({navigation}) => {
             style={{marginTop: 20}}
           />
 
-          <AppText style={{fontSize: 13, width: '100%', marginTop: 5}}>
+          <AppText style={styles.subtitleText}>
             This is how it’ll appear on your profile.
           </AppText>
 
@@ -58,7 +58,9 @@ const SchoolScreen = ({navigation}) => {
             disabled={school ? false : true}
             style={{
               marginTop: '20%',
-              backgroundColor: school ? appColors.secondoryColor : null,
+              backgroundColor: school
+                ? appColors.secondoryColor
+                : appColors.white,
               borderWidth: school ? 0 : 1,
             }}
             title={'Next'}
@@ -98,14 +100,14 @@ const styles = StyleSheet.create({
     width: '70%',
   },
   subtitleText: {
-    color: appColors.Black_color,
-    fontSize: 15,
+    // color: appColors.Black_color,
+    fontSize: 13,
     fontWeight: '500',
     opacity: 0.6,
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

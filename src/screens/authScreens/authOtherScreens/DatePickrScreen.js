@@ -26,8 +26,10 @@ import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moments from 'moment';
+import {useSelector} from 'react-redux';
 
 const DatePickrScreen = ({navigation}) => {
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
   const [dateofbirth, setDateOfBirth] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
   const handleDOBDateChange = (event, selectedDate) => {
@@ -65,7 +67,10 @@ const DatePickrScreen = ({navigation}) => {
             editable={false}
             placeholder="dd-mm-yyyy"
             placeholderTextColor={appColors.DARK_GRAY}
-            style={styles.dateInput}
+            style={[
+              styles.dateInput,
+              {color: isDarkMode ? appColors.white : appColors.BLACK},
+            ]}
           />
 
           {showDatePicker && (
@@ -101,7 +106,15 @@ const DatePickrScreen = ({navigation}) => {
         </AppText>
 
         <AppButton
-          style={{marginBottom: '3%', marginTop: '20%'}}
+          disabled={dateofbirth ? false : true}
+          style={{
+            marginBottom: '3%',
+            marginTop: '20%',
+            backgroundColor: dateofbirth
+              ? appColors.secondoryColor
+              : appColors.white,
+            borderWidth: dateofbirth ? 0 : 1,
+          }}
           title={'Next'}
           onPress={() => navigation.navigate(routes.Gender_Screen)}
         />
@@ -185,7 +198,6 @@ const styles = StyleSheet.create({
   dateInput: {
     flex: 1,
     fontSize: 15,
-    color: appColors.BLACK,
     zIndex: -1,
   },
   pickerBackground: {

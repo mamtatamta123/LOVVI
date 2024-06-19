@@ -31,7 +31,6 @@ const MessageScreen = ({navigation}) => {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-
             gap: 6,
           }}>
           <AppText style={styles.title}> Messages</AppText>
@@ -135,7 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 14,
     // marginBottom: 20,
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
   },
 
   button: {

@@ -4,6 +4,8 @@ import AppText from '../libComponents/AppText';
 import AppButton from '../libComponents/AppButton';
 import appColors from '../utils/appColors';
 import AppStatusBar from '../libComponents/AppStatusBar';
+import LinearGradient from 'react-native-linear-gradient';
+import {useSelector} from 'react-redux';
 
 const ImageSelectModal = ({
   onRequestClose,
@@ -12,6 +14,7 @@ const ImageSelectModal = ({
   onTakeImageFromCamera,
   onPress,
 }) => {
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
   return (
     <>
       <AppStatusBar backgroundColor="rgba(0, 0, 0, 0.5)" />
@@ -23,7 +26,15 @@ const ImageSelectModal = ({
           <TouchableOpacity
             onPress={onPress}
             style={{flex: 1}}></TouchableOpacity>
-          <View style={styles.mainContainer}>
+          <View
+            style={[
+              styles.mainContainer,
+              {
+                backgroundColor: isDarkMode
+                  ? appColors.Black_color
+                  : appColors.white,
+              },
+            ]}>
             <View
               style={{
                 paddingHorizontal: 20,
@@ -77,7 +88,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    backgroundColor: appColors.white,
     borderTopWidth: 0.6,
     borderRightWidth: 0.6,
     borderLeftWidth: 0.6,

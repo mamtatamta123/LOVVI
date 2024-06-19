@@ -42,6 +42,9 @@ const OtpVerificationScreen = ({navigation}) => {
   });
   const CELL_COUNT = 4;
 
+  const handleOtpVerification = () => {
+    navigation.navigate(routes.Email_Verification);
+  };
   return (
     <AppGradientView
       style={{height: '100%'}}
@@ -98,9 +101,16 @@ const OtpVerificationScreen = ({navigation}) => {
             )}
           />
           <AppButton
-            style={{marginBottom: '10%', marginTop: '10%'}}
+            disabled={value.length !== 4 ? true : false}
+            style={{
+              marginBottom: '10%',
+              marginTop: '10%',
+              backgroundColor:
+                value.length === 4 ? appColors.secondoryColor : appColors.white,
+              borderWidth: value.length === 4 ? 0 : 1,
+            }}
             title={'Verify'}
-            onPress={() => navigation.navigate(routes.Email_Verification)}
+            onPress={handleOtpVerification}
           />
           <AppView style={{flexDirection: 'row', justifyContent: 'center'}}>
             <AppText style={{fontSize: 15}}>Didn't received code?</AppText>

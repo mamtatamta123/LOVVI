@@ -152,7 +152,6 @@ const SelectInterest = ({navigation}) => {
   return (
     <AppView
       style={{
-        backgroundColor: appColors.white,
         flex: 1,
         paddingHorizontal: 15,
       }}>
@@ -164,9 +163,7 @@ const SelectInterest = ({navigation}) => {
       <AppText
         style={{
           fontWeight: 'bold',
-          color: appColors.Black_color,
           fontSize: 15,
-          fontWeight: '500',
           opacity: 0.5,
         }}>
         Discover Meaningful Connections by Selecting Your Interests

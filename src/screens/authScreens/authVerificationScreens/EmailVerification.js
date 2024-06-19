@@ -23,13 +23,15 @@ import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import {useSelector} from 'react-redux';
 
 const EmailVerification = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [toggleCheckBox, setToggleCheckBox] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
 
   return (
     <AppGradientView
@@ -66,7 +68,15 @@ const EmailVerification = ({navigation}) => {
           </AppText>
 
           <AppButton
-            style={{marginBottom: '3%', marginTop: '20%'}}
+            disabled={email ? false : true}
+            style={{
+              marginBottom: '3%',
+              marginTop: '20%',
+              backgroundColor: email
+                ? appColors.secondoryColor
+                : appColors.white,
+              borderWidth: email ? 0 : 1,
+            }}
             title={'Next'}
             onPress={() => navigation.navigate(routes.House_Rules)}
           />

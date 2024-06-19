@@ -29,7 +29,7 @@ import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
 import WelcomeModal from '../../../Modals/WelcomeModal';
 
 const NameScreen = ({navigation}) => {
-  const [name, setName] = useState();
+  const [name, setName] = useState('');
   const [isOpenWelcomeModal, setIsOpenWelcomeModal] = useState(false);
 
   return (
@@ -80,7 +80,15 @@ const NameScreen = ({navigation}) => {
             <AppText
               style={{fontSize: 13, width: '100%', marginTop: 5}}></AppText>
             <AppButton
-              style={{marginBottom: '3%', marginTop: '20%'}}
+              disabled={name ? false : true}
+              style={{
+                marginBottom: '3%',
+                marginTop: '20%',
+                backgroundColor: name
+                  ? appColors.secondoryColor
+                  : appColors.white,
+                borderWidth: name ? 0 : 1,
+              }}
               title={'Next'}
               onPress={() => setIsOpenWelcomeModal(true)}
             />
@@ -112,7 +120,7 @@ const styles = StyleSheet.create({
     paddingVertical: '8%',
   },
   titleText: {
-    // color: appColors.Black_color,
+    color: appColors.Black_color,
     fontSize: 24,
     fontWeight: '900',
     width: '70%',

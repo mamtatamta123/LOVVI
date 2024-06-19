@@ -5,18 +5,21 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppView from '../../../libComponents/AppView';
 import styles from './styles';
+import AppText from '../../../libComponents/AppText';
 
 const CommunityGuidelines = () => {
   return (
-    <AppView style={{backgroundColor: appColors.white}}>
+    <AppView>
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <Text style={styles.mainHeading}>Community Guidelines</Text>
+          <AppText style={styles.mainHeading}>Community Guidelines</AppText>
           <View>
-            <Text style={styles.heading}>Cookie Policy</Text>
-            <Text style={styles.textContent}>
+            <AppText style={styles.heading}>Cookie Policy</AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -27,9 +30,9 @@ const CommunityGuidelines = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
-            <Text style={styles.heading}>Lovvi Rules:</Text>
-            <Text style={styles.textContent}>
+            </AppText>
+            <AppText style={styles.heading}>Lovvi Rules:</AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -139,7 +142,7 @@ const CommunityGuidelines = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
+            </AppText>
           </View>
         </View>
       </ScrollView>

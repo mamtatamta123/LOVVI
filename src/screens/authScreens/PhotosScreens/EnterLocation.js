@@ -32,10 +32,12 @@ import {ErrorToast} from '../../../utils/Toasters';
 
 const EnterLocation = ({navigation}) => {
   const dispatch = useDispatch();
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [streetLocation, setstreetLocation] = useState('');
+  const [iconVisible, setIconVisible] = useState(true);
   const [inputKey, setInputKey] = useState(0);
   const current = useSelector(state => state.auth.currentAddress);
-  console.log('STREET LOCATION', streetLocation);
+  console.log('streetLocation', streetLocation);
 
   useEffect(() => {
     if (current) {
@@ -48,7 +50,6 @@ const EnterLocation = ({navigation}) => {
     <>
       <AppView
         style={{
-          backgroundColor: appColors.white,
           flex: 1,
           paddingHorizontal: 15,
         }}>
@@ -56,15 +57,27 @@ const EnterLocation = ({navigation}) => {
         <AppHeader isBlack={true} isColor={true} />
         <AppText style={styles.textContainer}>Enter Your Location?</AppText>
         <View
-          style={{flexDirection: 'row', alignItems: 'center', width: '100%'}}>
-          <AppIcon Type={Icon.EvilIcons} name={'search'} />
+          style={{
+            flexDirection: 'row',
+            // alignItems: 'center',
+            width: '100%',
+            marginTop: 10,
+            // backgroundColor: appColors.grayShade,
+            borderRadius: 5,
+            // paddingHorizontal: 5,
+            borderWidth: 0.5,
+          }}>
+          {/* <View style={{alignSelf: 'center', marginBottom: 5}}>
+            <AppIcon Type={Icon.EvilIcons} name={'search'} />
+          </View> */}
+
           <GooglePlacesAutocomplete
             key={inputKey}
             textInputProps={{
               value: streetLocation,
               // onChangeText: text => setstreetLocation(text),
             }}
-            placeholder="Search"
+            placeholder="Search Your Location"
             minLength={2}
             fetchDetails={false}
             onPress={(data, details = null) => {
@@ -75,11 +88,34 @@ const EnterLocation = ({navigation}) => {
               key: 'AIzaSyAKfvrGBxXsxJ2AovOGAdltyorLy4ytT1I',
               language: 'en',
             }}
+            styles={{
+              textInput: {
+                color: isarkMode ? appColors.white : appColors.Black_color,
+                backgroundColor: isarkMode ? '#474747' : appColors.white,
+              },
+              predefinedPlacesDescription: {
+                color: '#5d5d5d',
+              },
+              listView: {
+                color: '#5d5d5d',
+              },
+              description: {
+                color: '#5d5d5d',
+              },
+            }}
           />
-
-          <TouchableOpacity onPress={() => setstreetLocation(null)}>
-            <AppIcon Type={Icon.MaterialIcons} name={'cancel'} size={20} />
-          </TouchableOpacity>
+          {streetLocation && (
+            <TouchableOpacity
+              onPress={() => setstreetLocation(null)}
+              style={{marginTop: 12}}>
+              <AppIcon
+                Type={Icon.MaterialIcons}
+                name={'cancel'}
+                size={20}
+                color={appColors.secondoryColor}
+              />
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.textInput}>
@@ -97,7 +133,6 @@ const EnterLocation = ({navigation}) => {
             />
             <AppText
               style={{
-                color: appColors.Black_color,
                 fontSize: 14,
                 fontWeight: '600',
               }}>

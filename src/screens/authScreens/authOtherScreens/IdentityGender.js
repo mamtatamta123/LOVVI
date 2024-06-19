@@ -21,10 +21,12 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
+import { useSelector } from 'react-redux';
 
 const IdentityGender = ({navigation}) => {
   const [selectedGender, setSelectedGender] = useState('');
   const ScrollRef = useRef();
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
 
   const genderArr = [
     {name: 'Straight', value: 'straight'},
@@ -64,11 +66,14 @@ const IdentityGender = ({navigation}) => {
         <AppView style={styles.formContainer}>
           {genderArr.map((item, index) => (
             <AppButton
+              // titleStyle={{
+              //   color:
+              //     item.value == selectedGender
+              //       ? appColors.white
+              //       : appColors.Black_color,
+              // }}
               titleStyle={{
-                color:
-                  item.value == selectedGender
-                    ? appColors.white
-                    : appColors.Black_color,
+                color: isDarkMode ? appColors.white : appColors.Black_color,
               }}
               onPress={() => {
                 setSelectedGender(item.value), scrollDown();
@@ -139,7 +144,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

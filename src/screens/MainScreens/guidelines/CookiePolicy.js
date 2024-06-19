@@ -4,10 +4,11 @@ import appColors from '../../../utils/appColors';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import styles from './styles';
+import AppView from '../../../libComponents/AppView';
 
 const CookiePolicy = () => {
   return (
-    <View style={styles.container}>
+    <AppView style={styles.container}>
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
       <ScrollView contentContainerStyle={styles.scrollView}>
@@ -140,7 +141,7 @@ const CookiePolicy = () => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </AppView>
   );
 };
 

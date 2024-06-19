@@ -127,7 +127,7 @@ export default RecentlyAdded;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     flex: 1,
     paddingHorizontal: 15,
     paddingVertical: 20,

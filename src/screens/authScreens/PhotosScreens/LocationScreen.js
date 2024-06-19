@@ -52,7 +52,11 @@ const LocationScreen = ({navigation}) => {
         //  - "enabled" if user has clicked on OK button in the popup
       } catch (error) {
         if (error) {
-          console.error(error.message);
+          // console.error(error.message);
+          if (error.message === 'ERR00') {
+            return handleCheckPressed();
+          }
+
           return false;
           // The user has not accepted to enable the location services or something went wrong during the process
           // "err" : { "code" : "ERR00|ERR01|ERR02|ERR03", "message" : "message"}

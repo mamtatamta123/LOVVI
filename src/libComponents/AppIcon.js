@@ -38,12 +38,19 @@ export const Icon = {
 
 const AppIcon = ({Type, name, color, size = 24, style}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
+
   return (
     <View style={{...style}}>
       {Type && name && (
         <Type
           name={name}
-          color={isarkMode ? appColors.white : appColors.BLACK}
+          color={
+            color === appColors.secondoryColor || appColors.primaryColor
+              ? color
+              : isarkMode
+              ? appColors.white
+              : appColors.BLACK
+          }
           size={size}
         />
       )}

@@ -94,7 +94,7 @@ const Home = ({navigation}) => {
               Type={Icon.Ionicons}
               name={'location-sharp'}
               size={18}
-              color={appColors.BLACK}
+              color={appColors.white}
             />
             {/* <Text style={styles.textsubtitle}>New York, USA</Text> */}
             <AppText numberOfLines={1} style={styles.textsubtitle}>
@@ -122,6 +122,7 @@ const Home = ({navigation}) => {
                 name={'notifications-active'}
                 size={20}
                 color={appColors.secondoryColor}
+                // style={{color: appColors.secondoryColor}}
               />
             </TouchableOpacity>
           </View>
@@ -189,7 +190,7 @@ const Home = ({navigation}) => {
                     height: 50,
                     width: 50,
                     borderRadius: 25,
-                    backgroundColor: appColors.white,
+                    backgroundColor: appColors.Black_color,
                     justifyContent: 'center',
                     alignItems: 'center',
                     elevation: 3,
@@ -199,6 +200,7 @@ const Home = ({navigation}) => {
                     name={'cross'}
                     color={appColors.primaryColor}
                     size={30}
+                    style={{color: appColors.primaryColor}}
                   />
                 </TouchableOpacity>
 
@@ -295,10 +297,11 @@ const Home = ({navigation}) => {
                 Interested In
               </AppText>
               <View style={{flexDirection: 'row', gap: 12}}>
-                {genderArr.map(item => {
+                {genderArr.map((item, i) => {
                   return (
                     <AppButton
                       onPress={() => setSelectedIntrestGender(item)}
+                      key={i}
                       style={{
                         height: 34,
                         paddingHorizontal: 18,
@@ -336,10 +339,11 @@ const Home = ({navigation}) => {
                 Sort by
               </AppText>
               <View style={{flexDirection: 'row', gap: 12}}>
-                {sortByArr.map(item => {
+                {sortByArr.map((item, i) => {
                   return (
                     <AppButton
                       onPress={() => setSelectedSortBy(item)}
+                      key={i}
                       style={{
                         height: 34,
                         paddingHorizontal: 18,
@@ -375,12 +379,14 @@ const Home = ({navigation}) => {
                 }}>
                 Distance
               </AppText>
-              <MultiSlider
-                min={0}
-                max={100}
-                values={[0, 1000]}
-                onValuesChangeFinish={val => setPriceRange(val)}
-              />
+              <View style={{alignItems: 'center'}}>
+                <MultiSlider
+                  min={0}
+                  max={100}
+                  values={[0, 1000]}
+                  onValuesChangeFinish={val => setPriceRange(val)}
+                />
+              </View>
             </View>
             <View style={{marginVertical: 0}}>
               <AppText
@@ -392,12 +398,14 @@ const Home = ({navigation}) => {
                 }}>
                 Age
               </AppText>
-              <MultiSlider
-                min={0}
-                max={100}
-                values={[0, 1000]}
-                onValuesChangeFinish={val => setPriceRange(val)}
-              />
+              <View style={{alignItems: 'center'}}>
+                <MultiSlider
+                  min={0}
+                  max={100}
+                  values={[0, 1000]}
+                  onValuesChangeFinish={val => setPriceRange(val)}
+                />
+              </View>
 
               {/* <MultiSlider
                 isMarkersSeparated={true}

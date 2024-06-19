@@ -23,7 +23,9 @@ const AppHeader = ({isBlack = false, isColor = false}) => {
       <Image
         source={
           isBlack
-            ? require('../assets/Images/Lovvi2.png')
+            ? isarkMode
+              ? require('../assets/Images/mainHeading.png')
+              : require('../assets/Images/Lovvi2.png')
             : require('../assets/Images/mainHeading.png')
         }
         style={styles.image}

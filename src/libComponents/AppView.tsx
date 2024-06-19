@@ -12,6 +12,7 @@ const AppView: React.FC<customAppViewProp> = ({
   ...restProp
 }) => {
   const isarkMode = useSelector<any>(state => state.auth.isDarkMode);
+  console.log(isarkMode, 'uday');
   return (
     <View
       {...restProp}

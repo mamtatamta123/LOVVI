@@ -31,6 +31,7 @@ import {countries} from '../../../utils/constants';
 import {CountryPicker, CountryButton} from 'react-native-country-codes-picker';
 import Loader from '../../../libComponents/Loader';
 import {useSelector} from 'react-redux';
+import {ErrorToast} from '../../../utils/Toasters';
 
 const LoginScreen = ({navigation}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
@@ -46,7 +47,7 @@ const LoginScreen = ({navigation}) => {
         style={{
           paddingBottom: 20,
         }}>
-        <Text>Popular countries</Text>
+        <AppText>Popular countries</AppText>
         {countries?.map((country, index) => {
           return (
             <CountryButton
@@ -54,12 +55,28 @@ const LoginScreen = ({navigation}) => {
               item={country}
               name={country?.name?.[lang || 'en']}
               onPress={() => onPress(country)}
+              style={{
+                countryName: {
+                  color: appColors.Black_color,
+                },
+                dialCode: {
+                  color: appColors.Black_color,
+                },
+              }}
             />
           );
         })}
       </View>
     );
   }
+
+  const handleSignIn = () => {
+    if (phoneNumber.length !== 10) {
+      ErrorToast('Phone Number should be of 10 digits');
+      return;
+    }
+    navigation.navigate(routes.Otp_Verification_Screen);
+  };
 
   return (
     <AppGradientView
@@ -94,14 +111,15 @@ const LoginScreen = ({navigation}) => {
                 gap: 5,
                 paddingHorizontal: 10,
               }}>
-              <Text style={{color: appColors.DARK_GRAY}}>
+              {/* <Text style={{color: appColors.DARK_GRAY}}>
                 {selectedCountryCode}
-              </Text>
+              </Text> */}
+              <AppText>{selectedCountryCode}</AppText>
               <AppIcon
                 Type={Icon.Entypo}
                 name={'chevron-small-down'}
                 size={20}
-                color={appColors.DARK_GRAY}
+                // color={appColors.DARK_GRAY}
               />
             </TouchableOpacity>
 
@@ -111,7 +129,7 @@ const LoginScreen = ({navigation}) => {
               keyboardType={keyboardType.number_pad}
               // labelText="Phone Number"
               value={phoneNumber}
-              placeholder="Enter Your Phone Number"
+              placeholder="Enter Your 10 Digit Phone Number"
               onChangeText={text => setPhoneNumber(text)}
               style={styles.input}
               validationError={phoneNumberError}
@@ -119,10 +137,18 @@ const LoginScreen = ({navigation}) => {
           </View>
 
           <AppButton
+            disabled={phoneNumber.length !== 10 ? true : false}
             setButtonLoader={true}
-            style={{marginTop: '20%'}}
+            style={{
+              marginTop: '20%',
+              backgroundColor:
+                phoneNumber.length === 10
+                  ? appColors.secondoryColor
+                  : appColors.white,
+              borderWidth: phoneNumber.length === 10 ? 0 : 1,
+            }}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.Otp_Verification_Screen)}
+            onPress={handleSignIn}
           />
         </AppView>
       </ScrollView>
@@ -138,6 +164,17 @@ const LoginScreen = ({navigation}) => {
         }}
         ListHeaderComponent={ListHeaderComponent}
         popularCountries={['in', 'na', 'pl']}
+        style={{
+          modal: {
+            backgroundColor: isarkMode ? appColors.BLACK : appColors.white,
+          },
+          countryName: {
+            color: appColors.Black_color,
+          },
+          dialCode: {
+            color: appColors.Black_color,
+          },
+        }}
       />
     </AppGradientView>
   );

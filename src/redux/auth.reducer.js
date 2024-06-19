@@ -4,7 +4,7 @@ import {tapGestureHandlerProps} from 'react-native-gesture-handler/lib/typescrip
 const initialState = {
   loggedIn: false,
   userData: null,
-  isDarkMode: false,
+  isDarkMode:true,
   currentAddress: null,
   useAddress: null,
 };

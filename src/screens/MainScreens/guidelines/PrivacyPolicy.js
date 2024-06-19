@@ -5,18 +5,21 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppView from '../../../libComponents/AppView';
 import styles from './styles';
+import AppText from '../../../libComponents/AppText';
 
 const PrivacyPolicy = () => {
   return (
-    <AppView style={{backgroundColor: appColors.white}}>
+    <AppView>
       <AppStatusBar isDark={true} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
-      <ScrollView contentContainerStyle={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.contentContainer}>
-          <Text style={styles.mainHeading}>Privacy Policy</Text>
+          <AppText style={styles.mainHeading}>Privacy Policy</AppText>
           <View>
-            <Text style={styles.heading}>Privacy Policy</Text>
-            <Text style={styles.textContent}>
+            <AppText style={styles.heading}>Privacy Policy</AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -27,9 +30,9 @@ const PrivacyPolicy = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
-            <Text style={styles.heading}>Scope</Text>
-            <Text style={styles.textContent}>
+            </AppText>
+            <AppText style={styles.heading}>Scope</AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -40,9 +43,9 @@ const PrivacyPolicy = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
-            <Text style={styles.heading}>Definitions</Text>
-            <Text style={styles.textContent}>
+            </AppText>
+            <AppText style={styles.heading}>Definitions</AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -53,9 +56,11 @@ const PrivacyPolicy = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
-            <Text style={styles.heading}>Information collection and use</Text>
-            <Text style={styles.textContent}>
+            </AppText>
+            <AppText style={styles.heading}>
+              Information collection and use
+            </AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -66,11 +71,11 @@ const PrivacyPolicy = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
-            <Text style={styles.heading}>
+            </AppText>
+            <AppText style={styles.heading}>
               Information Sharing and Disclosure
-            </Text>
-            <Text style={styles.textContent}>
+            </AppText>
+            <AppText style={styles.textContent}>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s, when an unknown printer took a galley of
@@ -81,7 +86,7 @@ const PrivacyPolicy = () => {
               containing Lorem Ipsum passages, and more recently with desktop
               publishing software like Aldus PageMaker including versions of
               Lorem Ipsum.
-            </Text>
+            </AppText>
           </View>
         </View>
       </ScrollView>

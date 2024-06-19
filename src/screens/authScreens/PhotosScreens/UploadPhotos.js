@@ -131,7 +131,6 @@ const UploadPhotos = ({navigation}) => {
       <AppStatusBar isDark={false} isbg={false} />
       <AppView
         style={{
-          backgroundColor: appColors.white,
           flex: 1,
           paddingHorizontal: 15,
         }}>
@@ -163,7 +162,7 @@ const UploadPhotos = ({navigation}) => {
                   height: '100%',
                   width: '100%',
                   paddingVertical: 100,
-                  borderRadius: 20,
+                  borderRadius: 10,
                 }}
               />
             ) : (
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
   },
   textsubcontainer: {
     fontWeight: 'bold',
-    color: appColors.Black_color,
+    // color: appColors.Black_color,
     fontSize: 15,
     opacity: 0.5,
   },

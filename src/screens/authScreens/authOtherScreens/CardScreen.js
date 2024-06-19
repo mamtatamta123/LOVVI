@@ -117,7 +117,7 @@ const CardScreen = ({navigation}) => {
               {
                 backgroundColor: selectedCardItem
                   ? appColors.secondoryColor
-                  : null,
+                  : appColors.white,
                 borderWidth: selectedCardItem ? 0 : 1,
               },
             ]}
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,
@@ -180,14 +180,13 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 12,
   },
-  button: {
-    backgroundColor: appColors.white,
-    marginBottom: '3%',
-    marginTop: '20%',
-    borderWidth: 1,
-    borderColor: appColors.BLACK, // Set the border color for the button
-    // borderWidth: selectedCardIndex === null ? 0.8 : 0,
-  },
+  // button: {
+  //   backgroundColor: appColors.white,
+  //   marginBottom: '3%',
+  //   marginTop: '20%',
+  //   borderWidth: 1,
+  //   borderColor: appColors.BLACK,
+  // },
   buttonSelected: {
     backgroundColor: appColors.secondoryColor,
   },

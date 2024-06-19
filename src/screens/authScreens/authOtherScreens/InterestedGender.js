@@ -22,10 +22,12 @@ import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
 import IdentityGender from './IdentityGender';
+import {useSelector} from 'react-redux';
 
 const InterestedGender = ({navigation}) => {
   const [selectedGender, setSelectedGender] = useState('');
   const ScrollRef = useRef();
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
 
   const genderArr = [
     {name: 'Women', value: 'female'},
@@ -70,10 +72,7 @@ const InterestedGender = ({navigation}) => {
                   item.value == selectedGender ? appColors.primaryColor : null,
               }}
               titleStyle={{
-                color:
-                  item.value == selectedGender
-                    ? appColors.white
-                    : appColors.Black_color,
+                color: isDarkMode ? appColors.white : appColors.Black_color,
               }}
               title={item.name}
             />
@@ -133,7 +132,7 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,

@@ -24,10 +24,12 @@ import {routes} from '../../../utils/routes';
 import CheckBox from '@react-native-community/checkbox';
 import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import {useSelector} from 'react-redux';
+
 const DistanceRangeScreen = ({navigation}) => {
   const [range, setRange] = useState([0, 100]);
-  const [prigeRange, setPriceRange] = useState([0, 10]);
-  console.log(prigeRange, 'uday');
+  const [prigeRange, setPriceRange] = useState([10]);
+  const isDarkMode = useSelector(state => state.auth.isDarkMode);
 
   return (
     <AppGradientView
@@ -49,24 +51,26 @@ const DistanceRangeScreen = ({navigation}) => {
         </View>
 
         <AppView style={styles.formContainer}>
-          <AppText style={styles.labelText}>
-            Distance Preference (in miles) ?
-          </AppText>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <AppText style={styles.labelText}>
+              Distance Preference (in miles) ?
+            </AppText>
+            <AppText style={styles.labelText}>{prigeRange[0]}</AppText>
+          </View>
+
           <View style={{alignItems: 'center'}}>
             <MultiSlider
-              values={[0, 10]}
+              values={[10]}
               onValuesChangeFinish={val => setPriceRange(val)}
               min={0}
-              max={10}
-              enableLabel
+              max={101}
             />
           </View>
-          {/* <AppText style={styles.labelText}>
-            Min Distance : {prigeRange[0]}
-          </AppText>
-          <AppText style={styles.labelText}>
-            Max Distance : {prigeRange[1]}
-          </AppText> */}
           <AppButton
             style={{marginTop: '50%'}}
             title={'Next'}
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   formContainer: {
-    backgroundColor: appColors.white,
+    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,
@@ -137,7 +141,7 @@ const styles = StyleSheet.create({
   },
   labelText: {
     fontSize: fp(2),
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontWeight: '600',
     marginTop: 20,
     marginBottom: 50,
@@ -155,5 +159,8 @@ const styles = StyleSheet.create({
       fontWeight: '600',
       marginTop: 20,
     },
+  },
+  multiSliderLabel: {
+    color: '#222222',
   },
 });

@@ -15,12 +15,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
   },
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    paddingBottom: 10,
-  },
+  // scrollView: {
+  //   paddingBottom: 5,
+  // },
   imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -30,18 +27,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   textContent: {
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     marginTop: 10,
     textAlign: 'justify',
   },
   heading: {
-    color: appColors.primaryColor,
+    // color: appColors.primaryColor,
     fontSize: 16,
     marginTop: 10,
     fontWeight: '700',
   },
   mainHeading: {
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontSize: 18,
     marginTop: 10,
     fontWeight: '700',
