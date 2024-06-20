@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
   },
   rowTitle: {
     fontSize: 16,
-    color: appColors.BLACK,
+    // color: appColors.BLACK,
     fontWeight: '500',
   },
   rowContent: {

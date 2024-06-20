@@ -136,10 +136,10 @@ const AllSettings = ({navigation}) => {
               />
             </View>
             <View style={styles.row}>
-              <AppText style={styles.description}>
+              <Text style={styles.description}>
                 Show people further away if i run out of profiles to see
-              </AppText>
-              <View style={styles.rowContent}>
+              </Text>
+              {/* <View style={styles.rowContent}>
                 <AppText
                   style={{
                     fontSize: 16,
@@ -148,7 +148,7 @@ const AllSettings = ({navigation}) => {
                   }}>
                   50mi.
                 </AppText>
-              </View>
+              </View> */}
             </View>
           </View>
 
@@ -194,32 +194,14 @@ const AllSettings = ({navigation}) => {
                 onValuesChangeFinish={val => setPriceRange(val)}
               />
             </View>
-            <View style={styles.row}>
-              <AppText style={styles.description}>
-                Show people slightly out of my preferred range if i run out of
-                profiles to see
-              </AppText>
-              <View style={styles.rowContent}>
-                <AppText
-                  style={{
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                    color: appColors.IconColor,
-                  }}>
-                  50mi.
-                </AppText>
-              </View>
-            </View>
-            <AppText
+            <Text
               style={{
                 marginTop: 2,
                 color: appColors.IconColor,
-                width: '80%',
-                fontSize: 14,
               }}>
               Show people slightly out of my preferred range if i run out of
               profiles to see
-            </AppText>
+            </Text>
           </View>
 
           {/* ================================================= */}
@@ -324,7 +306,7 @@ const AllSettings = ({navigation}) => {
             style={styles.section}
             onPress={() => navigation.navigate(routes.Appearance)}>
             <AppText style={styles.sectionTitle}>Appearance</AppText>
-            <View style={styles.row}>
+            {/* <View style={styles.row}>
               <AppText
                 style={[
                   styles.rowTitle,
@@ -340,10 +322,10 @@ const AllSettings = ({navigation}) => {
                   // color={appColors.BLACK}
                 />
               </View>
-            </View>
+            </View> */}
           </TouchableOpacity>
           {/* ========================================================== */}
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <AppText style={styles.sectionTitle}>Data usage</AppText>
             <TouchableOpacity
               style={styles.row}
@@ -358,7 +340,7 @@ const AllSettings = ({navigation}) => {
                 />
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
 
           {/* ====================================================== */}
           <View style={styles.section}>
@@ -494,7 +476,7 @@ const AllSettings = ({navigation}) => {
             </View>
           </View>
           {/* ============================================ */}
-          <View style={styles.section}>
+          {/* <View style={styles.section}>
             <AppText style={styles.sectionTitle}>Connections</AppText>
             <TouchableOpacity
               onPress={() => navigation.navigate(routes.FriendsOf_Friend)}>
@@ -521,7 +503,7 @@ const AllSettings = ({navigation}) => {
                 or be seen by on Lovvi. This works with Friends of Friends
               </AppText>
             </View>
-          </View>
+          </View> */}
           {/* ============================================================== */}
           <View style={styles.section}>
             <AppText style={styles.sectionTitle}>App Settings</AppText>
@@ -579,7 +561,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 17,
   },
   row: {
     flexDirection: 'row',

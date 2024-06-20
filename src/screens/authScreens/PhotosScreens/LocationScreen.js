@@ -93,10 +93,16 @@ const LocationScreen = ({navigation}) => {
           console.log('granteddddddddddddddddd');
           return true;
         } else {
+          console.log('granted hello', granted);
+          if (granted === 'denied' || granted === 'never_ask_again') {
+            Linking.openSettings();
+          }
+
           return false;
         }
       }
     } catch (err) {
+      console.log('requestLocationPermission error', err);
       return false;
     }
   };
@@ -118,12 +124,6 @@ const LocationScreen = ({navigation}) => {
           console.log('Error in getLocation:', error);
           const {code, message} = error;
           console.log('UDAY', code, message);
-          // if (code === 'UNAVAILABLE') {
-          //   ErrorToast('Please Enable your mobile location');
-          //   setLocationUpdate('UNAVAILABLE');
-          // } else if (code === 'CANCELLED') {
-          //   ErrorToast('Location is mandatory');
-          // }
         }
       }
     };

@@ -232,7 +232,7 @@ const ProfileScreen = ({navigation}) => {
           iconSize={20}
           title={'Log Out'}
           onPress={() => {
-            dispatch(setLoggedIn(true));
+            dispatch(setLoggedIn(false));
           }}
         />
       </View>

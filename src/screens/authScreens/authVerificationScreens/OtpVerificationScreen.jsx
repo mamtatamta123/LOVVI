@@ -190,11 +190,12 @@ const styles = StyleSheet.create({
     width: wp(16),
     height: wp(16),
     lineHeight: wp(15),
-    fontSize: fp(4),
+    fontSize: fp(3),
     // borderWidth: 2,
     // borderColor: appColors.TextInput_BgColor,
     textAlign: 'center',
     borderRadius: wp(4),
+
     // color: appColors.BLACK,
     // backgroundColor: appColors.TextInput_BgColor,
   },

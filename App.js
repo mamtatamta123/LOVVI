@@ -1,4 +1,4 @@
-import {Appearance, StatusBar} from 'react-native';
+import {Appearance, StatusBar, useColorScheme} from 'react-native';
 import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './src/navigation/AuthStack';
@@ -9,25 +9,54 @@ import {PermissionsAndroid, Platform} from 'react-native';
 import Toast from 'react-native-toast-message';
 import {setIsDarkMode} from './src/redux/auth.reducer';
 import {useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const loggedIn = useSelector(state => state.auth.loggedIn);
   const dispatch = useDispatch();
   const isarkMode = useSelector(state => state.auth.isDarkMode);
+  const colorTheme = useColorScheme();
 
   useEffect(() => {
-    const listener = Appearance.addChangeListener(colorScheme => {
-      console.log('colorScheme', colorScheme);
+    const listener = Appearance.addChangeListener(async colorScheme => {
+      const themeMode = await AsyncStorage.getItem('themeMode');
+      console.log('themeMode', themeMode);
       if (colorScheme.colorScheme === 'dark') {
-        console.log('in dark mode');
-        dispatch(setIsDarkMode(true));
+        if (themeMode === null || themeMode === 'appsystem') {
+          await AsyncStorage.setItem('theme', 'dark');
+          dispatch(setIsDarkMode(true));
+        }
       } else {
-        console.log('in light mode');
-        dispatch(setIsDarkMode(false));
+        if (themeMode === null || themeMode === 'appsystem') {
+          await AsyncStorage.setItem('theme', 'light');
+          dispatch(setIsDarkMode(false));
+        }
       }
     });
 
     return () => listener;
+  }, []);
+
+  useEffect(() => {
+    const getInfo = async () => {
+      const theme = await AsyncStorage.getItem('theme');
+      const themeMode = await AsyncStorage.getItem('themeMode');
+      console.log('theme', theme);
+
+      if (themeMode) {
+        if (themeMode === 'applight' || themeMode === 'appdark') {
+          await AsyncStorage.setItem('theme', theme);
+          dispatch(setIsDarkMode(theme === 'dark'));
+        } else {
+          await AsyncStorage.setItem('theme', colorTheme);
+          dispatch(setIsDarkMode(colorTheme === 'dark'));
+        }
+      } else {
+        await AsyncStorage.setItem('theme', colorTheme);
+        dispatch(setIsDarkMode(colorTheme === 'dark'));
+      }
+    };
+    getInfo();
   }, []);
 
   return (
@@ -37,7 +66,7 @@ const App = () => {
         backgroundColor={'#2222'}
       />
       <NavigationContainer>
-        {!loggedIn ? <MainStack /> : <AuthStack />}
+        {loggedIn ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     </>
   );

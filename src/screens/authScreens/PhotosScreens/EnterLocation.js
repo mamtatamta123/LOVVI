@@ -170,7 +170,7 @@ const EnterLocation = ({navigation}) => {
           style={{marginTop: 30}}
           onPress={() => {
             if (streetLocation) {
-              dispatch(setLoggedIn(false));
+              dispatch(setLoggedIn(true));
               dispatch(setUsedAddres(streetLocation));
             } else {
               ErrorToast('Enter your location to continue');

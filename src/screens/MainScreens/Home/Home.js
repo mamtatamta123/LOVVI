@@ -7,6 +7,8 @@ import {
   ImageBackground,
   ScrollView,
   Modal,
+  Platform,
+  PermissionsAndroid,
 } from 'react-native';
 import Swiper from 'react-native-deck-swiper';
 import appColors from '../../../utils/appColors';
@@ -20,13 +22,24 @@ import AppButton from '../../../libComponents/AppButton';
 import FilterModal from '../../../Modals/FilterModal';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import {routes} from '../../../utils/routes';
+import TinderChoice from '../../../components/TinderChoice';
+import {isLocationEnabled} from 'react-native-android-location-enabler';
+import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
+import GetLocation from 'react-native-get-location';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 
 const Home = ({navigation}) => {
   const [prigeRange, setPriceRange] = useState([]);
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [swipingLeft, setSwipingLeft] = useState(false);
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setlongitude] = useState('');
   const isarkMode = useSelector(state => state.auth.isDarkMode);
 
   const useAddress = useSelector(state => state.auth.useAddress);
+  console.log('useAddress', useAddress);
   const [showFilterModal, setshowFilterModal] = useState(false);
+  const [showMapModal, setshowMapModal] = useState(false);
   const [selectedIntrestGender, setSelectedIntrestGender] = useState({
     id: 1,
     gender: 'Women',
@@ -77,6 +90,122 @@ const Home = ({navigation}) => {
       elevation: 3,
     },
   ];
+
+  const tinderSelection = type => {
+    console.log('tinderSelection called');
+    return (
+      <View
+        style={{
+          position: 'absolute',
+          top: 60,
+          left: type === 'Nope' ? 20 : null,
+          right: type === 'Like' ? 20 : null,
+          transform: [{rotate: type === 'Nope' ? '-30deg' : '30deg'}],
+        }}>
+        <TinderChoice type={type} />
+      </View>
+    );
+  };
+
+  const handleSwipeLeft = (x, y) => {
+    if (x < 0) {
+      console.log('inswipingleft<0');
+      setSwipingLeft(true);
+    } else if (x === 0) {
+      console.log('inswipingleft=0');
+      setSwipingLeft(false);
+    }
+  };
+
+  const handleCardIndex = index => {
+    console.log('card index', index);
+    setActiveCardIndex(index + 1);
+  };
+
+  async function handleEnabledPressed() {
+    if (Platform.OS === 'android') {
+      try {
+        const enableResult = await promptForEnableLocationIfNeeded();
+        console.log('enableResult', enableResult);
+        if (enableResult === 'enabled') {
+          return true;
+        }
+        // The user has accepted to enable the location services
+        // data can be :
+        //  - "already-enabled" if the location services has been already enabled
+        //  - "enabled" if user has clicked on OK button in the popup
+      } catch (error) {
+        if (error) {
+          // console.error(error.message);
+          if (error.message === 'ERR00') {
+            return handleCheckPressed();
+          }
+
+          return false;
+          // The user has not accepted to enable the location services or something went wrong during the process
+          // "err" : { "code" : "ERR00|ERR01|ERR02|ERR03", "message" : "message"}
+          // codes :
+          //  - ERR00 : The user has clicked on Cancel button in the popup
+          //  - ERR01 : If the Settings change are unavailable
+          //  - ERR02 : If the popup has failed to open
+          //  - ERR03 : Internal error
+        }
+      }
+    }
+  }
+
+  async function handleCheckPressed() {
+    if (Platform.OS === 'android') {
+      const checkEnabled = await isLocationEnabled();
+      if (checkEnabled) {
+        return true;
+      } else {
+        return handleEnabledPressed();
+      }
+    }
+  }
+
+  const requestLocationPermission = async () => {
+    try {
+      const isEnabled = await handleCheckPressed();
+      if (isEnabled) {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        console.log('granted', granted);
+        if (granted === 'granted') {
+          console.log('granteddddddddddddddddd');
+          return true;
+        } else {
+          return false;
+        }
+      }
+    } catch (err) {
+      return false;
+    }
+  };
+  const getLocation = async () => {
+    console.log('in getLocation');
+    const result = await requestLocationPermission();
+    if (result) {
+      try {
+        const location = await GetLocation.getCurrentPosition({
+          enableHighAccuracy: true,
+          timeout: 60000,
+          forceRequestLocation: true,
+        });
+        console.log('location', location);
+        setLatitude(location.latitude);
+        setlongitude(location.longitude);
+        setshowMapModal(true);
+      } catch (error) {
+        console.log('Error in getLocation:', error);
+        const {code, message} = error;
+        console.log('UDAY', code, message);
+      }
+    }
+  };
+
   return (
     <AppGradientView
       colors={isarkMode ? ['#000', '#000'] : appColors.PrimaryGradient}>
@@ -89,7 +218,14 @@ const Home = ({navigation}) => {
         }}>
         <AppText style={styles.textTitle}>Location</AppText>
         <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-          <View style={{flexDirection: 'row', alignItems: 'center', gap: 4}}>
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: 4,
+              zIndex: 9999,
+            }}
+            onPress={() => getLocation()}>
             <AppIcon
               Type={Icon.Ionicons}
               name={'location-sharp'}
@@ -98,9 +234,9 @@ const Home = ({navigation}) => {
             />
             {/* <Text style={styles.textsubtitle}>New York, USA</Text> */}
             <AppText numberOfLines={1} style={styles.textsubtitle}>
-              {useAddress}
+              {useAddress ? useAddress : 'Fetching your location...'}
             </AppText>
-          </View>
+          </TouchableOpacity>
 
           <View style={{flexDirection: 'row', gap: 10, zIndex: 9999}}>
             <TouchableOpacity
@@ -134,9 +270,11 @@ const Home = ({navigation}) => {
         ref={swiperRef}
         horizontalSwipe={true}
         verticalSwipe={false}
+        // onSwiping={handleSwipeLeft}
+        // onSwipedLeft={handleCardIndex}
         cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
-        renderCard={card => {
-          console.log('card', card);
+        renderCard={(card, index) => {
+          console.log('card', index);
           return (
             <View
               style={{
@@ -172,6 +310,9 @@ const Home = ({navigation}) => {
                   {/* <Text style={{color: appColors.white}}>Jennifer</Text>
                   <Text style={{color: appColors.white}}>New York, USA</Text> */}
                 </ImageBackground>
+                {/* {index === activeCardIndex &&
+                  swipingLeft &&
+                  tinderSelection('Nope')} */}
               </View>
               <View
                 style={{
@@ -252,7 +393,7 @@ const Home = ({navigation}) => {
         }}
         cardIndex={0}
         backgroundColor={'rgba(52, 52, 52, 0)'}
-        stackSize={5}
+        stackSize={6}
       />
 
       <Modal
@@ -462,6 +603,39 @@ const Home = ({navigation}) => {
               />
             </View>
           </View>
+        </View>
+      </Modal>
+
+      <Modal visible={showMapModal}>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          showsUserLocation={true}
+          zoomControlEnabled={true}
+          showsCompass={true}
+          style={{width: '100%', height: '90%'}}
+          region={{
+            latitude: latitude,
+            longitude: longitude,
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005,
+          }}>
+          <Marker
+            description="hello"
+            coordinate={{
+              latitude: latitude,
+              longitude: longitude,
+            }}
+          />
+        </MapView>
+
+        <View style={{paddingHorizontal: 20, marginTop: 20}}>
+          <AppButton
+            title="Close"
+            style={{marginTop: 'auto', marginBottom: '10%'}}
+            onPress={() => {
+              setshowMapModal(false);
+            }}
+          />
         </View>
       </Modal>
     </AppGradientView>

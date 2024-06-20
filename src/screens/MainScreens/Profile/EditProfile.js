@@ -19,6 +19,7 @@ import {routes} from '../../../utils/routes';
 import LabelContainer from 'rn-range-slider/LabelContainer';
 import {flingHandlerName} from 'react-native-gesture-handler/lib/typescript/handlers/FlingGestureHandler';
 import AppButton from '../../../libComponents/AppButton';
+import AppView from '../../../libComponents/AppView';
 
 const EditProfile = ({navigation}) => {
   const handleSelect = item => {
@@ -111,7 +112,7 @@ const EditProfile = ({navigation}) => {
   };
 
   return (
-    <View style={{backgroundColor: appColors.white, flex: 1}}>
+    <AppView style={{flex: 1}}>
       <AppStatusBar isDark={false} isbg={false} />
       <AppHeader isBlack={true} isColor={true} />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -133,21 +134,19 @@ const EditProfile = ({navigation}) => {
             <AppText style={styles.subText}>New York, USA</AppText>
           </View>
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               Description
-            </Text>
-            <Text>
+            </AppText>
+            <AppText>
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500s.
-            </Text>
+            </AppText>
           </View>
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               Interest
-            </Text>
+            </AppText>
 
             <View
               style={{
@@ -196,61 +195,57 @@ const EditProfile = ({navigation}) => {
             </View>
           </View>
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               Jennifer Info
-            </Text>
+            </AppText>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text>Age</Text>
-              <Text>24 Years</Text>
+              <AppText>Age</AppText>
+              <AppText>24 Years</AppText>
             </View>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text>Height</Text>
-              <Text>168 cm</Text>
+              <AppText>Height</AppText>
+              <AppText>168 cm</AppText>
             </View>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text>Speaks</Text>
-              <Text>English</Text>
+              <AppText>Speaks</AppText>
+              <AppText>English</AppText>
             </View>
           </View>
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               Essential
-            </Text>
-            <Text>03 miles away</Text>
-            <Text>03 miles away</Text>
+            </AppText>
+            <AppText>03 miles away</AppText>
+            <AppText>03 miles away</AppText>
           </View>
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               More about me
-            </Text>
+            </AppText>
 
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text>Zodiacs</Text>
-              <Text>Scorpio</Text>
+              <AppText>Zodiacs</AppText>
+              <AppText>Scorpio</AppText>
             </View>
           </View>
 
           {/* ========================================================= */}
           <View style={styles.container}>
-            <Text
-              style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
+            <AppText style={{fontSize: 16, fontWeight: '500'}}>
               Lifestyle
-            </Text>
+            </AppText>
 
-            <Text>How often do you smoke?</Text>
+            <AppText>How often do you smoke?</AppText>
           </View>
           <View style={styles.container}>
-            <Text
+            <AppText
               style={{color: appColors.BLACK, fontSize: 16, fontWeight: '500'}}>
               Gallery
-            </Text>
+            </AppText>
             <TouchableOpacity
               style={{flexDirection: 'row', flexWrap: 'wrap'}}
               onPress={() => navigation.navigate(routes.Gallery_Screen)}>
@@ -333,7 +328,6 @@ const EditProfile = ({navigation}) => {
                   borderRadius: 10,
                   padding: 10,
                   marginTop: 10,
-                  alignItems: 'center',
                 }}>
                 <Text
                   style={{
@@ -382,7 +376,7 @@ const EditProfile = ({navigation}) => {
         </View>
         {/* </View> */}
       </ScrollView>
-    </View>
+    </AppView>
   );
 };
 
