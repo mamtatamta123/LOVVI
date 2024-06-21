@@ -1,4 +1,4 @@
-import {StyleSheet, View, ViewProps, ViewStyle} from 'react-native';
+import {View, ViewProps, ViewStyle} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import appColors from '../utils/appColors';
@@ -12,7 +12,6 @@ const AppView: React.FC<customAppViewProp> = ({
   ...restProp
 }) => {
   const isarkMode = useSelector<any>(state => state.auth.isDarkMode);
-  console.log(isarkMode, 'uday');
   return (
     <View
       {...restProp}

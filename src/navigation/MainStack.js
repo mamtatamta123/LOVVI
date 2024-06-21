@@ -29,7 +29,6 @@ import GalleryScreen from '../screens/mainScreens/Profile/GalleryScreen';
 import messaging from '@react-native-firebase/messaging';
 import {notificationListeners} from '../notification/notificationOndisplay';
 import Block from '../screens/mainScreens/Settings/Block';
-import Notification from '../screens/mainScreens/NotificationScreen';
 import NotificationScreen from '../screens/mainScreens/NotificationScreen';
 import {isLocationEnabled} from 'react-native-android-location-enabler';
 import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
@@ -40,6 +39,14 @@ import {useDispatch} from 'react-redux';
 const MainStack = () => {
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getUserData = () => {
+      getLocation();
+      notificationListeners();
+    };
+    getUserData();
+  }, []);
 
   async function handleEnabledPressed() {
     if (Platform.OS === 'android') {
@@ -83,15 +90,6 @@ const MainStack = () => {
       }
     }
   }
-
-  useEffect(() => {
-    const getUserData = () => {
-      getLocation();
-      getDeviceToken();
-      notificationListeners();
-    };
-    getUserData();
-  }, []);
 
   const requestLocationPermission = async () => {
     try {
@@ -147,10 +145,6 @@ const MainStack = () => {
     }
   };
 
-  const getDeviceToken = async () => {
-    const token = await messaging().getToken();
-    console.log('========Device FCM -----Token=======', token);
-  };
   return (
     <Stack.Navigator
       screenOptions={{headerShown: false}}

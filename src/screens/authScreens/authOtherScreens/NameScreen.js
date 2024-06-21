@@ -1,13 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Modal,
-  Image,
-  StatusBar,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
@@ -15,16 +6,13 @@ import {
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
 import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
 import WelcomeModal from '../../../Modals/WelcomeModal';
 
@@ -37,6 +25,8 @@ const NameScreen = ({navigation}) => {
       <WelcomeModal
         isOpenWelcomeModal={isOpenWelcomeModal}
         setIsOpenWelcomeModal={setIsOpenWelcomeModal}
+        name={name}
+        setName={setName}
       />
       <AppGradientView
         style={{height: '100%'}}
@@ -58,9 +48,6 @@ const NameScreen = ({navigation}) => {
               value={name}
               placeholder="Enter Your Full Name"
               onChangeText={text => setName(text)}
-              // IconType={Icon.Feather}
-              // Iconsize={22}
-              // Iconname={'mail'}
               Iconcolor={appColors.IconColor}
               style={styles.input}
             />

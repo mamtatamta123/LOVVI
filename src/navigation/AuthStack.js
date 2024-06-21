@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import SplashScreen from '../screens/authScreens/authVerificationScreens/SplashScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {routes} from '../utils/routes';
@@ -22,19 +22,49 @@ import SelectSource from '../screens/authScreens/PhotosScreens/SelectSource';
 import LocationScreen from '../screens/authScreens/PhotosScreens/LocationScreen';
 import AllowLocation from '../screens/authScreens/PhotosScreens/AllowLocation';
 import EnterLocation from '../screens/authScreens/PhotosScreens/EnterLocation';
+import messaging from '@react-native-firebase/messaging';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceInfo from 'react-native-device-info';
 
 const AuthStack = () => {
   const Stack = createNativeStackNavigator();
+  const [lastVisitedRoute, setLastVisitedRoute] = useState('');
+  console.log('lastVisitedRoute', lastVisitedRoute);
+
+  useEffect(() => {
+    getDeviceTokenAndId();
+    getLastVisitedRoute();
+  }, []);
+
+  const getDeviceTokenAndId = async () => {
+    const token = await messaging().getToken();
+    await AsyncStorage.setItem('deviceToken', token);
+    let deviceId = DeviceInfo.getDeviceId();
+    await AsyncStorage.setItem('deviceId', deviceId);
+  };
+
+  const getLastVisitedRoute = async () => {
+    const lastRoute = await AsyncStorage.getItem('lastVisitedRoute');
+    console.log('lastRoute', lastRoute);
+    if (lastRoute) {
+      setLastVisitedRoute('HouseRules');
+    }
+  };
   return (
     <Stack.Navigator
-      initialRouteName={routes.Splash_Screen}
+      initialRouteName="HouseRules"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name={routes.Splash_Screen} component={SplashScreen} />
+      {/* <Stack.Screen name={routes.Splash_Screen} component={SplashScreen} /> */}
+      <Stack.Screen name={routes.House_Rules} component={HouseRules} />
       <Stack.Screen name={routes.Login_Screen} component={LoginScreen} />
 
       <Stack.Screen
         name={routes.Otp_Verification_Screen}
         component={OtpVerificationScreen}
+      />
+      <Stack.Screen
+        name={routes.Email_Verification}
+        component={EmailVerification}
       />
       <Stack.Screen name={routes.Welcome_Screen} component={WelcomeScreen} />
 
@@ -43,7 +73,7 @@ const AuthStack = () => {
         component={DatePickrScreen}
       />
       <Stack.Screen name={routes.Gender_Screen} component={GenderScreen} />
-      <Stack.Screen name={routes.House_Rules} component={HouseRules} />
+      {/* <Stack.Screen name={routes.House_Rules} component={HouseRules} /> */}
       <Stack.Screen name={routes.Name_Screen} component={NameScreen} />
       <Stack.Screen name={routes.Identity_Gender} component={IdentityGender} />
       <Stack.Screen

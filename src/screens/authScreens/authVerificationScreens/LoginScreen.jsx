@@ -30,13 +30,14 @@ import Loader from '../../../libComponents/Loader';
 import {useSelector} from 'react-redux';
 import {ErrorToast} from '../../../utils/Toasters';
 import {SignInApi} from '../../../Apis/AuthApis';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [showCountryModal, setShowCountryModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
-  const [buttonLoader, setButtonLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   function ListHeaderComponent({countries, lang, onPress}) {
     return (
@@ -67,106 +68,113 @@ const LoginScreen = ({navigation}) => {
     );
   }
 
-  const handleSignIn = () => {
-    if (phoneNumber.length !== 10) {
-      ErrorToast('Phone Number should be of 10 digits');
-      return;
-    }
+  const handleSignIn = async () => {
     navigation.navigate(routes.Otp_Verification_Screen);
+    // const device_token = await AsyncStorage.getItem('deviceToken');
+    // const device_id = await AsyncStorage.getItem('deviceId');
+    // const data = {
+    //   phone: phoneNumber,
+    //   countryCode: selectedCountryCode,
+    //   device_token: device_token,
+    //   device_id: device_id,
+    // };
+    // await SignInApi(data, navigation, setLoading);
   };
 
   return (
-    <AppGradientView
-      style={{height: '100%'}}
-      colors={appColors.HomeGradientPrimaryGradient2}>
-      <AppStatusBar />
-      <AppHeader />
-      <ScrollView
-        keyboardShouldPersistTaps={'handled'}
-        contentContainerStyle={{flexGrow: 1}}>
-        <View style={styles.infoContainer}>
-          <Text style={styles.titleText}>Sign In with Phone</Text>
-          <Text style={styles.titleText}>Number</Text>
-          <Text style={styles.subtitleText}>Enter your details to sign in</Text>
-        </View>
-        <AppView style={styles.formContainer}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'flex-end',
-              gap: 10,
-            }}>
-            <TouchableOpacity
-              onPress={() => setShowCountryModal(true)}
-              style={{
-                borderRadius: 10,
-                backgroundColor: isarkMode ? '#474747' : appColors.grayShade,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'row',
-                gap: 5,
-                paddingHorizontal: 10,
-              }}>
-              <AppText>{selectedCountryCode}</AppText>
-              <AppIcon
-                Type={Icon.Entypo}
-                name={'chevron-small-down'}
-                size={20}
-              />
-            </TouchableOpacity>
-
-            <AppTextInputLabel
-              maxLength={10}
-              autoFocus={true}
-              keyboardType={keyboardType.number_pad}
-              // labelText="Phone Number"
-              value={phoneNumber}
-              placeholder="Enter Your 10 Digit Phone Number"
-              onChangeText={text => setPhoneNumber(text)}
-              style={styles.input}
-              validationError={phoneNumberError}
-            />
+    <>
+      {loading ? <Loader /> : ''}
+      <AppGradientView
+        style={{height: '100%'}}
+        colors={appColors.HomeGradientPrimaryGradient2}>
+        <AppStatusBar />
+        <AppHeader />
+        <ScrollView
+          keyboardShouldPersistTaps={'handled'}
+          contentContainerStyle={{flexGrow: 1}}>
+          <View style={styles.infoContainer}>
+            <Text style={styles.titleText}>Sign In with Phone</Text>
+            <Text style={styles.titleText}>Number</Text>
+            <Text style={styles.subtitleText}>
+              Enter your details to sign in
+            </Text>
           </View>
+          <AppView style={styles.formContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'flex-end',
+                gap: 10,
+              }}>
+              <TouchableOpacity
+                onPress={() => setShowCountryModal(true)}
+                style={{
+                  borderRadius: 10,
+                  backgroundColor: isarkMode ? '#474747' : appColors.grayShade,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  gap: 5,
+                  paddingHorizontal: 10,
+                }}>
+                <AppText>{selectedCountryCode}</AppText>
+                <AppIcon
+                  Type={Icon.Entypo}
+                  name={'chevron-small-down'}
+                  size={20}
+                />
+              </TouchableOpacity>
 
-          <AppButton
-            disabled={phoneNumber.length !== 10 ? true : false}
-            setButtonLoader={true}
-            style={{
-              marginTop: '20%',
-              backgroundColor:
-                phoneNumber.length === 10
-                  ? appColors.secondoryColor
-                  : appColors.white,
-              borderWidth: phoneNumber.length === 10 ? 0 : 1,
-            }}
-            title={'Next'}
-            onPress={handleSignIn}
-          />
-        </AppView>
-      </ScrollView>
-      <CountryPicker
-        show={showCountryModal}
-        onRequestClose={() => setShowCountryModal(!showCountryModal)}
-        pickerButtonOnPress={item => {
-          setSelectedCountryCode(item.dial_code);
-          setShowCountryModal(false);
-        }}
-        ListHeaderComponent={ListHeaderComponent}
-        popularCountries={['in', 'na', 'pl']}
-        style={{
-          modal: {
-            backgroundColor: isarkMode ? appColors.BLACK : appColors.white,
-          },
-          countryName: {
-            color: appColors.Black_color,
-          },
-          dialCode: {
-            color: appColors.Black_color,
-          },
-        }}
-      />
-    </AppGradientView>
+              <AppTextInputLabel
+                maxLength={10}
+                autoFocus={true}
+                keyboardType={keyboardType.number_pad}
+                value={phoneNumber}
+                placeholder="Enter Your 10 Digit Phone Number"
+                onChangeText={text => setPhoneNumber(text)}
+                style={styles.input}
+              />
+            </View>
+
+            <AppButton
+              disabled={phoneNumber.length !== 10 ? true : false}
+              style={{
+                marginTop: '20%',
+                backgroundColor:
+                  phoneNumber.length === 10
+                    ? appColors.secondoryColor
+                    : appColors.white,
+                borderWidth: phoneNumber.length === 10 ? 0 : 1,
+              }}
+              title={'Next'}
+              onPress={handleSignIn}
+            />
+          </AppView>
+        </ScrollView>
+        <CountryPicker
+          show={showCountryModal}
+          onRequestClose={() => setShowCountryModal(!showCountryModal)}
+          pickerButtonOnPress={item => {
+            setSelectedCountryCode(item.dial_code);
+            setShowCountryModal(false);
+          }}
+          ListHeaderComponent={ListHeaderComponent}
+          popularCountries={['in', 'na', 'pl']}
+          style={{
+            modal: {
+              backgroundColor: isarkMode ? appColors.BLACK : appColors.white,
+            },
+            countryName: {
+              color: appColors.Black_color,
+            },
+            dialCode: {
+              color: appColors.Black_color,
+            },
+          }}
+        />
+      </AppGradientView>
+    </>
   );
 };
 

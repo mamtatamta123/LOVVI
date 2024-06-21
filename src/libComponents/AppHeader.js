@@ -16,7 +16,7 @@ const AppHeader = ({isBlack = false, isColor = false}) => {
         <AppIcon
           Type={Icon.Ionicons}
           name={'chevron-back-outline'}
-          color={isarkMode ? appColors.white : appColors.BLACK} // Fixed color logic
+          color={isarkMode ? appColors.white : appColors.BLACK}
           size={29}
         />
       </TouchableOpacity>

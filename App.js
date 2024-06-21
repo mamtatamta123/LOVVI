@@ -61,10 +61,10 @@ const App = () => {
 
   return (
     <>
-      <StatusBar
+      {/* <StatusBar
         barStyle={isarkMode ? '#22222' : 'red'}
         backgroundColor={'#2222'}
-      />
+      /> */}
       <NavigationContainer>
         {loggedIn ? <MainStack /> : <AuthStack />}
       </NavigationContainer>

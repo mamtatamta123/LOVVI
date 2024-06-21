@@ -58,7 +58,6 @@ export default AppButton;
 
 const styles = StyleSheet.create({
   title: {
-    // color: color?appColors.IconColor.appColors.Black,
     fontSize: 17.5,
     fontWeight: 'bold',
   },

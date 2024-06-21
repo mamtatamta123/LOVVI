@@ -1,32 +1,51 @@
 import {
   StyleSheet,
-  Text,
   View,
-  ScrollView,
   TouchableOpacity,
   Modal,
   Image,
   StatusBar,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import {routes} from '../utils/routes';
 import appColors from '../utils/appColors';
-
-import {
-  responsiveWidth as wp,
-  responsiveFontSize as fp,
-  responsiveHeight as hp,
-} from 'react-native-responsive-dimensions';
 import {useNavigation} from '@react-navigation/native';
 import AppButton from '../libComponents/AppButton';
 import {useSelector} from 'react-redux';
 import AppText from '../libComponents/AppText';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ErrorToast} from '../utils/Toasters';
 
-const WelcomeModal = ({isOpenWelcomeModal, setIsOpenWelcomeModal}) => {
+const WelcomeModal = ({
+  isOpenWelcomeModal,
+  setIsOpenWelcomeModal,
+  name,
+  setName,
+}) => {
   const navigation = useNavigation();
   const isDarkMode = useSelector(state => state.auth.isDarkMode);
 
+  useEffect(() => {
+    const getName = async () => {
+      const userName = await AsyncStorage.getItem('name');
+      if (userName) {
+        setName(userName);
+      }
+    };
+    getName();
+  }, []);
+
+  const handleNameChange = async () => {
+    if (name.length < 4) {
+      ErrorToast('Username must be minimum of 4 characters');
+      setIsOpenWelcomeModal(false);
+      return;
+    }
+    await AsyncStorage.setItem('name', name);
+    navigation.navigate(routes.DatePickr_Screen);
+    setIsOpenWelcomeModal(false);
+  };
   return (
     <>
       <Modal visible={isOpenWelcomeModal} transparent={true}>
@@ -41,15 +60,7 @@ const WelcomeModal = ({isOpenWelcomeModal, setIsOpenWelcomeModal}) => {
                 ? ['#454545', '#2D2D2D']
                 : [appColors.white, appColors.white]
             }>
-            <View
-              style={[
-                styles.modalSubContent,
-                // {
-                //   backgroundColor: isDarkMode
-                //     ? appColors.Black_color
-                //     : appColors.white,
-                // },
-              ]}>
+            <View style={styles.modalSubContent}>
               <Image
                 resizeMode="contain"
                 source={require('../assets/Images/bye.png')}
@@ -61,13 +72,7 @@ const WelcomeModal = ({isOpenWelcomeModal, setIsOpenWelcomeModal}) => {
                 set up first.
               </AppText>
               <View style={{width: '100%', marginTop: 20}}>
-                <AppButton
-                  title="Let’s go"
-                  onPress={() => {
-                    navigation.navigate(routes.DatePickr_Screen),
-                      setIsOpenWelcomeModal(false);
-                  }}
-                />
+                <AppButton title="Let’s go" onPress={handleNameChange} />
               </View>
 
               <TouchableOpacity onPress={() => setIsOpenWelcomeModal(false)}>
