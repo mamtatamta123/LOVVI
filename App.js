@@ -12,15 +12,15 @@ import {useDispatch} from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
-  const loggedIn = useSelector(state => state.auth.loggedIn);
   const dispatch = useDispatch();
-  const isarkMode = useSelector(state => state.auth.isDarkMode);
   const colorTheme = useColorScheme();
+  const loggedIn = useSelector(state => state.auth.loggedIn);
+  const isarkMode = useSelector(state => state.auth.isDarkMode);
 
+  //listener for darkmode who listen to mobile setting
   useEffect(() => {
     const listener = Appearance.addChangeListener(async colorScheme => {
       const themeMode = await AsyncStorage.getItem('themeMode');
-      console.log('themeMode', themeMode);
       if (colorScheme.colorScheme === 'dark') {
         if (themeMode === null || themeMode === 'appsystem') {
           await AsyncStorage.setItem('theme', 'dark');
@@ -37,11 +37,11 @@ const App = () => {
     return () => listener;
   }, []);
 
+  //for darkmode
   useEffect(() => {
     const getInfo = async () => {
       const theme = await AsyncStorage.getItem('theme');
       const themeMode = await AsyncStorage.getItem('themeMode');
-      console.log('theme', theme);
 
       if (themeMode) {
         if (themeMode === 'applight' || themeMode === 'appdark') {

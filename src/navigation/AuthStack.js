@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet} from 'react-native';
 import React from 'react';
 import SplashScreen from '../screens/authScreens/authVerificationScreens/SplashScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -22,7 +22,6 @@ import SelectSource from '../screens/authScreens/PhotosScreens/SelectSource';
 import LocationScreen from '../screens/authScreens/PhotosScreens/LocationScreen';
 import AllowLocation from '../screens/authScreens/PhotosScreens/AllowLocation';
 import EnterLocation from '../screens/authScreens/PhotosScreens/EnterLocation';
-import Home from '../screens/mainScreens/Home/Home';
 
 const AuthStack = () => {
   const Stack = createNativeStackNavigator();
@@ -33,10 +32,6 @@ const AuthStack = () => {
       <Stack.Screen name={routes.Splash_Screen} component={SplashScreen} />
       <Stack.Screen name={routes.Login_Screen} component={LoginScreen} />
 
-      <Stack.Screen
-        name={routes.Email_Verification}
-        component={EmailVerification}
-      />
       <Stack.Screen
         name={routes.Otp_Verification_Screen}
         component={OtpVerificationScreen}

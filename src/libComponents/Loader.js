@@ -1,7 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
 import LottieView from 'lottie-react-native';
-
 import appColors from '../utils/appColors';
 
 const Loader = ({}) => {
@@ -12,8 +11,8 @@ const Loader = ({}) => {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: appColors.white,
-        marginBottom: marginBottom,
-        paddingBottom: paddingBottom,
+        // marginBottom: marginBottom,
+        // paddingBottom: paddingBottom,
       }}>
       <LottieView
         style={{height: 200, width: 200}}

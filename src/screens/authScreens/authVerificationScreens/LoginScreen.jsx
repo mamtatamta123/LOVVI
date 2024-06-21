@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -21,23 +21,20 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
 import {setLoggedIn} from '../../../redux/auth.reducer';
 import AppTextInputLabel, {
   keyboardType,
 } from '../../../libComponents/AppTextInputLabel';
-import {SelectCountry} from 'react-native-element-dropdown';
-import {countries} from '../../../utils/constants';
 import {CountryPicker, CountryButton} from 'react-native-country-codes-picker';
 import Loader from '../../../libComponents/Loader';
 import {useSelector} from 'react-redux';
 import {ErrorToast} from '../../../utils/Toasters';
+import {SignInApi} from '../../../Apis/AuthApis';
 
 const LoginScreen = ({navigation}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [showCountryModal, setShowCountryModal] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [phoneNumberError, setPhoneNumberError] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [buttonLoader, setButtonLoader] = useState(false);
 
@@ -111,15 +108,11 @@ const LoginScreen = ({navigation}) => {
                 gap: 5,
                 paddingHorizontal: 10,
               }}>
-              {/* <Text style={{color: appColors.DARK_GRAY}}>
-                {selectedCountryCode}
-              </Text> */}
               <AppText>{selectedCountryCode}</AppText>
               <AppIcon
                 Type={Icon.Entypo}
                 name={'chevron-small-down'}
                 size={20}
-                // color={appColors.DARK_GRAY}
               />
             </TouchableOpacity>
 
@@ -153,12 +146,9 @@ const LoginScreen = ({navigation}) => {
         </AppView>
       </ScrollView>
       <CountryPicker
-        // searchMessage={'ind'}
         show={showCountryModal}
         onRequestClose={() => setShowCountryModal(!showCountryModal)}
-        // when picker button press you will get the country object with dial code
         pickerButtonOnPress={item => {
-          // console.log('item=-----', item);
           setSelectedCountryCode(item.dial_code);
           setShowCountryModal(false);
         }}
@@ -213,7 +203,6 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   formContainer: {
-    // backgroundColor: appColors.white,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     elevation: 2,
@@ -222,17 +211,14 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   input: {
-    // width: '82%',
     flex: 1,
   },
-
   labelText: {
     fontSize: fp(2),
     color: appColors.BLACK,
     fontWeight: '600',
     marginTop: 20,
   },
-
   Sublabel: {
     color: appColors.Black_color,
     fontSize: 12,
@@ -240,14 +226,6 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     width: '100%',
   },
-  // dropdown: {
-  //   margin: 16,
-  // },
-  // imageStyle: {
-  //   width: 24,
-  //   height: 24,
-  //   borderRadius: 12,
-  // },
   placeholderStyle: {
     fontSize: 16,
   },
@@ -260,7 +238,6 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
   },
-
   dropdown: {
     margin: 16,
     height: 50,
@@ -271,23 +248,8 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
   },
-  placeholderStyle: {
-    fontSize: 16,
-  },
-  selectedTextStyle: {
-    fontSize: 16,
-    marginLeft: 8,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
-  },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-  },
-  imageStyle: {
-    width: 24,
-    height: 24,
   },
 });
