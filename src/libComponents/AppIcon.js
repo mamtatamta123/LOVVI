@@ -46,7 +46,8 @@ const AppIcon = ({Type, name, color, size = 24, style}) => {
           name={name}
           color={
             color === appColors.secondoryColor ||
-            color === appColors.primaryColor
+            color === appColors.primaryColor ||
+            '#FF0000'
               ? color
               : isarkMode
               ? appColors.white

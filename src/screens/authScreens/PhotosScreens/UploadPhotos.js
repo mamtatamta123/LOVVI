@@ -1,15 +1,10 @@
 import {
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
-  Modal,
-  StatusBar,
   Image,
-  Alert,
   Linking,
   ToastAndroid,
-  TouchableWithoutFeedback,
   Platform,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -17,20 +12,18 @@ import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
-
 import {PermissionsAndroid} from 'react-native';
 import {routes} from '../../../utils/routes';
 import AppButton from '../../../libComponents/AppButton';
 import appColors from '../../../utils/appColors';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-
 import ImagePicker from 'react-native-image-crop-picker';
-
 import ImageSelectModal from '../../../Modals/ImageSelectModal';
-import {TextInput} from 'react-native-gesture-handler';
+import {uploadBase64ImageApi} from '../../../Apis/AuthApis';
+import ImgToBase64 from 'react-native-image-base64';
+import {ErrorToast} from '../../../utils/Toasters';
 
 const UploadPhotos = ({navigation}) => {
-  const [showSelectOptionModal, setIsOpenageSelectModal] = useState(false);
   const [isOpenImageSelectModal, setIsOpenImageSelectModal] = useState(false);
   const [imageNumber, setImageNumber] = useState('');
   const [image1, setSelectedImage1] = useState('');
@@ -67,7 +60,13 @@ const UploadPhotos = ({navigation}) => {
       cropping: true,
     })
       .then(image => {
-        console.log(image);
+        console.log('pickImagesFromGallery', image.path);
+        const imageUri = image.path;
+        ImgToBase64.getBase64String(imageUri).then(async base64Image => {
+          await uploadBase64ImageApi({
+            image: `data:image/png;base64,${base64Image}`,
+          });
+        });
         if (imageNumber === 'image1') {
           setSelectedImage1(image.path);
         } else if (imageNumber === 'image2') {
@@ -96,7 +95,13 @@ const UploadPhotos = ({navigation}) => {
       cropping: true,
     })
       .then(image => {
-        console.log(image);
+        console.log('takeImageFromCamera', image);
+        const imageUri = image.path;
+        ImgToBase64.getBase64String(imageUri).then(async base64Image => {
+          await uploadBase64ImageApi({
+            image: `data:image/png;base64,${base64Image}`,
+          });
+        });
         setIsOpenImageSelectModal(false);
         if (imageNumber === 'image1') {
           setSelectedImage1(image.path);
@@ -118,11 +123,17 @@ const UploadPhotos = ({navigation}) => {
       });
   };
 
+  const isImagesUploaded = () => {
+    const uploadedImages = [image1, image2, image3, image4, image5, image6];
+    const filteredImages = uploadedImages.filter(img => !!img);
+    return filteredImages.length >= 2;
+  };
+
   const handleSubmitImages = () => {
-    if (image1) {
+    if (isImagesUploaded()) {
       navigation.navigate(routes.Location_Screen);
     } else {
-      ToastAndroid.show('All fields required!', ToastAndroid.BOTTOM);
+      ErrorToast('Upload at least two images to continue');
     }
   };
 
@@ -134,7 +145,11 @@ const UploadPhotos = ({navigation}) => {
           flex: 1,
           paddingHorizontal: 15,
         }}>
-        <AppHeader isBlack={true} isColor={true} />
+        <AppHeader
+          isBlack={true}
+          isColor={true}
+          isBack={routes.Select_Interest}
+        />
         <AppText style={styles.textContainer}>Upload Your Photos</AppText>
         <AppText style={styles.textsubcontainer}>
           To Boost Your Daily Match Potential, Include your Photos

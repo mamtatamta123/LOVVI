@@ -1,26 +1,24 @@
-import {
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import AppHeader from '../../../libComponents/AppHeader';
-import AppGradientView from '../../../libComponents/AppGradientView';
 import AppView from '../../../libComponents/AppView';
 import appColors from '../../../utils/appColors';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import AppText from '../../../libComponents/AppText';
 import AppButton from '../../../libComponents/AppButton';
-import {NavigationContainer} from '@react-navigation/native';
 import {routes} from '../../../utils/routes';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ErrorToast} from '../../../utils/Toasters';
 
 const SelectInterest = ({navigation}) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
 
   const handleSelect = item => {
+    if (selectedInterests.length >= 10) {
+      ErrorToast('You can only select upto 10 interests');
+      return;
+    }
     if (selectedInterests.some(val => val.id === item.id)) {
       console.log('------------Unselect-----------------');
       setSelectedInterests(
@@ -149,6 +147,22 @@ const SelectInterest = ({navigation}) => {
     },
   ];
 
+  useEffect(() => {
+    const getInterest = async () => {
+      const interest = await AsyncStorage.getItem('interest');
+      if (interest) {
+        setSelectedInterests(JSON.parse(interest));
+      }
+    };
+    getInterest();
+  }, []);
+
+  const handleInterest = async () => {
+    await AsyncStorage.setItem('interest', JSON.stringify(selectedInterests));
+    navigation.navigate(routes.Upload_Photos);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.Upload_Photos);
+  };
+
   return (
     <AppView
       style={{
@@ -156,7 +170,7 @@ const SelectInterest = ({navigation}) => {
         paddingHorizontal: 15,
       }}>
       <AppStatusBar isDark={false} isbg={false} />
-      <AppHeader isBlack={true} isColor={true} />
+      <AppHeader isBlack={true} isColor={true} isBack={routes.School_Screen} />
       <AppText style={{fontWeight: 'bold', marginTop: 30, fontSize: 20}}>
         Select up to 10 interests
       </AppText>
@@ -230,7 +244,7 @@ const SelectInterest = ({navigation}) => {
               ? appColors.secondoryColor
               : appColors.Black_color,
         }}
-        onPress={() => navigation.navigate(routes.Upload_Photos)}
+        onPress={handleInterest}
       />
     </AppView>
   );

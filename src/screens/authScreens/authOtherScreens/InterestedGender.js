@@ -1,28 +1,19 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useRef, useState} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
-import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import IdentityGender from './IdentityGender';
 import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const InterestedGender = ({navigation}) => {
   const [selectedGender, setSelectedGender] = useState('');
@@ -37,9 +28,24 @@ const InterestedGender = ({navigation}) => {
 
   const scrollDown = () => {
     setTimeout(() => {
-      console.log('hello');
       ScrollRef.current.scrollToEnd();
     }, 200);
+  };
+
+  useEffect(() => {
+    const getInterestedGender = async () => {
+      const interestedGender = await AsyncStorage.getItem('interestedGender');
+      if (interestedGender) {
+        setSelectedGender(interestedGender);
+      }
+    };
+    getInterestedGender();
+  }, []);
+
+  const handleInterestedGender = async () => {
+    await AsyncStorage.setItem('interestedGender', selectedGender);
+    navigation.navigate(routes.Card_Screen);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.Card_Screen);
   };
 
   return (
@@ -47,7 +53,7 @@ const InterestedGender = ({navigation}) => {
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Identity_Gender} />
       <ScrollView
         ref={ScrollRef}
         keyboardShouldPersistTaps={'handled'}
@@ -89,7 +95,7 @@ const InterestedGender = ({navigation}) => {
               borderWidth: selectedGender ? 0 : 1,
             }}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.Card_Screen)}
+            onPress={handleInterestedGender}
           />
         </AppView>
       </ScrollView>

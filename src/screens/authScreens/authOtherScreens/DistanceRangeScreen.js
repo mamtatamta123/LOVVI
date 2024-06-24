@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useCallback, useState} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -14,29 +8,40 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
-import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DistanceRangeScreen = ({navigation}) => {
-  const [range, setRange] = useState([0, 100]);
   const [prigeRange, setPriceRange] = useState([10]);
-  const isDarkMode = useSelector(state => state.auth.isDarkMode);
+
+  useEffect(() => {
+    const getInterest = async () => {
+      const distance = await AsyncStorage.getItem('distance');
+      if (distance) {
+        setPriceRange([distance]);
+      }
+    };
+    getInterest();
+  }, []);
+
+  const handleDistanceRange = async () => {
+    await AsyncStorage.setItem('distance', String(prigeRange[0]));
+    navigation.navigate(routes.School_Screen);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.School_Screen);
+  };
 
   return (
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Card_Screen} />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
@@ -74,7 +79,7 @@ const DistanceRangeScreen = ({navigation}) => {
           <AppButton
             style={{marginTop: '50%'}}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.School_Screen)}
+            onPress={handleDistanceRange}
           />
         </AppView>
       </ScrollView>

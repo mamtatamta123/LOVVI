@@ -32,7 +32,7 @@ const NameScreen = ({navigation}) => {
         style={{height: '100%'}}
         colors={appColors.PrimaryGradient2}>
         <AppStatusBar />
-        <AppHeader />
+        <AppHeader isBack={routes.House_Rules} />
         <ScrollView
           keyboardShouldPersistTaps={'handled'}
           contentContainerStyle={{flexGrow: 1}}>

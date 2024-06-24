@@ -45,6 +45,7 @@ const WelcomeModal = ({
     await AsyncStorage.setItem('name', name);
     navigation.navigate(routes.DatePickr_Screen);
     setIsOpenWelcomeModal(false);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.DatePickr_Screen);
   };
   return (
     <>

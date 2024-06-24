@@ -1,11 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -14,25 +8,40 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
 import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SchoolScreen = ({navigation}) => {
   const [school, setSchool] = useState('');
+
+  useEffect(() => {
+    const getSchool = async () => {
+      const schooling = await AsyncStorage.getItem('school');
+      if (schooling) {
+        setSchool(schooling);
+      }
+    };
+    getSchool();
+  }, []);
+
+  const handleSchool = async () => {
+    await AsyncStorage.setItem('school', school);
+    navigation.navigate(routes.Select_Interest);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.Select_Interest);
+  };
 
   return (
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Distance_Range_Screen} />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
@@ -64,7 +73,7 @@ const SchoolScreen = ({navigation}) => {
               borderWidth: school ? 0 : 1,
             }}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.Select_Interest)}
+            onPress={handleSchool}
           />
         </AppView>
       </ScrollView>

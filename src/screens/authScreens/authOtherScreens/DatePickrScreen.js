@@ -5,16 +5,13 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-import AppTextInputLabel, {
-  keyboardType,
-} from '../../../libComponents/AppTextInputLabel';
 import AppButton from '../../../libComponents/AppButton';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
@@ -23,19 +20,35 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import moments from 'moment';
 import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DatePickrScreen = ({navigation}) => {
   const isDarkMode = useSelector(state => state.auth.isDarkMode);
   const [dateofbirth, setDateOfBirth] = useState('');
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const handleDOBDateChange = (event, selectedDate) => {
+  const handleDOBDateChange = async (event, selectedDate) => {
     const formattedDate = moments(selectedDate).format('YYYY-MM-DD');
     setShowDatePicker(false);
     setDateOfBirth(formattedDate.toString());
+    await AsyncStorage.setItem('dob', formattedDate.toString());
+  };
+
+  useEffect(() => {
+    const getDob = async () => {
+      const dob = await AsyncStorage.getItem('dob');
+      if (dob) {
+        setDateOfBirth(dob);
+      }
+    };
+    getDob();
+  }, []);
+
+  const handleBirthday = async () => {
+    navigation.navigate(routes.Gender_Screen);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.Gender_Screen);
   };
 
   return (
@@ -43,7 +56,7 @@ const DatePickrScreen = ({navigation}) => {
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Name_Screen} />
 
       <View style={styles.infoContainer}>
         <Text style={styles.titleText}>Your</Text>
@@ -116,7 +129,7 @@ const DatePickrScreen = ({navigation}) => {
             borderWidth: dateofbirth ? 0 : 1,
           }}
           title={'Next'}
-          onPress={() => navigation.navigate(routes.Gender_Screen)}
+          onPress={handleBirthday}
         />
       </AppView>
     </AppGradientView>

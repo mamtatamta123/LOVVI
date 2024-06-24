@@ -4,14 +4,18 @@ import appColors from '../utils/appColors';
 import AppIcon, {Icon} from './AppIcon';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
+import {routes} from '../utils/routes';
 
-const AppHeader = ({isBlack = false, isColor = false}) => {
+const AppHeader = ({isBlack = false, isColor = false, isBack = ''}) => {
+  // console.log('isBack', isBack);
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
       <TouchableOpacity
-        onPress={() => navigation.goBack()}
+        onPress={() => {
+          isBack ? navigation.navigate(isBack) : navigation.goBack();
+        }}
         style={styles.buttonContainer}>
         <AppIcon
           Type={Icon.Ionicons}

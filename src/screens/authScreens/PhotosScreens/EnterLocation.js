@@ -1,40 +1,21 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Modal,
-  StatusBar,
-  Image,
-  Alert,
-  TextInput,
-} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
-
 import AppButton from '../../../libComponents/AppButton';
-
-import {PermissionsAndroid} from 'react-native';
-import {routes} from '../../../utils/routes';
-import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
-import {prepareAutoBatched} from '@reduxjs/toolkit';
 import appColors from '../../../utils/appColors';
-import AppTextInputLabel from '../../../libComponents/AppTextInputLabel';
 import {setLoggedIn, setUsedAddres} from '../../../redux/auth.reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
-import {cleanSingle} from 'react-native-image-crop-picker';
 import {ErrorToast} from '../../../utils/Toasters';
 
 const EnterLocation = ({navigation}) => {
   const dispatch = useDispatch();
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [streetLocation, setstreetLocation] = useState('');
-  const [iconVisible, setIconVisible] = useState(true);
   const [inputKey, setInputKey] = useState(0);
   const current = useSelector(state => state.auth.currentAddress);
   console.log('streetLocation', streetLocation);
@@ -59,29 +40,20 @@ const EnterLocation = ({navigation}) => {
         <View
           style={{
             flexDirection: 'row',
-            // alignItems: 'center',
             width: '100%',
             marginTop: 10,
-            // backgroundColor: appColors.grayShade,
             borderRadius: 5,
-            // paddingHorizontal: 5,
             borderWidth: 0.5,
           }}>
-          {/* <View style={{alignSelf: 'center', marginBottom: 5}}>
-            <AppIcon Type={Icon.EvilIcons} name={'search'} />
-          </View> */}
-
           <GooglePlacesAutocomplete
             key={inputKey}
             textInputProps={{
               value: streetLocation,
-              // onChangeText: text => setstreetLocation(text),
             }}
             placeholder="Search Your Location"
             minLength={2}
             fetchDetails={false}
             onPress={(data, details = null) => {
-              // console.log(data, 'details?.formatted_address');
               setstreetLocation(details?.description);
             }}
             query={{

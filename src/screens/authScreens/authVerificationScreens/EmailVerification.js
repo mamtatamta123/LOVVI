@@ -6,7 +6,6 @@ import {
   responsiveFontSize as fp,
   responsiveHeight as hp,
 } from 'react-native-responsive-dimensions';
-
 import AppButton from '../../../libComponents/AppButton';
 import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
@@ -41,7 +40,7 @@ const EmailVerification = ({navigation}) => {
     }
     await AsyncStorage.setItem('email', email);
     navigation.navigate(routes.House_Rules);
-    await AsyncStorage.setItem('lastVisitedRoute', 'routes.Name_Screen');
+    await AsyncStorage.setItem('lastVisitedRoute', routes.House_Rules);
   };
 
   return (
@@ -49,7 +48,7 @@ const EmailVerification = ({navigation}) => {
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Login_Screen} />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>

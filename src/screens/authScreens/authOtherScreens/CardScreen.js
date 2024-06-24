@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,6 @@ import {
   Image,
 } from 'react-native';
 import appColors from '../../../utils/appColors';
-import {
-  responsiveWidth as wp,
-  responsiveFontSize as fp,
-  responsiveHeight as hp,
-} from 'react-native-responsive-dimensions';
-
 import AppButton from '../../../libComponents/AppButton';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
@@ -21,10 +15,11 @@ import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import {Screen} from 'react-native-screens';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CardScreen = ({navigation}) => {
   const [selectedCardItem, setSelectedCardItem] = useState('');
+  console.log('selectedCardItem', selectedCardItem);
 
   const cardArr = [
     {
@@ -59,12 +54,32 @@ const CardScreen = ({navigation}) => {
     },
   ];
 
+  useEffect(() => {
+    const getLookingFor = async () => {
+      const cardItem = await AsyncStorage.getItem('lookingFor');
+      console.log('cardItem', cardItem);
+      if (cardItem) {
+        setSelectedCardItem(cardItem);
+      }
+    };
+    getLookingFor();
+  }, []);
+
+  const handleCard = async () => {
+    await AsyncStorage.setItem('lookingFor', String(selectedCardItem));
+    navigation.navigate(routes.Distance_Range_Screen);
+    await AsyncStorage.setItem(
+      'lastVisitedRoute',
+      routes.Distance_Range_Screen,
+    );
+  };
+
   return (
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Interested_Gender} />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
@@ -85,29 +100,24 @@ const CardScreen = ({navigation}) => {
               paddingVertical: 10,
               justifyContent: 'space-between',
             }}>
-            {cardArr.map(
-              (item, index) => (
-                console.log('item--', item),
-                (
-                  <TouchableOpacity
-                    key={index}
-                    style={[
-                      styles.cardContainer,
-                      {
-                        borderWidth: item?.id == selectedCardItem?.id ? 1.5 : 0,
-                        borderColor:
-                          selectedCardItem.id == item.id
-                            ? appColors.primaryColor
-                            : null,
-                      },
-                    ]}
-                    onPress={() => setSelectedCardItem(item)}>
-                    <Image source={item.image} style={styles.cardImage} />
-                    <AppText style={styles.cardTitle}>{item.title}</AppText>
-                  </TouchableOpacity>
-                )
-              ),
-            )}
+            {cardArr.map((item, index) => (
+              <TouchableOpacity
+                key={index}
+                style={[
+                  styles.cardContainer,
+                  {
+                    borderWidth: item?.id == selectedCardItem ? 1.5 : 0,
+                    borderColor:
+                      selectedCardItem == item.id
+                        ? appColors.primaryColor
+                        : null,
+                  },
+                ]}
+                onPress={() => setSelectedCardItem(item.id)}>
+                <Image source={item.image} style={styles.cardImage} />
+                <AppText style={styles.cardTitle}>{item.title}</AppText>
+              </TouchableOpacity>
+            ))}
           </View>
 
           <AppButton
@@ -122,7 +132,7 @@ const CardScreen = ({navigation}) => {
               },
             ]}
             title={'Next'}
-            onPress={() => navigation.navigate(routes.Distance_Range_Screen)}
+            onPress={handleCard}
           />
         </AppView>
       </ScrollView>

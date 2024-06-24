@@ -28,11 +28,23 @@ import DeviceInfo from 'react-native-device-info';
 
 const AuthStack = () => {
   const Stack = createNativeStackNavigator();
-  const [lastVisitedRoute, setLastVisitedRoute] = useState('');
+  const [lastVisitedRoute, setLastVisitedRoute] = useState(null);
   console.log('lastVisitedRoute', lastVisitedRoute);
 
   useEffect(() => {
     getDeviceTokenAndId();
+  }, []);
+
+  useEffect(() => {
+    const getLastVisitedRoute = async () => {
+      const lastRoute = await AsyncStorage.getItem('lastVisitedRoute');
+      console.log('lastRoute', lastRoute);
+      if (lastRoute) {
+        setLastVisitedRoute(lastRoute);
+      } else {
+        return '';
+      }
+    };
     getLastVisitedRoute();
   }, []);
 
@@ -43,21 +55,17 @@ const AuthStack = () => {
     await AsyncStorage.setItem('deviceId', deviceId);
   };
 
-  const getLastVisitedRoute = async () => {
-    const lastRoute = await AsyncStorage.getItem('lastVisitedRoute');
-    console.log('lastRoute', lastRoute);
-    if (lastRoute) {
-      setLastVisitedRoute('HouseRules');
-    }
-  };
+  if (lastVisitedRoute === null) {
+    return null;
+  }
+
   return (
     <Stack.Navigator
-      initialRouteName="HouseRules"
+      initialRouteName={lastVisitedRoute}
       screenOptions={{headerShown: false}}>
       {/* <Stack.Screen name={routes.Splash_Screen} component={SplashScreen} /> */}
-      <Stack.Screen name={routes.House_Rules} component={HouseRules} />
       <Stack.Screen name={routes.Login_Screen} component={LoginScreen} />
-
+      <Stack.Screen name={routes.House_Rules} component={HouseRules} />
       <Stack.Screen
         name={routes.Otp_Verification_Screen}
         component={OtpVerificationScreen}

@@ -14,28 +14,25 @@ import {
 } from 'react-native-responsive-dimensions';
 
 import AppButton from '../../../libComponents/AppButton';
-import {Icon} from '../../../libComponents/AppIcon';
 import AppGradientView from '../../../libComponents/AppGradientView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
 import AppHeader from '../../../libComponents/AppHeader';
 import AppView from '../../../libComponents/AppView';
 import AppText from '../../../libComponents/AppText';
 import {routes} from '../../../utils/routes';
-import CheckBox from '@react-native-community/checkbox';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HouseRules = ({navigation}) => {
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [toggleCheckBox, setToggleCheckBox] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
-  const [email, setEmail] = useState();
-
+  const handleHouseRuleNavigate = async () => {
+    navigation.navigate(routes.Name_Screen);
+    await AsyncStorage.setItem('lastVisitedRoute', routes.Name_Screen);
+  };
   return (
     <AppGradientView
       style={{height: '100%'}}
       colors={appColors.PrimaryGradient2}>
       <AppStatusBar />
-      <AppHeader />
+      <AppHeader isBack={routes.Email_Verification} />
       <ScrollView
         keyboardShouldPersistTaps={'handled'}
         contentContainerStyle={{flexGrow: 1}}>
@@ -71,7 +68,7 @@ const HouseRules = ({navigation}) => {
           <AppButton
             style={{marginTop: '50%'}}
             title={'I agree'}
-            onPress={() => navigation.navigate(routes.Name_Screen)}
+            onPress={handleHouseRuleNavigate}
           />
         </AppView>
       </ScrollView>
