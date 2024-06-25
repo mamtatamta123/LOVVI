@@ -5,18 +5,12 @@ import {
   PermissionsAndroid,
   Linking,
   Platform,
-  Text,
-  Alert,
-  ToastAndroid,
   TouchableOpacity,
 } from 'react-native';
-import AppView from '../../../libComponents/AppView';
 import AppStatusBar from '../../../libComponents/AppStatusBar';
-import AppHeader from '../../../libComponents/AppHeader';
 import AppText from '../../../libComponents/AppText';
 import AppButton from '../../../libComponents/AppButton';
 import {routes} from '../../../utils/routes';
-import LoginScreen from '../authVerificationScreens/LoginScreen';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import appColors from '../../../utils/appColors';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
@@ -26,9 +20,9 @@ import {useDispatch} from 'react-redux';
 import {setCurrentAddress} from '../../../redux/auth.reducer';
 import LottieView from 'lottie-react-native';
 import GetLocation from 'react-native-get-location';
-import {SuccessToast, ErrorToast} from '../../../utils/Toasters';
 import {isLocationEnabled} from 'react-native-android-location-enabler';
 import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LocationScreen = ({navigation}) => {
   const [latitude, setLatitude] = useState('');
@@ -120,6 +114,8 @@ const LocationScreen = ({navigation}) => {
           console.log('location', location);
           setLatitude(location.latitude);
           setlongitude(location.longitude);
+          await AsyncStorage.setItem('latitude', String(location.latitude));
+          await AsyncStorage.setItem('longitude', String(location.longitude));
         } catch (error) {
           console.log('Error in getLocation:', error);
           const {code, message} = error;
@@ -135,7 +131,11 @@ const LocationScreen = ({navigation}) => {
     const reverseGeocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAKfvrGBxXsxJ2AovOGAdltyorLy4ytT1I`;
     fetch(reverseGeocodingUrl)
       .then(response => response.json())
-      .then(result => {
+      .then(async result => {
+        await AsyncStorage.setItem(
+          'address',
+          result?.results[0]?.formatted_address,
+        );
         dispatch(setCurrentAddress(result?.results[0]?.formatted_address));
         navigation.navigate(routes.Enter_Location);
         setButtonLoder(false);

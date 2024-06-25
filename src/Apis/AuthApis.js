@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {baseUrl} from '../utils/baseUrl';
 import {ErrorToast, SuccessToast} from '../utils/Toasters';
 import {routes} from '../utils/routes';
+import {setLoggedIn, setUsedAddres} from '../redux/auth.reducer';
 
 export async function SignInApi(userData, navigation, setLoading) {
   setLoading(true);
@@ -74,21 +75,27 @@ export async function uploadBase64ImageApi(data) {
 
 export async function userProfileCompletionApi(
   userData,
-  navigation,
-  setLoading,
+  dispatch,
+  streetLocation,
 ) {
-  setLoading(true);
+  const token = await AsyncStorage.getItem('lovii_Token');
   try {
-    const response = await axios.post(
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const response = await axios.put(
       `${baseUrl}/user-profile-completion`,
       userData,
+      {headers},
     );
-    setLoading(false);
+    console.log(response);
     SuccessToast(response.data.message);
+    dispatch(setLoggedIn(true));
+    await AsyncStorage.setItem('loviTokenAfterLogin', token);
+    dispatch(setUsedAddres(streetLocation));
     return;
   } catch (error) {
     console.log('Error in Login Api:', error.response);
-    setLoading(false);
     ErrorToast(error.response.data.message);
     return;
   }

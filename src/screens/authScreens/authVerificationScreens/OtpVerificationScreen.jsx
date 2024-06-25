@@ -57,29 +57,29 @@ const OtpVerificationScreen = ({navigation}) => {
   }, [timer]);
 
   const handleResend = async () => {
-    // if (timer === 0) {
-    //   const device_token = await AsyncStorage.getItem('deviceToken');
-    //   const device_id = await AsyncStorage.getItem('deviceId');
-    //   const phoneNumber = await AsyncStorage.getItem('phoneNumber');
-    //   const countryCode = await AsyncStorage.getItem('countryCode');
-    //   const data = {
-    //     phone: phoneNumber,
-    //     countryCode: countryCode,
-    //     device_token: device_token,
-    //     device_id: device_id,
-    //   };
-    //   await resendOtpApi(data,setTimer);
-    // }
+    if (timer === 0) {
+      const device_token = await AsyncStorage.getItem('deviceToken');
+      const device_id = await AsyncStorage.getItem('deviceId');
+      const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+      const countryCode = await AsyncStorage.getItem('countryCode');
+      const data = {
+        phone: phoneNumber,
+        countryCode: countryCode,
+        device_token: device_token,
+        device_id: device_id,
+      };
+      await resendOtpApi(data,setTimer);
+    }
   };
 
   const handleOtpVerification = async () => {
     navigation.navigate(routes.Email_Verification);
-    // const phone = await AsyncStorage.getItem('phoneNumber');
-    // const data = {
-    //   otp: value,
-    //   phone: phone,
-    // };
-    // await otpVerifyApi(data, navigation, setLoading);
+    const phone = await AsyncStorage.getItem('phoneNumber');
+    const data = {
+      otp: value,
+      phone: phone,
+    };
+    await otpVerifyApi(data, navigation, setLoading);
   };
   return (
     <>

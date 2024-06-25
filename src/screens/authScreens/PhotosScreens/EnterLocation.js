@@ -11,6 +11,9 @@ import {setLoggedIn, setUsedAddres} from '../../../redux/auth.reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {ErrorToast} from '../../../utils/Toasters';
+import {routes} from '../../../utils/routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {userProfileCompletionApi} from '../../../Apis/AuthApis';
 
 const EnterLocation = ({navigation}) => {
   const dispatch = useDispatch();
@@ -18,7 +21,7 @@ const EnterLocation = ({navigation}) => {
   const [streetLocation, setstreetLocation] = useState('');
   const [inputKey, setInputKey] = useState(0);
   const current = useSelector(state => state.auth.currentAddress);
-  console.log('streetLocation', streetLocation);
+  // console.log('streetLocation', streetLocation);
 
   useEffect(() => {
     if (current) {
@@ -26,6 +29,76 @@ const EnterLocation = ({navigation}) => {
       setInputKey(prevKey => prevKey + 1);
     }
   }, [current]);
+
+  const handleLogin = async () => {
+    const interest = await AsyncStorage.getItem('interest');
+    console.log('interest', interest);
+    const schooling = await AsyncStorage.getItem('school');
+    console.log('schooling', schooling);
+    const distance = await AsyncStorage.getItem('distance');
+    console.log('distance', distance);
+    const cardItem = await AsyncStorage.getItem('lookingFor');
+    console.log('lookingFor', cardItem);
+    const interestedGender = await AsyncStorage.getItem('interestedGender');
+    console.log('interestedGender', interestedGender);
+    const bodyOrientation = await AsyncStorage.getItem('bodyOrientation');
+    console.log('bodyOrientation', bodyOrientation);
+    const gender = await AsyncStorage.getItem('gender');
+    console.log('gender', gender);
+    const dob = await AsyncStorage.getItem('dob');
+    console.log('dob', dob);
+    const userName = await AsyncStorage.getItem('name');
+    console.log('userName', userName);
+    const userEmail = await AsyncStorage.getItem('email');
+    console.log('userEmail', userEmail);
+    const phoneNumber = await AsyncStorage.getItem('phoneNumber');
+    console.log('phoneNumber', phoneNumber);
+    const latitude = await AsyncStorage.getItem('latitude');
+    console.log('latitude', latitude);
+    const longitude = await AsyncStorage.getItem('longitude');
+    console.log('longitude', longitude);
+    const deviceToken = await AsyncStorage.getItem('deviceToken');
+    console.log('deviceToken', deviceToken);
+    const deviceId = await AsyncStorage.getItem('deviceId');
+    console.log('deviceId', deviceId);
+    const address = await AsyncStorage.getItem('address');
+    console.log('address', address);
+    const data = {
+      phone: phoneNumber,
+      fullName: userName,
+      email: userEmail,
+      gender: gender,
+      DOB: dob,
+      bodyOrientation: bodyOrientation,
+      houseRule: 'Renting',
+      interestedIn: interestedGender,
+      lookingFor: cardItem,
+      lat: latitude,
+      lng: longitude,
+      distance: distance,
+      schooling: schooling,
+      address: address,
+      hobbies: interest,
+      location: address,
+      device_token: deviceToken,
+      device_id: deviceId,
+      profileImg:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_1:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_2:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_3:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_4:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_5:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+      image_6:
+        'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
+    };
+    await userProfileCompletionApi(data, dispatch,streetLocation);
+  };
 
   return (
     <>
@@ -35,7 +108,11 @@ const EnterLocation = ({navigation}) => {
           paddingHorizontal: 15,
         }}>
         <AppStatusBar isDark={false} isbg={false} />
-        <AppHeader isBlack={true} isColor={true} />
+        <AppHeader
+          isBlack={true}
+          isColor={true}
+          isBack={routes.Upload_Photos}
+        />
         <AppText style={styles.textContainer}>Enter Your Location?</AppText>
         <View
           style={{
@@ -53,7 +130,9 @@ const EnterLocation = ({navigation}) => {
             placeholder="Search Your Location"
             minLength={2}
             fetchDetails={false}
-            onPress={(data, details = null) => {
+            onPress={async (data, details = null) => {
+              console.log('googleplaceautocomplete', details);
+              await AsyncStorage.setItem('address', details?.description);
               setstreetLocation(details?.description);
             }}
             query={{
@@ -92,7 +171,8 @@ const EnterLocation = ({navigation}) => {
 
         <View style={styles.textInput}>
           <TouchableOpacity
-            onPress={() => {
+            onPress={async () => {
+              await AsyncStorage.setItem('address', current);
               setstreetLocation(current);
               // dispatch(setLoggedIn(true));
             }}
@@ -142,8 +222,7 @@ const EnterLocation = ({navigation}) => {
           style={{marginTop: 30}}
           onPress={() => {
             if (streetLocation) {
-              dispatch(setLoggedIn(true));
-              dispatch(setUsedAddres(streetLocation));
+              handleLogin();
             } else {
               ErrorToast('Enter your location to continue');
             }

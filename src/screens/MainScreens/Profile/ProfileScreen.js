@@ -26,6 +26,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import ImagePicker from 'react-native-image-crop-picker';
 import {useSelector} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProfileMenuButton = ({iconType, iconSize, iconName, title, onPress}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
@@ -113,11 +114,10 @@ const ProfileScreen = ({navigation}) => {
     takeImageFromCamera();
     pickImagesFromGallery();
   };
-  const handlelogout = async () => {
-    setTimeout(() => {
-      dispatch(setLoggedIn(false));
-      AsyncStorage.clear();
-    }, 500);
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('loviTokenAfterLogin');
+    await AsyncStorage.removeItem('lastVisitedRoute');
+    dispatch(setLoggedIn(false));
   };
 
   return (
@@ -231,9 +231,7 @@ const ProfileScreen = ({navigation}) => {
           iconName={'logout'}
           iconSize={20}
           title={'Log Out'}
-          onPress={() => {
-            dispatch(setLoggedIn(false));
-          }}
+          onPress={() => handleLogout()}
         />
       </View>
 

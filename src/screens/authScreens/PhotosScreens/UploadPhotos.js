@@ -22,6 +22,7 @@ import ImageSelectModal from '../../../Modals/ImageSelectModal';
 import {uploadBase64ImageApi} from '../../../Apis/AuthApis';
 import ImgToBase64 from 'react-native-image-base64';
 import {ErrorToast} from '../../../utils/Toasters';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const UploadPhotos = ({navigation}) => {
   const [isOpenImageSelectModal, setIsOpenImageSelectModal] = useState(false);
@@ -129,8 +130,9 @@ const UploadPhotos = ({navigation}) => {
     return filteredImages.length >= 2;
   };
 
-  const handleSubmitImages = () => {
+  const handleSubmitImages = async () => {
     if (isImagesUploaded()) {
+      await AsyncStorage.setItem('lastVisitedRoute', routes.Location_Screen);
       navigation.navigate(routes.Location_Screen);
     } else {
       ErrorToast('Upload at least two images to continue');

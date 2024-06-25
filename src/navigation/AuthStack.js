@@ -42,7 +42,7 @@ const AuthStack = () => {
       if (lastRoute) {
         setLastVisitedRoute(lastRoute);
       } else {
-        return '';
+        setLastVisitedRoute('LoginScreen');
       }
     };
     getLastVisitedRoute();

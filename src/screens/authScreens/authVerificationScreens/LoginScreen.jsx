@@ -70,15 +70,15 @@ const LoginScreen = ({navigation}) => {
 
   const handleSignIn = async () => {
     navigation.navigate(routes.Otp_Verification_Screen);
-    // const device_token = await AsyncStorage.getItem('deviceToken');
-    // const device_id = await AsyncStorage.getItem('deviceId');
-    // const data = {
-    //   phone: phoneNumber,
-    //   countryCode: selectedCountryCode,
-    //   device_token: device_token,
-    //   device_id: device_id,
-    // };
-    // await SignInApi(data, navigation, setLoading);
+    const device_token = await AsyncStorage.getItem('deviceToken');
+    const device_id = await AsyncStorage.getItem('deviceId');
+    const data = {
+      phone: phoneNumber,
+      countryCode: selectedCountryCode,
+      device_token: device_token,
+      device_id: device_id,
+    };
+    await SignInApi(data, navigation, setLoading);
   };
 
   return (

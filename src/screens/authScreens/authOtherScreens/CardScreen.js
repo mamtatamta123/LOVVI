@@ -35,7 +35,7 @@ const CardScreen = ({navigation}) => {
     {
       id: 3,
       image: require('../../../assets/Images/champagne.png'),
-      title: 'Long-term, but short-term Ok',
+      title: 'Short-term, but long-term Ok',
     },
     {
       id: 4,
@@ -66,7 +66,7 @@ const CardScreen = ({navigation}) => {
   }, []);
 
   const handleCard = async () => {
-    await AsyncStorage.setItem('lookingFor', String(selectedCardItem));
+    await AsyncStorage.setItem('lookingFor', selectedCardItem);
     navigation.navigate(routes.Distance_Range_Screen);
     await AsyncStorage.setItem(
       'lastVisitedRoute',
@@ -106,14 +106,14 @@ const CardScreen = ({navigation}) => {
                 style={[
                   styles.cardContainer,
                   {
-                    borderWidth: item?.id == selectedCardItem ? 1.5 : 0,
+                    borderWidth: item?.title == selectedCardItem ? 1.5 : 0,
                     borderColor:
-                      selectedCardItem == item.id
+                      selectedCardItem == item.title
                         ? appColors.primaryColor
                         : null,
                   },
                 ]}
-                onPress={() => setSelectedCardItem(item.id)}>
+                onPress={() => setSelectedCardItem(item.title)}>
                 <Image source={item.image} style={styles.cardImage} />
                 <AppText style={styles.cardTitle}>{item.title}</AppText>
               </TouchableOpacity>

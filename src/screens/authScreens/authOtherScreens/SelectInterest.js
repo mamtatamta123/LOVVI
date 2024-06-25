@@ -14,19 +14,19 @@ import {ErrorToast} from '../../../utils/Toasters';
 const SelectInterest = ({navigation}) => {
   const [selectedInterests, setSelectedInterests] = useState([]);
 
-  const handleSelect = item => {
-    if (selectedInterests.length >= 10) {
-      ErrorToast('You can only select upto 10 interests');
-      return;
-    }
-    if (selectedInterests.some(val => val.id === item.id)) {
+  const handleSelect = title => {
+    if (selectedInterests.some(val => val === title)) {
       console.log('------------Unselect-----------------');
       setSelectedInterests(
-        selectedInterests.filter(interest => interest.id !== item.id),
+        selectedInterests.filter(interest => interest !== title),
       );
     } else {
+      if (selectedInterests.length >= 10) {
+        ErrorToast('You can only select upto 10 interests');
+        return;
+      }
       console.log('------------select-----------------');
-      setSelectedInterests([...selectedInterests, item]);
+      setSelectedInterests([...selectedInterests, title]);
     }
   };
 
@@ -49,12 +49,12 @@ const SelectInterest = ({navigation}) => {
       IconName: 'book',
       title: 'Language',
     },
-    {
-      id: 4,
-      IconType: Icon.MaterialCommunityIcons,
-      IconName: 'google-translate',
-      title: 'language',
-    },
+    // {
+    //   id: 4,
+    //   IconType: Icon.MaterialCommunityIcons,
+    //   IconName: 'google-translate',
+    //   title: 'language',
+    // },
     {
       id: 5,
       IconType: Icon.AntDesign,
@@ -73,18 +73,18 @@ const SelectInterest = ({navigation}) => {
       IconName: 'leaf',
       title: 'Nature',
     },
-    {
-      id: 8,
-      IconType: Icon.FontAwesome5,
-      IconName: 'dumbbell',
-      title: 'Gym',
-    },
-    {
-      id: 9,
-      IconType: Icon.MaterialIcons,
-      IconName: 'pets',
-      title: 'Animal',
-    },
+    // {
+    //   id: 8,
+    //   IconType: Icon.FontAwesome5,
+    //   IconName: 'dumbbell',
+    //   title: 'Gym',
+    // },
+    // {
+    //   id: 9,
+    //   IconType: Icon.MaterialIcons,
+    //   IconName: 'pets',
+    //   title: 'Animal',
+    // },
     {
       id: 10,
       IconType: Icon.FontAwesome5,
@@ -103,24 +103,24 @@ const SelectInterest = ({navigation}) => {
       IconName: 'google-translate',
       title: 'language',
     },
-    {
-      id: 13,
-      IconType: Icon.AntDesign,
-      IconName: 'camera',
-      title: 'Photography',
-    },
-    {
-      id: 14,
-      IconType: Icon.Ionicons,
-      IconName: 'shirt',
-      title: 'Fashion',
-    },
-    {
-      id: 15,
-      IconType: Icon.Entypo,
-      IconName: 'leaf',
-      title: 'Nature',
-    },
+    // {
+    //   id: 13,
+    //   IconType: Icon.AntDesign,
+    //   IconName: 'camera',
+    //   title: 'Photography',
+    // },
+    // {
+    //   id: 14,
+    //   IconType: Icon.Ionicons,
+    //   IconName: 'shirt',
+    //   title: 'Fashion',
+    // },
+    // {
+    //   id: 15,
+    //   IconType: Icon.Entypo,
+    //   IconName: 'leaf',
+    //   title: 'Nature',
+    // },
     {
       id: 16,
       IconType: Icon.FontAwesome5,
@@ -133,18 +133,18 @@ const SelectInterest = ({navigation}) => {
       IconName: 'pets',
       title: 'Animal',
     },
-    {
-      id: 18,
-      IconType: Icon.FontAwesome5,
-      IconName: 'lightbulb',
-      title: 'Technology',
-    },
-    {
-      id: 19,
-      IconType: Icon.FontAwesome5,
-      IconName: 'business-time',
-      title: 'Business',
-    },
+    // {
+    //   id: 18,
+    //   IconType: Icon.FontAwesome5,
+    //   IconName: 'lightbulb',
+    //   title: 'Technology',
+    // },
+    // {
+    //   id: 19,
+    //   IconType: Icon.FontAwesome5,
+    //   IconName: 'business-time',
+    //   title: 'Business',
+    // },
   ];
 
   useEffect(() => {
@@ -192,12 +192,12 @@ const SelectInterest = ({navigation}) => {
         }}>
         {interestArr.map((item, index) => (
           <TouchableOpacity
-            onPress={() => handleSelect(item)}
+            onPress={() => handleSelect(item.title)}
             style={[
               styles.cardContainer,
               {
                 backgroundColor: selectedInterests.some(
-                  val => val.id == item.id,
+                  val => val == item.title,
                 )
                   ? appColors.primaryColor
                   : appColors.TextInput_BgColor,
@@ -207,7 +207,7 @@ const SelectInterest = ({navigation}) => {
             <Text
               style={{
                 // color:  appColors.DARK_GRAY,
-                color: selectedInterests.some(val => val.id == item.id)
+                color: selectedInterests.some(val => val == item.title)
                   ? appColors.white
                   : appColors.DARK_GRAY,
                 fontSize: 13,
@@ -219,7 +219,7 @@ const SelectInterest = ({navigation}) => {
               Type={item.IconType}
               name={item.IconName}
               color={
-                selectedInterests.some(val => val.id == item.id)
+                selectedInterests.some(val => val == item.title)
                   ? appColors.white
                   : appColors.DARK_GRAY
               }

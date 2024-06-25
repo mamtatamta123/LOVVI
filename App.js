@@ -1,5 +1,5 @@
 import {Appearance, StatusBar, useColorScheme} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import AuthStack from './src/navigation/AuthStack';
 import {Provider, useSelector} from 'react-redux';
@@ -14,8 +14,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const App = () => {
   const dispatch = useDispatch();
   const colorTheme = useColorScheme();
+  const [token, setToken] = useState('');
   const loggedIn = useSelector(state => state.auth.loggedIn);
   const isarkMode = useSelector(state => state.auth.isDarkMode);
+
+  //getting Token
+  useEffect(() => {
+    const getToken = async () => {
+      const loviiToken = await AsyncStorage.getItem('loviTokenAfterLogin');
+      if (loviiToken) {
+        setToken(loviiToken);
+      } else {
+        setToken('');
+      }
+    };
+    getToken();
+  }, [loggedIn]);
 
   //listener for darkmode who listen to mobile setting
   useEffect(() => {
@@ -66,7 +80,7 @@ const App = () => {
         backgroundColor={'#2222'}
       /> */}
       <NavigationContainer>
-        {loggedIn ? <MainStack /> : <AuthStack />}
+        {token ? <MainStack /> : <AuthStack />}
       </NavigationContainer>
     </>
   );
