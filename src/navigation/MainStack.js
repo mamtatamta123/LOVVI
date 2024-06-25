@@ -33,7 +33,7 @@ import NotificationScreen from '../screens/mainScreens/NotificationScreen';
 import {isLocationEnabled} from 'react-native-android-location-enabler';
 import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
 import GetLocation from 'react-native-get-location';
-import {setUsedAddres} from '../redux/auth.reducer';
+import {setUsedAddres, setCurrentAddress} from '../redux/auth.reducer';
 import {useDispatch} from 'react-redux';
 
 const MainStack = () => {
@@ -126,7 +126,7 @@ const MainStack = () => {
           .then(response => response.json())
           .then(result => {
             console.log('hello', result?.results[0]?.formatted_address);
-            dispatch(setUsedAddres(result?.results[0]?.formatted_address));
+            dispatch(setCurrentAddress(result?.results[0]?.formatted_address));
           })
           .catch(e => {
             console.log('error', e);

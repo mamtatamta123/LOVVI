@@ -24,17 +24,26 @@ export async function SignInApi(userData, navigation, setLoading) {
   }
 }
 
-export async function otpVerifyApi(userData, navigation, setLoading) {
+export async function otpVerifyApi(userData, navigation, setLoading, dispatch) {
   setLoading(true);
   console.log('userData', userData);
   try {
     const response = await axios.post(`${baseUrl}/verified-otp`, userData);
     console.log('response', response.data);
     await AsyncStorage.setItem('lovii_Token', response?.data?.token);
-    setLoading(false);
-    SuccessToast(response.data.message);
-    navigation.navigate(routes.Email_Verification);
-    await AsyncStorage.setItem('lastVisitedRoute', routes.Email_Verification);
+    if (response.data.isProfileComplete === true) {
+      await AsyncStorage.setItem('loviTokenAfterLogin', response?.data?.token);
+      dispatch(setLoggedIn(true));
+      setLoading(false);
+      SuccessToast(response.data.message);
+      return;
+    } else {
+      SuccessToast(response.data.message);
+      navigation.navigate(routes.Email_Verification);
+      setLoading(false);
+      await AsyncStorage.setItem('lastVisitedRoute', routes.Email_Verification);
+    }
+
     return;
   } catch (error) {
     console.log('Error in otpVerifyApi:', error.response);

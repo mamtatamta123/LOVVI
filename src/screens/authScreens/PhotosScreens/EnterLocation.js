@@ -7,7 +7,11 @@ import AppText from '../../../libComponents/AppText';
 import AppButton from '../../../libComponents/AppButton';
 import AppIcon, {Icon} from '../../../libComponents/AppIcon';
 import appColors from '../../../utils/appColors';
-import {setLoggedIn, setUsedAddres} from '../../../redux/auth.reducer';
+import {
+  setCurrentAddress,
+  setLoggedIn,
+  setUsedAddres,
+} from '../../../redux/auth.reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {ErrorToast} from '../../../utils/Toasters';
@@ -97,7 +101,7 @@ const EnterLocation = ({navigation}) => {
       image_6:
         'https://img.freepik.com/free-photo/portrait-man-having-great-time_23-2149443790.jpg',
     };
-    await userProfileCompletionApi(data, dispatch,streetLocation);
+    await userProfileCompletionApi(data, dispatch, streetLocation);
   };
 
   return (
@@ -134,6 +138,7 @@ const EnterLocation = ({navigation}) => {
               console.log('googleplaceautocomplete', details);
               await AsyncStorage.setItem('address', details?.description);
               setstreetLocation(details?.description);
+              dispatch(setCurrentAddress(details?.description));
             }}
             query={{
               key: 'AIzaSyAKfvrGBxXsxJ2AovOGAdltyorLy4ytT1I',

@@ -5,7 +5,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import appColors from '../../../utils/appColors';
 import {
   responsiveWidth as wp,
@@ -31,6 +31,7 @@ import {useSelector} from 'react-redux';
 import {ErrorToast} from '../../../utils/Toasters';
 import {SignInApi} from '../../../Apis/AuthApis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeviceNumber from 'react-native-device-number';
 
 const LoginScreen = ({navigation}) => {
   const isarkMode = useSelector(state => state.auth.isDarkMode);
@@ -38,6 +39,31 @@ const LoginScreen = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [selectedCountryCode, setSelectedCountryCode] = useState('+91');
   const [loading, setLoading] = useState(false);
+
+  const getNumber = () => {
+    DeviceNumber.get().then(res => {
+      console.log(res);
+    });
+  };
+
+  // useEffect(() => {
+  //   console.log('in useeefect');
+  //   DeviceNumber.get().then(res => {
+  //     console.log(res);
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   const getPhoneNumber = async () => {
+  //     try {
+  //       const phoneNumbe = await SmsRetriever.requestPhoneNumber();
+  //       console.log('phoneNumbe', phoneNumbe);
+  //     } catch (error) {
+  //       console.log(JSON.stringify(error));
+  //     }
+  //   };
+  //   getPhoneNumber();
+  // }, []);
 
   function ListHeaderComponent({countries, lang, onPress}) {
     return (

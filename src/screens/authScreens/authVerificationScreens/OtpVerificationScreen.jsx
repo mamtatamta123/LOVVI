@@ -30,8 +30,16 @@ import {otpVerifyApi} from '../../../Apis/AuthApis';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../../../libComponents/Loader';
 import {resendOtpApi} from '../../../Apis/AuthApis';
+import {useDispatch} from 'react-redux';
+import {
+  getHash,
+  startOtpListener,
+  useOtpVerify,
+  removeListener,
+} from 'react-native-otp-verify';
 
 const OtpVerificationScreen = ({navigation}) => {
+  const dispatch = useDispatch();
   const isarkMode = useSelector(state => state.auth.isDarkMode);
   const [value, setValue] = useState('');
   const [loading, setLoading] = useState(false);
@@ -42,6 +50,21 @@ const OtpVerificationScreen = ({navigation}) => {
     setValue,
   });
   const CELL_COUNT = 4;
+
+  useEffect(() => {
+    getHash()
+      .then(hash => {
+        console.log('hash', hash);
+      })
+      .catch(console.log);
+
+    startOtpListener(message => {
+      console.log('messsage', message);
+      const otp = /(\d{4})/g.exec(message)[1];
+      setValue(otp);
+    });
+    return () => removeListener();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -68,18 +91,17 @@ const OtpVerificationScreen = ({navigation}) => {
         device_token: device_token,
         device_id: device_id,
       };
-      await resendOtpApi(data,setTimer);
+      await resendOtpApi(data, setTimer);
     }
   };
 
   const handleOtpVerification = async () => {
-    navigation.navigate(routes.Email_Verification);
     const phone = await AsyncStorage.getItem('phoneNumber');
     const data = {
       otp: value,
       phone: phone,
     };
-    await otpVerifyApi(data, navigation, setLoading);
+    await otpVerifyApi(data, navigation, setLoading, dispatch);
   };
   return (
     <>
