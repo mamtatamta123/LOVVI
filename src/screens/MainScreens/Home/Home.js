@@ -27,8 +27,12 @@ import {isLocationEnabled} from 'react-native-android-location-enabler';
 import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
 import GetLocation from 'react-native-get-location';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
+import {useDispatch} from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setCurrentAddress} from '../../../redux/auth.reducer';
 
 const Home = ({navigation}) => {
+  const dispatch = useDispatch();
   const [prigeRange, setPriceRange] = useState([]);
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [swipingLeft, setSwipingLeft] = useState(false);
@@ -36,8 +40,10 @@ const Home = ({navigation}) => {
   const [longitude, setlongitude] = useState('');
   const isarkMode = useSelector(state => state.auth.isDarkMode);
 
-  const useAddress = useSelector(state => state.auth.useAddress);
-  console.log('useAddress', useAddress);
+  // const useAddress = useSelector(state => state.auth.useAddress);
+  // console.log('useAddress', useAddress);
+  const currentAddress = useSelector(state => state.auth.currentAddress);
+  console.log('currentAddress', currentAddress);
   const [showFilterModal, setshowFilterModal] = useState(false);
   const [showMapModal, setshowMapModal] = useState(false);
   const [selectedIntrestGender, setSelectedIntrestGender] = useState({
@@ -184,6 +190,7 @@ const Home = ({navigation}) => {
       return false;
     }
   };
+
   const getLocation = async () => {
     console.log('in getLocation');
     const result = await requestLocationPermission();
@@ -234,7 +241,7 @@ const Home = ({navigation}) => {
             />
             {/* <Text style={styles.textsubtitle}>New York, USA</Text> */}
             <AppText numberOfLines={1} style={styles.textsubtitle}>
-              {useAddress ? useAddress : 'Fetching your location...'}
+              {currentAddress ? currentAddress : 'Fetching your location...'}
             </AppText>
           </TouchableOpacity>
 
@@ -268,13 +275,13 @@ const Home = ({navigation}) => {
       <Swiper
         infinite={true}
         ref={swiperRef}
-        horizontalSwipe={true}
-        verticalSwipe={false}
+        horizontalSwipe={false}
+        verticalSwipe={true}
         // onSwiping={handleSwipeLeft}
         // onSwipedLeft={handleCardIndex}
         cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
         renderCard={(card, index) => {
-          console.log('card', index);
+          // console.log('card', index);
           return (
             <View
               style={{
